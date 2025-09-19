@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classical Mechanics Part 1 by Coolnut — Course Index</title>
+
+<!-- MathJax v3 -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true,
+    tags: 'none',
+    macros: {
+      dd: ['\\,\\mathrm{d}#1', 1],
+      dv: ['\\dfrac{\\mathrm{d}#1}{\\mathrm{d}#2}', 2],
+      vec: ['\\mathbf{#1}', 1],
+      ihat: '\\hat{\\mathbf{i}}',
+      jhat: '\\hat{\\mathbf{j}}',
+      khat: '\\hat{\\mathbf{k}}',
+      vect: ['\\boldsymbol{#1}', 1]
+    }
+  },
+  chtml: { scale: 1.35 },
+  options: { renderActions: { addMenu: [] } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+  :root{
+    --ink:#0f172a; --muted:#475569; --bg:#ffffff; --bd:#e2e8f0;
+    --box:#f8fafc; --card-bg:#ffffff; --card-shadow:0 4px 6px -1px rgba(0,0,0,0.1);
+    --primary:#3b82f6; --primary-hover:#2563eb; --primary-light:#dbeafe;
+    --success:#10b981; --warning:#f59e0b; --danger:#ef4444;
+    --gradient:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  html,body{
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color:var(--ink);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Noto Sans Thai", "Noto Sans", "Helvetica Neue", Arial, Tahoma, sans-serif;
+    line-height:1.7; margin:0; padding:0;
+    min-height: 100vh;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+    background: var(--card-bg);
+    padding: 3rem 2rem;
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: var(--gradient);
+  }
+  
+  .header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 0 1rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .header .subtitle {
+    font-size: 1.25rem;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+  
+  .header .description {
+    font-size: 1.1rem;
+    color: var(--ink);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  
+  /* Course Overview */
+  .course-overview {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    margin-bottom: 3rem;
+  }
+  
+  .course-overview h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: var(--primary);
+  }
+  
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  
+  .overview-card {
+    background: var(--primary-light);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary);
+  }
+  
+  .overview-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    color: var(--primary);
+  }
+  
+  .overview-card p {
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin: 0;
+  }
+  
+  /* Chapters Grid */
+  .chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Chapter Card */
+  .chapter-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  
+  .chapter-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  }
+  
+  .chapter-header {
+    padding: 1.5rem;
+    background: var(--gradient);
+    color: white;
+    position: relative;
+  }
+  
+  .chapter-number {
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 0.5rem;
+  }
+  
+  .chapter-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    line-height: 1.3;
+  }
+  
+  .chapter-subtitle {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    margin: 0;
+  }
+  
+  .chapter-content {
+    padding: 1.5rem;
+  }
+  
+  .chapter-description {
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+  
+  .chapter-topics {
+    margin-bottom: 1.5rem;
+  }
+  
+  .chapter-topics h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .topics-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .topics-list li {
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--muted);
+    position: relative;
+    padding-left: 1rem;
+  }
+  
+  .topics-list li::before {
+    content: '•';
+    color: var(--primary);
+    position: absolute;
+    left: 0;
+  }
+  
+  .chapter-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+  }
+  
+  .chapter-link:hover {
+    background: var(--primary-hover);
+    transform: translateX(2px);
+  }
+  
+  .chapter-link::after {
+    content: '→';
+    transition: transform 0.2s ease;
+  }
+  
+  .chapter-link:hover::after {
+    transform: translateX(2px);
+  }
+  
+  /* Status badges */
+  .status-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .status-basic { background: #dbeafe; color: #1e40af; }
+  .status-intermediate { background: #fef3c7; color: #92400e; }
+  .status-advanced { background: #fee2e2; color: #991b1b; }
+  
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .header h1 { font-size: 2.2rem; }
+    .header { padding: 2rem 1rem; }
+    .chapters-grid { grid-template-columns: 1fr; }
+    .overview-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Classical Mechanics Part 1</h1>
+    <p class="subtitle">by Coolnut</p>
+    <p class="description">
+      คอร์สกลศาสตร์คลาสสิกภาคแรก ครอบคลุมตั้งแต่คิเนแมติกส์พื้นฐานไปจนถึงกลศาสตร์นิวตัน 
+      ด้วยแนวทางการสอนแบบเล่าเรื่อง พร้อมตัวอย่างสถานการณ์จริงและแบบฝึกหัดครบครัน
+    </p>
+  </div>
+
+  <!-- Course Overview -->
+  <div class="course-overview">
+    <h2>🎯 ภาพรวมคอร์ส</h2>
+    <p>คอร์สนี้ออกแบบให้เรียนรู้กลศาสตร์คลาสสิกอย่างเป็นระบบ เริ่มจากพื้นฐานคิเนแมติกส์ไปจนถึงการประยุกต์ใช้กฎของนิวตัน</p>
+    
+    <div class="overview-grid">
+      <div class="overview-card">
+        <h3>📚 เนื้อหาครบครัน</h3>
+        <p>ครอบคลุม 5 บทหลัก ตั้งแต่พื้นฐานไปจนถึงระดับสูง</p>
+      </div>
+      <div class="overview-card">
+        <h3>🧮 คณิตศาสตร์สมบูรณ์</h3>
+        <p>ใช้ MathJax แสดงสมการและสัญลักษณ์ทางคณิตศาสตร์</p>
+      </div>
+      <div class="overview-card">
+        <h3>💡 ตัวอย่างจริง</h3>
+        <p>โจทย์และสถานการณ์ที่เชื่อมโยงกับชีวิตประจำวัน</p>
+      </div>
+      <div class="overview-card">
+        <h3>✅ แบบฝึกหัด</h3>
+        <p>แบบฝึกหัดพร้อมเฉลยทีละขั้นตอนอย่างละเอียด</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chapters -->
+  <div class="chapters-grid">
+    
+    <!-- Chapter 1+2 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-basic">พื้นฐาน</div>
+        <div class="chapter-number">บทที่ 1+2</div>
+        <h3 class="chapter-title">พื้นฐานคิเนแมติกส์ & การอ่านกราฟ</h3>
+        <p class="chapter-subtitle">1D → 2D → 3D — เวอร์ชันเล่าเรื่อง</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          เริ่มต้นด้วยพื้นฐานการเคลื่อนที่ 1 มิติ ขยายสู่ 2D และ 3D พร้อมการอ่านและตีความกราฟ 
+          ทุกโจทย์ผูกกับสถานการณ์จริง อ่านสนุก เข้าใจภาพก่อนลงมือคำนวณ
+        </p>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>สัญลักษณ์และข้อกำหนดพื้นฐาน</li>
+            <li>การเคลื่อนที่ 1 มิติจากนิยามแคลคูลัส</li>
+            <li>ขยายสู่ 2D/3D ด้วยเวกเตอร์หน่วย</li>
+            <li>การอ่านกราฟ x-t, v-t, a-t</li>
+            <li>สถานการณ์ตัวอย่างและแบบฝึกหัด</li>
+          </ul>
+        </div>
+        <a href="chapter1.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
+    <!-- Chapter 2 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-intermediate">ระดับกลาง</div>
+        <div class="chapter-number">บทที่ 2</div>
+        <h3 class="chapter-title">การเคลื่อนที่ 1 มิติขั้นสูง</h3>
+        <p class="chapter-subtitle">เร่งคงตัว & ไม่คงตัว — Beautiful Math</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          ศึกษาการเคลื่อนที่แบบเร่งคงตัวและไม่คงตัว ครอบคลุมกรณี a(t), a(x), a(v) 
+          พร้อมขยายสู่ 2D/3D ด้วยเครื่องมือแคลคูลัสที่สมบูรณ์
+        </p>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>การเร่งคงตัวและสมการพื้นฐาน</li>
+            <li>การเร่งไม่คงตัว: a(t), a(x), a(v)</li>
+            <li>กล่องเครื่องมือแคลคูลัส</li>
+            <li>สถานการณ์ประยุกต์ 5 กรณี</li>
+            <li>แบบฝึกหัด 6 ข้อพร้อมเฉลย</li>
+          </ul>
+        </div>
+        <a href="chapter2.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
+    <!-- Chapter 3 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-intermediate">ระดับกลาง</div>
+        <div class="chapter-number">บทที่ 3</div>
+        <h3 class="chapter-title">การเคลื่อนที่ 2 มิติ</h3>
+        <p class="chapter-subtitle">คาร์ทีเซียน & โพรเจคไทล์ + 3D</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          การเคลื่อนที่ในระนาบและอวกาศ ศึกษาโพรเจคไทล์บนพื้นราบและพื้นเอียง 
+          รวมถึงผลกระทบของลมและการขยายสู่ 3 มิติ
+        </p>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>กรอบเวกเตอร์และสัญลักษณ์</li>
+            <li>โพรเจคไทล์พื้นราบ (ไม่มีลม)</li>
+            <li>โพรเจคไทล์มีลมแบบง่าย</li>
+            <li>การเคลื่อนที่บนพื้นเอียง</li>
+            <li>ขยายสู่ 3 มิติและ Inverse Design</li>
+          </ul>
+        </div>
+        <a href="chapter3.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
+    <!-- Chapter 4 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-advanced">ระดับสูง</div>
+        <div class="chapter-number">บทที่ 4</div>
+        <h3 class="chapter-title">กรอบเฉื่อย & การเคลื่อนที่สัมพัทธ์</h3>
+        <p class="chapter-subtitle">การแปลงกาลิเลโอ</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          การศึกษาการเคลื่อนที่ในกรอบอ้างอิงต่างๆ การแปลงกาลิเลโอ 
+          และการประยุกต์ในสถานการณ์จริงเช่น การข้ามแม่น้ำ การเคลื่อนที่บนทางเลื่อน
+        </p>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>กรอบอ้างอิงและสัญลักษณ์</li>
+            <li>การแปลงกาลิเลโอและความหมาย</li>
+            <li>เครื่องมือแคลคูลัสขั้นสูง</li>
+            <li>สถานการณ์ตัวอย่างโจทย์ฟิสิกส์</li>
+            <li>แบบฝึกหัดเวอร์ชันขยาย</li>
+          </ul>
+        </div>
+        <a href="Chapter4.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
+    <!-- Chapter 5 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-advanced">ระดับสูง</div>
+        <div class="chapter-number">บทที่ 5</div>
+        <h3 class="chapter-title">กลศาสตร์นิวตันพื้นฐาน</h3>
+        <p class="chapter-subtitle">Full Story Problems</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          การประยุกต์กฎของนิวตันในการแก้ปัญหาจริง ครอบคลุมแรงเสียดทาน แรงต้านอากาศ 
+          พร้อมเทคนิค FBD และการใช้แคลคูลัสขั้นสูง
+        </p>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>กฎของนิวตันและสูตรพื้นฐาน</li>
+            <li>แรงเสียดทานและแรงต้านอากาศ</li>
+            <li>ตัวอย่างสถานการณ์ 5 เรื่อง</li>
+            <li>แบบฝึกหัดและ Advanced Problems</li>
+            <li>เทคนิค FBD และหมายเหตุ</li>
+          </ul>
+        </div>
+        <a href="chapter5.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>📚 Classical Mechanics Part 1 by Coolnut</p>
+    <p>คอร์สกลศาสตร์คลาสสิกสำหรับการเรียนรู้อย่างเป็นระบบ</p>
+  </div>
+</div>
+
+</body>
+</html>
