@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>บทที่ 1+2 — พื้นฐานคิเนแมติกส์ & การอ่านกราฟ (1D → 2D → 3D) — Narrative Edition</title>
+
+<!-- MathJax v3 -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true,
+    tags: 'none',
+    macros: {
+      dd: ['\\,\\mathrm{d}#1', 1],
+      dv: ['\\dfrac{\\mathrm{d}#1}{\\mathrm{d}#2}', 2],
+      vec: ['\\mathbf{#1}', 1],
+      ihat: '\\hat{\\mathbf{i}}',
+      jhat: '\\hat{\\mathbf{j}}',
+      khat: '\\hat{\\mathbf{k}}',
+      R: '\\mathbb{R}'
+    }
+  },
+  chtml: { scale: 1.35 },
+  options: { renderActions: { addMenu: [] } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+  :root{
+    --ink:#0f172a; --muted:#475569; --bg:#ffffff; --bd:#e2e8f0;
+    --box:#f8fafc; --eqbg:#f0f9ff; --eqbd:#93c5fd;
+    --prob-bg:#fff7ed; --prob-bd:#fdba74; --prob-h:#9a3412;
+    --sol-bg:#eef2ff; --sol-bd:#c7d2fe; --sol-h:#3730a3;
+    --note-bg:#f0fdf4; --note-bd:#bbf7d0;
+    --toc-bg:#faf5ff; --toc-bd:#e9d5ff;
+  }
+  html,body{
+    background:var(--bg); color:var(--ink);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Noto Sans Thai", "Noto Sans", "Helvetica Neue", Arial, Tahoma, sans-serif;
+    line-height:1.9;
+  }
+  main{max-width: 1024px; margin: 2rem auto; padding: 0 1rem 4rem;}
+  h1{font-size:2.2rem; font-weight:800; letter-spacing:.1px; margin:0 0 .5rem;}
+  .lead{color:var(--muted); margin:.25rem 0 1.25rem;}
+  h2{font-size:1.6rem; font-weight:750; color:#0b4f54; margin:1.8rem 0 .9rem;}
+  h3{font-size:1.24rem; font-weight:700; color:#0b4f54; margin:1.2rem 0 .6rem;}
+  p,li{font-size:1.08rem;}
+  section{margin:1.6rem 0 1.6rem; padding-bottom:.6rem; border-bottom:1px solid var(--bd);}
+  .box{background:var(--box); border:1px solid var(--bd); border-radius:14px; padding:1.05rem 1.15rem;}
+  .eq-block{
+    margin:.95rem auto; padding:.85rem 1rem; text-align:center;
+    border-left:4px solid var(--eqbd); background:var(--eqbg); border-radius:12px;
+  }
+  .note{background:var(--note-bg); border:1px solid var(--note-bd); color:#166534; border-radius:10px; padding:.7rem 1rem; margin:.8rem 0;}
+  .toc{background:var(--toc-bg); border:1px solid var(--toc-bd); border-radius:14px; padding:1rem 1.2rem; margin:1rem 0;}
+  .toc a{color:#6b21a8; text-decoration:none;}
+  .toc a:hover{text-decoration:underline;}
+  /* Problem / Solution cards */
+  .problem{background:var(--prob-bg); border:2px solid var(--prob-bd); border-radius:16px; padding:1rem 1.1rem; margin:1rem 0;}
+  .problem h4{color:var(--prob-h); font-size:1.08rem; margin:.1rem 0 .45rem;}
+  .solution{background:var(--sol-bg); border:2px dashed var(--sol-bd); border-radius:16px; padding:1rem 1.1rem; margin:.7rem 0;}
+  .solution h4{color:var(--sol-h); font-size:1.08rem; margin:.1rem 0 .45rem;}
+  ol.steps{margin:.2rem 0 0 1.1rem;}
+  ol.steps li{margin:.35rem 0;}
+  mjx-container[jax="CHTML"]{ font-size: 135% !important; }
+  mjx-container{ margin:.45rem 0; }
+  .small{color:var(--muted); font-size:.98rem;}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>บทที่ 1+2 — พื้นฐานคิเนแมติกส์ & การอ่านกราฟ (1D → 2D → 3D)</h1>
+    <p class="lead">เวอร์ชันเล่าเรื่อง — ทุกโจทย์ผูกกับสถานการณ์จริง อ่านสนุก เข้าใจภาพ ก่อนลงมือคำนวณ</p>
+    <div class="note"><b>ข้อกำหนด:</b> คิเนมาติกส์ล้วน — ยังไม่พูดถึงแรง/พลังงาน/วงกลม/หมุน</div>
+  </header>
+
+  <nav class="toc">
+    <h3 id="toc">สารบัญ</h3>
+    <ol>
+      <li><a href="#symbols">สัญลักษณ์และข้อกำหนด</a></li>
+      <li><a href="#basics1d">พื้นฐาน 1 มิติ (จากนิยาม)</a></li>
+      <li><a href="#basics2d3d">ขยายสู่ 2D/3D ด้วย \(\ihat,\jhat,\khat\)</a></li>
+      <li><a href="#graphs">การอ่านกราฟ \(x\!-\!t, v\!-\!t, a\!-\!t\)</a></li>
+      <li><a href="#situations">สถานการณ์ตัวอย่าง</a></li>
+      <li><a href="#exercises">แบบฝึกหัด 6 ข้อ (เล่าเรื่อง) + เฉลย</a></li>
+      <li><a href="#summary">สรุปแก่นคิด</a></li>
+    </ol>
+  </nav>
+
+  <section id="symbols">
+    <h2>สัญลักษณ์และข้อกำหนด</h2>
+    <div class="box">
+      <ul>
+        <li>เวลา \(t\) (วินาที), จุดเริ่ม \(t=0\)</li>
+        <li>พิกัด: \(x,y,z\) (เมตร); เวกเตอร์หน่วย: \(\ihat,\jhat,\khat\)</li>
+        <li>เวกเตอร์ตำแหน่ง: \(\vec{r}(t)=x(t)\,\ihat+y(t)\,\jhat+z(t)\,\khat\)</li>
+        <li>ความเร็ว–เร่ง: \(\vec{v}=\dv{\vec{r}}{t},\ \vec{a}=\dv{\vec{v}}{t}\)</li>
+        <li>ชันกราฟกับพื้นที่ใต้กราฟ: ชัน \(x\!-\!t\)=\(v\), ชัน \(v\!-\!t\)=\(a\), พื้นที่ใต้ \(v\!-\!t\)=\(\Delta x\), พื้นที่ใต้ \(a\!-\!t\)=\(\Delta v\)</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="basics1d">
+    <h2>พื้นฐาน 1 มิติ (จากนิยามแคลคูลัส)</h2>
+    <div class="box">
+      <p><b>นิยาม:</b> \(a=\dv{v}{t}\), \(v=\dv{x}{t}\). อินทิกรัลจาก \(0\to t\):</p>
+      <div class="eq-block">\[ v(t)=v_0+\int_{0}^{t} a(\tau)\,\dd{\tau} \]</div>
+      <div class="eq-block">\[ x(t)=x_0+\int_{0}^{t} v(\tau)\,\dd{\tau} \]</div>
+      <p>กรณีคงเร่ง \(a(\tau)=a\) (ค่าคงที่):</p>
+      <div class="eq-block">\[ v=v_0+a t, \qquad x=x_0+v_0 t+\tfrac12 a t^2 \]</div>
+      <p>กำจัดเวลา:</p>
+      <div class="eq-block">\[ \boxed{\,v^2=v_0^2+2a(x-x_0)\,} \]</div>
+    </div>
+  </section>
+
+  <section id="basics2d3d">
+    <h2>ขยายสู่ 2D/3D ด้วย \(\ihat,\jhat,\khat\)</h2>
+    <div class="box">
+      <div class="eq-block">\[
+        \vec{a}=a_x\,\ihat+a_y\,\jhat+a_z\,\khat\ (\text{คงที่}),\quad
+        \vec{v}_0=v_{0x}\,\ihat+v_{0y}\,\jhat+v_{0z}\,\khat
+      \]</div>
+      <div class="eq-block">\[
+        \vec{v}(t)=\vec{v}_0+\vec{a}t
+        =(v_{0x}+a_x t)\,\ihat+(v_{0y}+a_y t)\,\jhat+(v_{0z}+a_z t)\,\khat
+      \]</div>
+      <div class="eq-block">\[
+        \vec{r}(t)=\vec{r}_0+\vec{v}_0 t+\tfrac12\vec{a}t^2
+        =(x_0+v_{0x}t+\tfrac12 a_x t^2)\,\ihat+(y_0+v_{0y}t+\tfrac12 a_y t^2)\,\jhat+(z_0+v_{0z}t+\tfrac12 a_z t^2)\,\khat
+      \]</div>
+      <div class="eq-block">\[
+        v^2=v_0^2+2\,\vec{a}\cdot(\vec{r}-\vec{r}_0)
+        =v_0^2+2\,[a_x(x-x_0)+a_y(y-y_0)+a_z(z-z_0)]
+      \]</div>
+    </div>
+  </section>
+
+  <section id="graphs">
+    <h2>การอ่านกราฟ \(x\!-\!t,\ v\!-\!t,\ a\!-\!t\)</h2>
+    <div class="box">
+      <h3>ชันและพื้นที่ใต้กราฟ</h3>
+      <ul>
+        <li>\(x\!-\!t\): ชัน ณ จุด = \(v=\dv{x}{t}\)</li>
+        <li>\(v\!-\!t\): ชัน = \(a=\dv{v}{t}\); พื้นที่ใต้กราฟบนช่วง = \(\Delta x=\int v\,\dd t\)</li>
+        <li>\(a\!-\!t\): พื้นที่ใต้กราฟบนช่วง = \(\Delta v=\int a\,\dd t\)</li>
+      </ul>
+      <h3>กรณีชิ้นส่วน</h3>
+      <ul>
+        <li>กราฟเชิงเส้นหลายท่อน ⇒ ใช้พื้นที่รูปทรงเรขาคณิต</li>
+        <li>ไม่ต่อเนื่อง ⇒ คิดช่วงละสูตรแล้วต่อผล</li>
+      </ul>
+      <h3>หลายมิติ</h3>
+      <ul>
+        <li>อ่านต่อแกน: \(v_x=\dv{x}{t}\), \(v_y=\dv{y}{t}\); พื้นที่ใต้กราฟ \(v_x\!-\!t\) ให้ \(\Delta x\) เป็นต้น</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="situations">
+    <h2>สถานการณ์ตัวอย่าง (เล่านิยายโจทย์ให้เห็นฉาก)</h2>
+
+    <div class="problem">
+      <h4>สถานการณ์ A — “รถรางสนามบิน: ออกตัวนุ่มก่อนเข้าโค้ง” (1D)</h4>
+      <p>ที่อาคารผู้โดยสาร A มีรถรางไร้คนขับพาผู้โดยสารไปอาคาร B ระยะทางสั้น ๆ ช่วงแรกเป็นทางตรงก่อนเข้าโค้งอ่อน ระบบตั้งค่าการออกตัวให้ “นุ่ม” เพื่อไม่ให้ผู้โดยสารเสียการทรงตัว โดยกำหนดความเร่งคงที่ \(a>0\) เป็นเวลาควบคุม \(T\) วินาที รถเริ่มจากหยุดนิ่งที่ \(x_0=0\). ผู้ควบคุมอยากทราบว่า (ก) เมื่อครบเวลาควบคุม \(T\) รถมีความเร็วเท่าใด (ข) ช่วงออกตัวกินระยะทางไปเท่าไร (ค) ถ้าคงเร่งเดิมต่อไปอีก จะใช้เวลากี่วินาทีถึงเสาอ้างอิงตัวถัดไปที่ระยะ \(X\) เมตรจากจุดเริ่ม</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>ใช้ \(v=v_0+at\) (โดย \(v_0=0\)) ⇒ \(v(T)=aT\).</li>
+        <li>ใช้ \(x=x_0+v_0 t+\tfrac12 a t^2\) ⇒ \(x(T)=\tfrac12 aT^2\).</li>
+        <li>ถึงระยะ \(X\): \(\,X=\tfrac12 a t^2\Rightarrow t=\sqrt{2X/a}\).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> อินทิกรัลค่าคงที่, สมการกำลังสอง</div>
+    </div>
+
+    <div class="problem">
+      <h4>สถานการณ์ B — “สายพานทดสอบจักรยานไฟฟ้า: อ่านกราฟความเร็ว” (1D)</h4>
+      <p>สตูดิโอเทสต์รถไฟฟ้าขนาดเล็กใช้สายพาน (rolling dyno) ทดสอบการจ่ายกำลังของจักรยานไฟฟ้ารุ่นใหม่ โปรแกรมทดสอบ “เร่ง–คงที่–ผ่อน” ให้กราฟความเร็วเป็นฟันเลื่อย: จาก 0 เพิ่มเชิงเส้นถึง \(V\) ในเวลา \(T/2\) แล้วลดเชิงเส้นกลับ 0 ภายในอีก \(T/2\). วิศวกรต้องการรู้ว่า “ในหนึ่งคาบทดสอบ” การกระจัดบนสายพานเป็นเท่าใด เพื่อเทียบกับข้อมูลจากตัววัดระยะที่ล้อ</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>พื้นที่ใต้กราฟ \(v\!-\!t\) คือ \(\Delta x\). เป็นสามเหลี่ยมสองอันเท่ากัน ⇒ \(\Delta x=2\cdot \tfrac12\cdot (T/2)\cdot V=\tfrac12 VT\).</li>
+        <li>ตรวจด้วยความเร็วเฉลี่ย \(V/2\): \((V/2)\cdot T=\tfrac12 VT\) ตรงกัน.</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> พื้นที่ใต้กราฟ = อินทิกรัลของความเร็ว</div>
+    </div>
+
+    <div class="problem">
+      <h4>สถานการณ์ C — “AGV ในคลังสินค้า: เปลี่ยนเลนหลบพาเลต” (2D)</h4>
+      <p>ในคลังสินค้า AGV (รถขนส่งอัตโนมัติ) วิ่งเลนตรงแกน \(x\) ด้วยความเร็วต้นคงที่ \(u\). ข้างหน้ามีพาเลตที่ยื่นออกมาเล็กน้อย จึงตั้งโปรไฟล์ให้ AGV “ดริฟต์ขึ้นด้านบน” อย่างนุ่ม โดยใช้ความเร่งคงที่ \(\vec{a}=(0,\alpha)\) ตลอดช่วงเบี่ยงเลน เพื่อไม่ให้ของบนรถล้ม สรุปคือเริ่มที่ \((0,0)\) ด้วย \(\vec{v}_0=(u,0)\), ต้องหาเส้นทาง \(\vec{r}(t)\), มุมหัวรถ \(\theta(t)\), และสมการวิถี \(y(x)\) เพื่อปรับระยะห่างข้างพาเลต</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>\(\vec{v}(t)=(u,\alpha t)\Rightarrow \vec{r}(t)=(ut,\tfrac12\alpha t^2)\).</li>
+        <li>มุมหัวรถ: \(\tan\theta=\dfrac{v_y}{v_x}=\dfrac{\alpha t}{u}\).</li>
+        <li>กำจัดเวลา: \(t=x/u\Rightarrow y(x)=\dfrac{\alpha}{2u^2}x^2\) (พาราโบลา เบี่ยงเลนอย่างนุ่ม).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> อินทิกรัลเวกเตอร์, กำจัดเวลา</div>
+    </div>
+  </section>
+
+  <section id="exercises">
+    <h2>แบบฝึกหัด 6 ข้อ (เล่าเรื่องยาวขึ้น) + เฉลย</h2>
+
+    <div class="problem">
+      <h4>ข้อ 1 — “รถรับ–ส่งในมหาวิทยาลัย: เข้าจุดจอดตรงเวลา” (1D)</h4>
+      <p>รถไฟฟ้ารับ–ส่งนักศึกษาเริ่มจากหยุดนิ่งที่ป้าย A ต้องไปถึงป้าย B ซึ่งห่างตรง \(L\) เมตร “ตรงเวลา” ที่ระบบประกาศไว้ \(T\) วินาที เพื่อให้ผู้โดยสารถ่ายรูปกับมาสคอตพอดี กำหนดให้ช่วงนี้ควบคุมแบบ “เร่งคงที่” ตลอดทาง (ผู้ขับระบบไม่อยากให้ผู้โดยสารเหวี่ยง) จงหา (ก) ความเร่ง \(a\) ที่ต้องตั้ง (ข) ความเร็วเมื่อถึงป้าย B เพื่อส่งต่อให้โปรแกรมติดเบรกอัตโนมัติคำนวณต่อ</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>สมการ \(x=x_0+v_0 t+\tfrac12 a t^2\) กับ \(x_0=v_0=0\) ⇒ \(L=\tfrac12 aT^2\Rightarrow a=2L/T^2\).</li>
+        <li>\(v(T)=v_0+aT=2L/T\).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> รูปคงเร่ง 1 มิติ</div>
+    </div>
+
+    <div class="problem">
+      <h4>ข้อ 2 — “โซนซ่อมถนน: ต้องหยุดก่อนป้ายเตือน” (1D)</h4>
+      <p>รถบริการเมืองเริ่มด้วยความเร็ว \(v_0\) และเห็นโซนซ่อมถนนอยู่ข้างหน้าอีก \(D\) เมตร โดยมีป้ายกำกับให้ “หยุดก่อนถึงป้าย” ระบบเลือกคุมแบบ “หน่วงคงที่” ตลอด ช่วยหา (ก) อัตราหน่วงขั้นต่ำ \(\alpha\) ที่หยุดทัน (ข) เวลาที่ใช้จนหยุด เพื่อบันทึกลงสมุดสถิติการขับขี่</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>ตั้ง \(a=-\alpha\) และใช้ \(0=v_0^2+2aX\) โดยให้ \(X=D\) ขั้นต่ำ ⇒ \(\alpha=v_0^2/(2D)\).</li>
+        <li>เวลาหยุด \(t^\*=v_0/\alpha=2D/v_0\).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> สูตรกำจัดเวลา \(v^2=v_0^2+2a\Delta x\)</div>
+    </div>
+
+    <div class="problem">
+      <h4>ข้อ 3 — “สกู๊ตเตอร์บนลานเอียง: ขึ้นแล้วกลับแตะพื้น” (2D)</h4>
+      <p>สกู๊ตเตอร์ไฟฟ้าวิ่งบนลานเรียบเอียงให้ความเร่งสุทธิแนวดิ่งลงเท่ากับ \(-\gamma\) (คิดในกรอบ 2D: \(a_x=0, a_y=-\gamma\)). เริ่มจากจุดกำเนิดด้วยความเร็วต้น \(\vec{v}_0=(u,v)\) โดย \(v>0\) คือพุ่งขึ้นเล็กน้อย ผู้ทดสอบอยากรู้ว่า (ก) เส้นทาง \(\vec{r}(t)\) เป็นอย่างไร (ข) สมการวิถี \(y(x)\) (ค) ใช้เวลากี่วินาทีกลับมาแตะ \(y=0\) อีกครั้ง (ไม่นับตอนเริ่ม)</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>\(x=ut,\ y=vt-\tfrac12\gamma t^2\).</li>
+        <li>\(t=x/u\Rightarrow y(x)=\dfrac{v}{u}x-\dfrac{\gamma}{2u^2}x^2\).</li>
+        <li>\(y=0\Rightarrow t=0\) หรือ \(t=2v/\gamma\) ⇒ เวลากลับแตะพื้น \(2v/\gamma\).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> แยกแกนและกำจัดเวลา</div>
+    </div>
+
+    <div class="problem">
+      <h4>ข้อ 4 — “ประตูสแกน x = X: ต้องผ่านด้วย ‘หัวมุม’ ที่กำหนด” (2D)</h4>
+      <p>สายพานคัดแยกพัสดุมี “ประตูสแกน” ที่ตำแหน่ง \(x=X\) ซึ่งต้องการให้พัสดุผ่านด้วยทิศทางความเร็ว (หัวมุม) \( \theta_{\mathrm{req}} \) เพื่อยิงเลเซอร์อ่านบาร์โค้ดได้พอดี ระบบเริ่ม \(\vec{v}_0=(u,v)\) และตั้ง \(\vec{a}=(a_x,a_y)\) คงที่ไว้ล่วงหน้า ถามว่า (ก) จะผ่านประตูเมื่อเวลาใด (ข) ขณะผ่าน เวกเตอร์ความเร็วเป็นเท่าไร (ค) เงื่อนไขใดทำให้หัวมุมที่ผ่านเท่ากับ \(\theta_{\mathrm{req}}\)</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>แก้ \(X=u t+\tfrac12 a_x t^2\Rightarrow t=\dfrac{-u+\sqrt{u^2+2a_x X}}{a_x}\) (เอาค่าบวก).</li>
+        <li>\(\vec{v}(t)=(u+a_x t)\,\ihat+(v+a_y t)\,\jhat\).</li>
+        <li>\(\tan\theta_{\mathrm{req}}=\dfrac{v+a_y t}{u+a_x t}\) ที่เวลาในข้อ 1.</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> แก้กำลังสอง, มุมจากองค์ประกอบของ \(\vec{v}\)</div>
+    </div>
+
+    <div class="problem">
+      <h4>ข้อ 5 — “โดรนสำรวจ: แตะระดับความสูง H ที่สันเขา” (3D)</h4>
+      <p>โดรนบินสำรวจเริ่มจากสันเขาต่ำที่ \(z=0\) ด้วยความเร็วตั้งต้นแนวดิ่ง \(w>0\) (แกน \(x,y\) อาจลอยตามลมช้า ๆ) โปรแกรมไต่ระดับคงเร่งแนวดิ่ง \((0,0,a_z)\) เพื่อให้กล้องพ้นแนวไม้และถ่ายพาโนรามาความสูง \(H\). ถามว่า (ก) ต้องใช้เวลากี่วินาทีจึงแตะ \(z=H\) (ข) ขณะนั้นอยู่พิกัดใดบนระนาบ \(z=H\)</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>\(\tfrac12 a_z t^2+w t-H=0\Rightarrow t=\dfrac{-w+\sqrt{w^2+2a_z H}}{a_z}\) (เลือกค่าบวก).</li>
+        <li>\(x=x_0+u t,\ y=y_0+v t\Rightarrow \vec{r}=x\,\ihat+y\,\jhat+H\,\khat\).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> กำหนดเวลาแกนเดียวแล้วประกอบเวกเตอร์</div>
+    </div>
+
+    <div class="problem">
+      <h4>ข้อ 6 — “ปรับโปรไฟล์ให้ความเร็วต่ำสุดช่วงสั้น ๆ เพื่อถ่ายภาพคม” (3D)</h4>
+      <p>เพื่อถ่ายภาพระยะใกล้จากโดรนให้คมชัด ทีมงานอยากให้ “อัตราเร็วต่ำสุดชั่วคราว” กลางอากาศ โดยกำหนดโปรไฟล์คงเร่ง \(\vec{a}\) ในช่วงสั้น ๆ จากความเร็วต้น \(\vec{v}_0\). จงหาว่าเวลาใด \(t^\*\) ที่ \(|\vec{v}(t)|\) ต่ำสุด และค่าต่ำสุดนั้นเป็นเท่าไร พร้อมอธิบายความหมายเชิงเรขาคณิต</p>
+    </div>
+    <div class="solution">
+      <h4>เฉลย</h4>
+      <ol class="steps">
+        <li>ให้ \(f(t)=|\vec{v}|^2=(\vec{v}_0+\vec{a}t)\cdot(\vec{v}_0+\vec{a}t)=v_0^2+2(\vec{a}\cdot\vec{v}_0)t+a^2 t^2\).</li>
+        <li>\(\dv{f}{t}=2(\vec{a}\cdot\vec{v}_0)+2a^2 t=0\Rightarrow t^\*=-\dfrac{\vec{a}\cdot\vec{v}_0}{a^2}\).</li>
+        <li>\(|\vec{v}(t^\*)|=\sqrt{\,v_0^2-\dfrac{(\vec{a}\cdot\vec{v}_0)^2}{a^2}\,}\) (เหลือองค์ประกอบตั้งฉากกับ \(\vec{a}\)).</li>
+      </ol>
+      <div class="note"><b>ใช้:</b> มินิไมซ์พหุนามกำลังสอง, สเกลาร์โปรดักต์</div>
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>สรุปแก่นคิด</h2>
+    <ul>
+      <li>นิยาม \(a=\dv{v}{t}\), \(v=\dv{x}{t}\) ⇒ อินทิกรัล \(a\to v\to x\).</li>
+      <li>เมื่อโจทย์เน้น “ตำแหน่ง/ระยะ” ใช้ \(v^2=v_0^2+2a(x-x_0)\) กำจัดเวลา.</li>
+      <li>หลายมิติ: ทำต่อแกนแล้วประกอบบน \(\ihat,\jhat,\khat\).</li>
+      <li>กราฟ: ชัน = อนุพันธ์, พื้นที่ใต้กราฟ = อินทิกรัล (คิดเป็น “พื้นที่”).</li>
+    </ul>
+  </section>
+
+</main>
+</body>
+</html>

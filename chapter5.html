@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>บทที่ 5 — กลศาสตร์นิวตันพื้นฐาน · Full Story Problems (Beautiful Math)</title>
+
+<!-- MathJax configuration -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true,
+    packages: {'[+]': ['ams', 'amsmath', 'amssymb']},
+    macros: {
+      ihat: '\\hat{\\boldsymbol{i}}',
+      jhat: '\\hat{\\boldsymbol{j}}',
+      khat: '\\hat{\\boldsymbol{k}}',
+      vect: ['\\boldsymbol{#1}', 1],
+      dv: ['\\dfrac{\\mathrm{d}#1}{\\mathrm{d}#2}', 2],
+      dd: ['\\,\\mathrm{d}#1', 1],
+      norm: ['\\left\\lVert #1\\right\\rVert', 1]
+    }
+  },
+  chtml: { 
+    scale: 1.1
+  },
+  options: {
+    skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+
+<style>
+:root{
+  --ink:#0f172a; --muted:#475569; --bg:#ffffff; --bd:#e2e8f0;
+  --box:#f8fafc; --prob-bg:#fff7ed; --prob-bd:#fdba74; --prob-h:#9a3412;
+  --sol-bg:#eef2ff; --sol-bd:#c7d2fe; --sol-h:#3730a3;
+  --toc-bg:#faf5ff; --toc-bd:#e9d5ff; --note-bg:#f0fdf4; --note-bd:#bbf7d0;
+}
+html,body{background:var(--bg);color:var(--ink);
+  font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,"Noto Sans Thai","Noto Sans","Helvetica Neue",Arial; line-height:1.75;}
+main{max-width:1100px;margin:2rem auto 4rem;padding:0 1rem}
+h1{font-size:2.35rem;font-weight:800;margin:0 0 .5rem}
+.lead{color:var(--muted);margin:.25rem 0 1.1rem}
+h2{font-size:1.7rem;font-weight:760;color:#0b4f54;margin:1.8rem 0 1rem}
+h3{font-size:1.28rem;font-weight:700;color:#0b4f54;margin:1.1rem 0 .6rem}
+p,li{font-size:1.06rem}
+section{margin:1.4rem 0 1.4rem;padding-bottom:.9rem;border-bottom:1px solid var(--bd)}
+.box{background:var(--box);border:1px solid var(--bd);border-radius:14px;padding:1rem 1.1rem}
+.toc{background:var(--toc-bg);border:1px solid var(--toc-bd);border-radius:14px;padding:1rem 1.1rem;margin:1rem 0}
+.toc a{color:#6b21a8;text-decoration:none} .toc a:hover{text-decoration:underline}
+.problem{background:var(--prob-bg);border:2px solid var(--prob-bd);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0}
+.problem h4{color:var(--prob-h);font-size:1.12rem;margin:.1rem 0 .45rem}
+.solution{background:var(--sol-bg);border:2px dashed var(--sol-bd);border-radius:16px;padding:1rem 1.1rem;margin:.75rem 0}
+.solution h4{color:var(--sol-h);font-size:1.06rem;margin:.1rem 0 .45rem}
+ol.steps{margin:.2rem 0 0 1.1rem} ol.steps li{margin:.42rem 0}
+.callout{background:var(--note-bg);border:1px solid var(--note-bd);border-radius:12px;padding:.8rem 1rem;margin:.8rem 0}
+/* MathJax styling */
+.MathJax {
+  font-size: 1.1em !important;
+}
+
+.MathJax_Display {
+  text-align: left !important;
+  margin: 1em 0 !important;
+}
+
+/* Ensure proper rendering */
+mjx-container {
+  margin: 0.2em 0;
+}
+
+mjx-container[display="true"] {
+  display: block !important;
+  text-align: left !important;
+  margin: 1em 0 !important;
+}
+
+/* Fix inline math alignment */
+mjx-container:not([display="true"]) {
+  display: inline-block !important;
+  vertical-align: baseline !important;
+}
+
+/* Ensure math renders properly in all contexts */
+p mjx-container,
+li mjx-container,
+div mjx-container {
+  vertical-align: baseline;
+}
+hr.sep{border:0;border-top:1px dashed var(--bd);margin:1.25rem 0}
+.small{font-size:.95rem;color:var(--muted)}
+kbd{background:#111827;color:#fff;padding:.08rem .35rem;border-radius:6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>บทที่ 5 — กลศาสตร์นิวตันพื้นฐาน (Newtonian Mechanics)</h1>
+  <p class="lead">ฉบับ "Full Story Problems" พร้อมเฉลยทีละขั้น ใช้เวกเตอร์ \(\ihat,\jhat,\khat\), แคลคูลัสครบ (Chain Rule, Parts, ODE), เสียดทาน &amp; Drag และ FBD Tips</p>
+  <div class="box">
+    <b>สูตรแกนกลาง</b>:
+    \[\sum\vect{F}=m\vect{a}\Rightarrow
+    \begin{cases}\sum F_x=ma_x\\ \sum F_y=ma_y\\ \sum F_z=ma_z\end{cases}\]<br/>
+    ความสัมพันธ์เวลา:
+    \(\vect{a}=\dv{\vect{v}}{t}\),
+    \(\;\vect{v}(t)=\vect{v}_0+\int_0^t \vect{a}(\tau)\,\dd{\tau}\),
+    \(\;\vect{r}(t)=\vect{r}_0+\int_0^t \vect{v}(\tau)\,\dd{\tau}\).
+  </div>
+</header>
+
+<nav class="toc">
+  <h3>สารบัญ</h3>
+  <ol>
+    <li><a href="#basics">1) บทนำและสูตรพื้นฐาน</a></li>
+    <li><a href="#examples">2) ตัวอย่างสถานการณ์ (5 เรื่อง) + เฉลย</a></li>
+    <li><a href="#exercises">3) แบบฝึกหัด (5 ข้อ) + เฉลย</a></li>
+    <li><a href="#advanced">4) Advanced Problems (4 ข้อ) + เฉลย</a></li>
+    <li><a href="#notes">5) หมายเหตุ &amp; FBD Tips</a></li>
+  </ol>
+</nav>
+
+<section id="basics">
+  <h2>1) บทนำและสูตรพื้นฐาน</h2>
+  <div class="box">
+    <p><b>กฎของนิวตันข้อที่ 2 (เวกเตอร์):</b>
+      \(\sum\vect{F}=m\vect{a}\Rightarrow
+      \sum F_x=ma_x,\;\sum F_y=ma_y,\;\sum F_z=ma_z\).</p>
+    <p><b>แรงเสียดทาน:</b> จลน์ \(F_k=\mu_k N\), สถิต \(F_s\le\mu_s N\).</p>
+    <p><b>แรงต้านอากาศ (Drag):</b> เชิงเส้น \(\vect{F}_d=-k\vect{v}\); กำลังสอง \(\vect{F}_d=-k\,\norm{\vect{v}}\,\vect{v}\).</p>
+    <p><b>กลเม็ดคณิต:</b> อินทิกรัลพหุนาม \(\int t^n\dd t=\tfrac{t^{n+1}}{n+1}\);
+      ตรีโกณ \(\int \cos t\dd t=\sin t,\;\int \sin t\dd t=-\cos t\);
+      Parts \(\int u\,dv=uv-\int v\,du\);
+      Chain Rule \(\dv{}{t}f(g)=f'(g)g'\).</p>
+    <p class="small">สัญลักษณ์เวกเตอร์หนึ่งหน่วย \(\ihat,\jhat,\khat\) แทนทิศแกน \(x,y,z\) ตามลำดับ</p>
+  </div>
+</section>
+
+<section id="examples">
+  <h2>2) ตัวอย่างสถานการณ์ (5 เรื่อง) + เฉลยละเอียด</h2>
+
+  <!-- Example 1 -->
+  <div class="problem">
+    <h4>ตัวอย่าง 1 — ลังบนพื้นเอียงมีแรงเสียดทาน</h4>
+    <p>โรงงานทดสอบระบบลำเลียงโดยให้ลังไม้เลื่อนลงทางเอียง มวลลัง 10 กก. พื้นเอียงมุม \(30^\circ\) กับแนวนอน พื้นมีความฝืด \(\mu_k=0.20\). ลังเริ่มจากหยุดนิ่ง ต้องหาความเร่งเวกเตอร์ \(\vect{a}\), ความเร็ว \(\vect{v}(t)\), และตำแหน่ง \(\vect{r}(t)\) ในกรอบโลก \(\ihat\) ขวา, \(\jhat\) ขึ้น.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>แรง: น้ำหนัก \(mg=98\,\mathrm{N}\), ปฏิกิริยา \(N\), เสียดทานจลน์ \(f_k=\mu_kN\).</li>
+      <li>ตั้งฉากพื้น: \(N=mg\cos30^\circ=84.9\,\mathrm{N}\Rightarrow f_k=0.2\times84.9=17.0\,\mathrm{N}\).</li>
+      <li>ตามแนวพื้น: \(F_{\parallel}=mg\sin30^\circ-f_k=32.0\,\mathrm{N}\Rightarrow a_{\parallel}=3.20\,\mathrm{m/s^2}\).</li>
+      <li>แตกเป็น \(\ihat,\jhat\):
+        \(a_x=3.20\cos30^\circ=2.77\), \(a_y=-3.20\sin30^\circ=-1.60\).</li>
+      <li>อินทิกรัล (เริ่มนิ่ง):
+        \(\vect{v}(t)=(2.77t)\ihat+(-1.60t)\jhat\);
+        \(\vect{r}(t)=(1.385t^2)\ihat+(-0.80t^2)\jhat\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: อินทิกรัลพหุนาม; เลือกแกนตามพื้นช่วยลดการแตกแรง</div>
+  </div>
+
+  <!-- Example 2 -->
+  <div class="problem">
+    <h4>ตัวอย่าง 2 — ลิฟต์แรงดึงเพิ่มตามเวลา</h4>
+    <p>อาคารสูงทดสอบระบบลิฟต์ มวลรวม 400 กก. เริ่มนิ่งที่พื้น แรงดึงสายเคเบิล \(T(t)=4000+200t\) นิวตัน ชี้ \(+y\). จงหา \(\vect{v}(t)\), \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>แรงสุทธิแกน y:
+        \(F_y=T-mg=80+200t\Rightarrow a_y=0.2+0.5t\).</li>
+      <li>ความเร็ว:
+        \(v_y(t)=\int(0.2+0.5t)\,\dd t=0.2t+0.25t^2\).</li>
+      <li>ตำแหน่ง:
+        \(y(t)=\int(0.2t+0.25t^2)\,\dd t=0.1t^2+\tfrac{1}{12}t^3\).</li>
+      <li>คำตอบ:
+        \(\vect{v}(t)=(0.2t+0.25t^2)\,\jhat\),
+        \(\vect{r}(t)=(0.1t^2+\tfrac{1}{12}t^3)\,\jhat\).</li>
+    </ol>
+  </div>
+
+  <!-- Example 3 -->
+  <div class="problem">
+    <h4>ตัวอย่าง 3 — วัตถุตกพร้อมแรงต้านอากาศเชิงเส้น</h4>
+    <p>ปล่อยลูกโลหะมวล 1 กก. ให้ตกในอากาศ กำหนด \(\jhat\) ลง แรงต้านอากาศเชิงเส้น \(\vect{F}_d=-kv\,\jhat\) โดย \(k=2\,\mathrm{N\,s/m}\). หาความเร็ว \(v(t)\) และความเร็วจำกัด.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>นิวตัน:
+        \(m\,\dv{v}{t}=mg-kv\Rightarrow \dv{v}{t}+\tfrac{k}{m}v=g\).</li>
+      <li>แก้ ODE เชิงเส้น (integrating factor):
+        \(v(t)=\dfrac{mg}{k}\bigl(1-e^{-\tfrac{k}{m}t}\bigr)=4.9(1-e^{-2t})\).</li>
+      <li>เวกเตอร์:
+        \(\vect{v}(t)=v(t)\,\jhat\); ความเร็วจำกัด \(v_\infty=mg/k=4.9\,\mathrm{m/s}\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: ODE เชิงเส้นอันดับ 1 + integrating factor</div>
+  </div>
+
+  <!-- Example 4 (Chain Rule) -->
+  <div class="problem">
+    <h4>ตัวอย่าง 4 — แรงขึ้นกับตำแหน่ง (ใช้ Chain Rule)</h4>
+    <p>สไลเดอร์หัวอ่านมวล 1 กก. ถูกขับให้เคลื่อนตาม \(x(t)=\sin(2t)\). สนามแม่เหล็กให้แรงตามตำแหน่ง \(F_x(x)=3e^{x}\). จงหา \(a_x(t)\), \(\dv{F_x}{t}\), และ jerk \(j_x(t)=\dv{a_x}{t}\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>นิวตัน:
+        \(a_x=F_x/m=3e^{\sin(2t)}\).</li>
+      <li>Chain Rule:
+        \(\dv{F_x}{t}=3e^{\sin(2t)}\,\dv{}{t}(\sin 2t)=6e^{\sin(2t)}\cos 2t\).</li>
+      <li>jerk:
+        \(j_x=\dv{a_x}{t}=6e^{\sin(2t)}\cos 2t\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: Chain Rule; อนุพันธ์ตรีโกณ \(\dv{}{t}\sin(2t)=2\cos(2t)\)</div>
+  </div>
+
+  <!-- Example 5 -->
+  <div class="problem">
+    <h4>ตัวอย่าง 5 — อนุภาคในสนามสามมิติ (\(\ihat,\jhat,\khat\))</h4>
+    <p>อนุภาคมวล 2 กก. ได้แรง \(F_x=4t\), \(F_y=6\), \(F_z=2t^2\). เริ่มนิ่งที่กำเนิด จงหา \(\vect{v}(t)\) และ \(\vect{r}(t)\) เป็นเวกเตอร์ \(\ihat,\jhat,\khat\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=2t,\ a_y=3,\ a_z=t^2\).</li>
+      <li>\(\vect{v}(t)=(t^2)\,\ihat+(3t)\,\jhat+(\tfrac{1}{3}t^3)\,\khat\).</li>
+      <li>\(\vect{r}(t)=(\tfrac{1}{3}t^3)\,\ihat+(1.5t^2)\,\jhat+(\tfrac{1}{12}t^4)\,\khat\).</li>
+    </ol>
+  </div>
+</section>
+
+<section id="exercises">
+  <h2>3) แบบฝึกหัด (5 ข้อ) + เฉลยละเอียด</h2>
+
+  <!-- Ex1 -->
+  <div class="problem">
+    <h4>ข้อ 1 — รถบรรทุกออกจากท่าเรือ</h4>
+    <p>รถบรรทุกมวล 1000 กก. ถูกดึงด้วยแรง \(\vect{F}(t)=(500+20t)\,\ihat\) นิวตัน เริ่มนิ่งที่กำเนิด จงหา \(\vect{v}(t)\) และ \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=0.5+0.02t\).</li>
+      <li>\(v_x=0.5t+0.01t^2\).</li>
+      <li>\(x=0.25t^2+\tfrac{1}{300}t^3\).</li>
+      <li>เวกเตอร์:
+        \(\vect{v}=(0.5t+0.01t^2)\,\ihat\),
+        \(\vect{r}=(0.25t^2+\tfrac{1}{300}t^3)\,\ihat\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: อินทิกรัลพหุนาม</div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="problem">
+    <h4>ข้อ 2 — แท่นสองแกน</h4>
+    <p>แท่นมวล 20 กก. ได้แรงคงที่ 30 นิวตันตาม \(+x\) และแรง \(40t\) นิวตันตาม \(+y\), เริ่มนิ่ง จงหา \(\vect{v}(t)\), \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=1.5,\ a_y=2t\).</li>
+      <li>\(v_x=1.5t,\ v_y=t^2\).</li>
+      <li>\(x=0.75t^2,\ y=\tfrac{1}{3}t^3\).</li>
+      <li>คำตอบ:
+        \(\vect{v}=(1.5t)\,\ihat+(t^2)\,\jhat\),
+        \(\vect{r}=(0.75t^2)\,\ihat+(\tfrac{1}{3}t^3)\,\jhat\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="problem">
+    <h4>ข้อ 3 — ลิฟต์แขวน</h4>
+    <p>ลิฟต์มวล 50 กก. มีแรงดึงสาย \(T(t)=600+10t\) นิวตัน ชี้ \(+y\), เริ่มนิ่ง จงหา \(\vect{v}(t)\), \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_y=(110+10t)/50=2.2+0.2t\).</li>
+      <li>\(v_y=2.2t+0.1t^2\).</li>
+      <li>\(y=1.1t^2+0.033t^3\).</li>
+      <li>เวกเตอร์:
+        \(\vect{v}=(2.2t+0.1t^2)\,\jhat\),
+        \(\vect{r}=(1.1t^2+0.033t^3)\,\jhat\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="problem">
+    <h4>ข้อ 4 — จรวดสามแกน</h4>
+    <p>จรวดมวล 5 กก. มีแรง \(F_x=20t\), \(F_y=10t^2\), \(F_z=50\) เริ่มนิ่ง จงหา \(\vect{v}(t)\) และ \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=4t,\ a_y=2t^2,\ a_z=10\).</li>
+      <li>\(\vect{v}=(2t^2)\,\ihat+(\tfrac{2}{3}t^3)\,\jhat+(10t)\,\khat\).</li>
+      <li>\(\vect{r}=(\tfrac{2}{3}t^3)\,\ihat+(\tfrac{1}{6}t^4)\,\jhat+(5t^2)\,\khat\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex5 -->
+  <div class="problem">
+    <h4>ข้อ 5 — เรือเล็กในทะเล</h4>
+    <p>เรือเล็กมวล 500 กก. ถูกลากด้วยแรง \(\vect{F}(t)=(100\cos t)\,\ihat+(50\sin t)\,\jhat\) เริ่มนิ่ง จงหา \(\vect{v}(t)\), \(\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=0.2\cos t,\ a_y=0.1\sin t\).</li>
+      <li>\(v_x=0.2\sin t,\ v_y=-0.1\cos t+0.1\) (ใช้ \(\int \cos t=\sin t,\ \int \sin t=-\cos t\)).</li>
+      <li>\(x=-0.2\cos t+0.2,\ y=-0.1\sin t+0.1t\).</li>
+      <li>เวกเตอร์:
+        \(\vect{v}=(0.2\sin t)\,\ihat+(-0.1\cos t+0.1)\,\jhat\),
+        \(\vect{r}=(-0.2\cos t+0.2)\,\ihat+(-0.1\sin t+0.1t)\,\jhat\).</li>
+    </ol>
+  </div>
+</section>
+
+<section id="advanced">
+  <h2>4) Advanced Problems (4 ข้อ) + เฉลยละเอียด</h2>
+
+  <!-- Adv1 -->
+  <div class="problem">
+    <h4>Advanced 1 — แรงตามเวลาแบบ Product Rule</h4>
+    <p>แท่นมวล 10 กก. บนรางไร้เสียดทานถูกผลักด้วยแรง \(F(t)=t\cos t\) (ทิศ \(+x\)) เริ่มนิ่ง หาความเร็วและตำแหน่ง.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(a_x=0.1t\cos t\).</li>
+      <li>\(v_x=0.1\int t\cos t\,\dd t\). Parts: \(u=t,\ dv=\cos t\,\dd t\Rightarrow v=\sin t\) ⇒
+        \(\int t\cos t\,\dd t=t\sin t+\cos t\).
+        ด้วยเงื่อนไขเริ่ม \(v_x(0)=0\) ⇒ \(v_x=0.1(t\sin t+\cos t-1)\).</li>
+      <li>\(x=0.1\int (t\sin t+\cos t-1)\,\dd t\). ใช้ Parts สำหรับ \(\int t\sin t\,\dd t=-t\cos t+\sin t\).<br/>
+        ได้ \(x=0.1(-t\cos t+2\sin t-t)\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: Integration by Parts (สองครั้ง)</div>
+  </div>
+
+  <!-- Adv2 -->
+  <div class="problem">
+    <h4>Advanced 2 — สปริงไม่เชิงเส้น (Nonlinear ODE)</h4>
+    <p>รถเล็กมวล 2 กก. ต่อกับสปริงพิเศษแรงคืนรูป \(F=-kx^3\) (\(k=5\,\mathrm{N/m^3}\)). ดึงไปที่ \(x=0.2\,\mathrm{m}\) แล้วปล่อยจากหยุดนิ่ง เขียนสมการการเคลื่อนที่และแสดง \(\dot{x}(x)\) ด้วยวิธีพลังงาน.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>นิวตัน: \(m\ddot{x}=-kx^3\Rightarrow \ddot{x}+2.5x^3=0\) (ไม่เชิงเส้น).</li>
+      <li>พลังงานคงที่: \(E=\tfrac12 m\dot{x}^2+\tfrac14 kx^4\) (\(\dv{E}{t}=0\)).</li>
+      <li>ต้นฉบับ: \(\dot{x}(0)=0,\ x(0)=0.2\Rightarrow E=\tfrac14\cdot5\cdot0.2^4=0.002\,\mathrm{J}\).</li>
+      <li>จึงได้ \(\dot{x}(x)=\sqrt{\tfrac{2}{m}\Big(E-\tfrac14 kx^4\Big)}\) ใช้วิเคราะห์การเคลื่อนที่เชิงคุณภาพได้.</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: Nonlinear ODE; Energy Integral</div>
+  </div>
+
+  <!-- Adv3 -->
+  <div class="problem">
+    <h4>Advanced 3 — Drone ในลม (เวกเตอร์สามมิติ)</h4>
+    <p>โดรนมวล 1.5 กก. มีแรงขับแนวตั้งคงที่ \(T=20\,\mathrm{N}\); ลมให้แรง \(\vect{F}_{\text{wind}}=(20\cos t)\,\ihat+(10\sin t)\,\jhat\). เริ่มนิ่ง จงหา \(\vect{a}(t),\vect{v}(t),\vect{r}(t)\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>แรงสุทธิ:
+        \(\sum\vect{F}=(20\cos t)\ihat+(10\sin t)\jhat+(20-1.5\cdot9.8)\khat\)
+        \(=(20\cos t)\ihat+(10\sin t)\jhat+5.3\khat\).</li>
+      <li>ความเร่ง:
+        \(\vect{a}=(13.3\cos t)\ihat+(6.67\sin t)\jhat+(3.53)\khat\).</li>
+      <li>ความเร็ว (เริ่มนิ่ง):
+        \(\vect{v}=(13.3\sin t)\ihat+(-6.67\cos t+6.67)\jhat+(3.53t)\khat\).</li>
+      <li>ตำแหน่ง:
+        \(\vect{r}=(-13.3\cos t+13.3)\ihat+(-6.67\sin t+6.67t)\jhat+(1.765t^2)\khat\).</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: อินทิกรัลตรีโกณ &amp; พหุนาม; เขียนคำตอบบน \(\ihat,\jhat,\khat\)</div>
+  </div>
+
+  <!-- Adv4 -->
+  <div class="problem">
+    <h4>Advanced 4 — ตรวจด้วย Work–Energy (กรณีรถบรรทุก)</h4>
+    <p>ยืนยัน “รถบรรทุกออกจากท่าเรือ” ด้วยทฤษฎีงาน–พลังงาน: \(W=\Delta KE\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (สเก็ตช์หลักการ)</h4>
+    <ol class="steps">
+      <li>งานสะสม:
+        \(W(t)=\int_0^{t} F_x(\tau)\,v_x(\tau)\,\dd{\tau}\) โดยใช้ \(\dd x=v\,\dd t\).</li>
+      <li>แทน \(F_x=500+20t\), \(v_x=0.5t+0.01t^2\) แล้วอินทิกรัลจะได้ \(W(t)\).</li>
+      <li>พลังงานจลน์:
+        \(KE=\tfrac12 m v_x^2\). ตรวจว่า \(W(t)=KE(t)-KE(0)\) (โดย \(KE(0)=0\)).</li>
+      <li>สรุป:
+        \(W=\Delta KE\) สอดคล้องกับวิธีนิวตัน.</li>
+    </ol>
+    <div class="callout small">คณิตที่ใช้: เปลี่ยนตัวแปรอินทิกรัล \((\dd x=v\,\dd t)\), อินทิกรัลพหุนาม</div>
+  </div>
+</section>
+
+<section id="notes">
+  <h2>5) หมายเหตุ &amp; FBD Tips</h2>
+  <div class="box">
+    <p><b>ขั้นตอนวาด Free-Body Diagram (FBD):</b></p>
+    <ol>
+      <li>เลือก “วัตถุ” ที่จะวิเคราะห์ให้ชัดเจน (ตัดออกจากสิ่งแวดล้อม)</li>
+      <li>วาดแรง <u>ทุกแรง</u> บนวัตถุ (น้ำหนัก, ปฏิกิริยา, แรงดึง/ผลัก, เสียดทาน, ลม/drag ฯลฯ)</li>
+      <li>เลือกแกนพิกัดให้เหมาะ — ขนาน/ตั้งฉากพื้นเอียง หรือทิศการเคลื่อนที่</li>
+      <li>ตั้งสมการองค์ประกอบ: \(\sum F_x=ma_x\), \(\sum F_y=ma_y\), \(\sum F_z=ma_z\)</li>
+      <li>แก้ทีละแกน แล้วประกอบเป็นเวกเตอร์บน \(\ihat,\jhat,\khat\)</li>
+    </ol>
+    <hr class="sep" />
+    <p><b>ข้อผิดพลาดที่พบบ่อย:</b> (1) ลืมแรงเสียดทาน/น้ำหนัก (2) เลือกแกนไม่สอดคล้องสถานการณ์ (3) ลืมเงื่อนไขเริ่มต้นตอนอินทิกรัล (4) ผิดพลาดใน Parts/Chain Rule</p>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

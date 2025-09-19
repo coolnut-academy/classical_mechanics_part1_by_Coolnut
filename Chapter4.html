@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>บทที่ 4 (ใหม่) — กรอบเฉื่อย & การเคลื่อนที่สัมพัทธ์ (Galilean)</title>
+
+<!-- MathJax v3 -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true,
+    tags: 'none',
+    packages: {'[+]': ['ams']},
+    macros: {
+      dd: ['\\,\\mathrm{d}#1', 1],
+      dv: ['\\dfrac{\\mathrm{d}#1}{\\mathrm{d}#2}', 2],
+      vect: ['\\boldsymbol{#1}', 1],
+      ihat: '\\hat{\\boldsymbol{i}}',
+      jhat: '\\hat{\\boldsymbol{j}}',
+      khat: '\\hat{\\boldsymbol{k}}',
+      abs: ['\\left\\lvert #1\\right\\rvert', 1],
+      norm: ['\\left\\lVert #1\\right\\rVert', 1]
+    }
+  },
+  chtml: { scale: 1.46 },
+  options: { renderActions: { addMenu: [] } }
+};
+</script>
+<script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+  :root{
+    --ink:#0f172a;--muted:#475569;--bg:#ffffff;--bd:#e2e8f0;
+    --box:#f8fafc;--eqbg:#eef6ff;--eqbd:#93c5fd;
+    --prob-bg:#fff7ed;--prob-bd:#fdba74;--prob-h:#9a3412;
+    --sol-bg:#eef2ff;--sol-bd:#c7d2fe;--sol-h:#3730a3;
+    --note-bg:#f0fdf4;--note-bd:#bbf7d0;--tip-bg:#ecfeff;--tip-bd:#a5f3fc;
+    --toc-bg:#faf5ff;--toc-bd:#e9d5ff
+  }
+  html,body{
+    background:var(--bg);color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Thai","Noto Sans","Helvetica Neue",Arial,Tahoma,sans-serif;
+    line-height:1.85
+  }
+  main{max-width:1120px;margin:2rem auto;padding:0 1rem 4rem}
+  h1{font-size:2.35rem;font-weight:800;margin:.2rem 0 .8rem}
+  .lead{color:var(--muted);margin:.25rem 0 1.25rem}
+  h2{font-size:1.7rem;font-weight:760;color:#0b4f54;margin:1.8rem 0 1rem}
+  h3{font-size:1.28rem;font-weight:700;color:#0b4f54;margin:1.1rem 0 .6rem}
+  p,li{font-size:1.06rem}
+  section{margin:1.5rem 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid var(--bd)}
+  .box{background:var(--box);border:1px solid var(--bd);border-radius:14px;padding:1.05rem 1.15rem}
+  .eq-block{margin:1rem auto;padding:.9rem 1rem;text-align:center;border-left:4px solid var(--eqbd);background:var(--eqbg);border-radius:12px}
+  .eq-caption{color:#0b4f54;font-size:1rem;margin:.35rem 0 .8rem;text-align:center}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);color:#166534;border-radius:10px;padding:.7rem 1rem;margin:.8rem 0}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);color:#075985;border-radius:10px;padding:.7rem 1rem;margin:.8rem 0}
+  .toc{background:var(--toc-bg);border:1px solid var(--toc-bd);border-radius:14px;padding:1rem 1.1rem;margin:1rem 0}
+  .toc a{color:#6b21a8;text-decoration:none} .toc a:hover{text-decoration:underline}
+  .problem{background:var(--prob-bg);border:2px solid var(--prob-bd);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0}
+  .problem h4{color:var(--prob-h);font-size:1.12rem;margin:.1rem 0 .45rem}
+  .solution{background:var(--sol-bg);border:2px dashed var(--sol-bd);border-radius:16px;padding:1rem 1.1rem;margin:.75rem 0}
+  .solution h4{color:var(--sol-h);font-size:1.06rem;margin:.1rem 0 .45rem}
+  ol.steps{margin:.2rem 0 0 1.1rem} ol.steps li{margin:.42rem 0}
+  mjx-container[jax="CHTML"]{font-size:148% !important} mjx-container{margin:.5rem 0}
+  .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+  @media (max-width:900px){.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>บทที่ 4 (ใหม่) — กรอบเฉื่อย & การเคลื่อนที่สัมพัทธ์ (Galilean)</h1>
+  <p class="lead">เวอร์ชันสมบูรณ์สไตล์ “โจทย์ฟิสิกส์”: กล่องโจทย์/เฉลยแยกชัด, สมการพร้อมคำอธิบาย, ใช้เวกเตอร์ \(\ihat,\jhat,\khat\) และคิเนแมติกส์ล้วน</p>
+  <div class="note"><b>แนวทางคงที่:</b> ใช้อินทิกรัลเวลาแบบ \(\displaystyle v(t)=v_0+\int_0^t a(t)\,\dd t\), \(\displaystyle r(t)=r_0+\int_0^t v(t)\,\dd t\) เพื่อความสม่ำเสมอของสัญลักษณ์</div>
+</header>
+
+<nav class="toc">
+  <h3 id="toc">สารบัญ</h3>
+  <ol>
+    <li><a href="#symbols">สัญลักษณ์และกรอบอ้างอิง</a></li>
+    <li><a href="#galilean">การแปลงกาลิเลโอ & ความหมาย</a></li>
+    <li><a href="#toolkit">กล่องเครื่องมือแคลคูลัส</a></li>
+    <li><a href="#situations">สถานการณ์ตัวอย่าง (โจทย์ฟิสิกส์) + เฉลย</a></li>
+    <li><a href="#exercises">แบบฝึกหัดเวอร์ชันขยาย (6 ข้อ) + เฉลย</a></li>
+    <li><a href="#cheatsheet">Cheat Sheet สรุปสูตร</a></li>
+  </ol>
+</nav>
+
+<section id="symbols">
+  <h2>สัญลักษณ์และกรอบอ้างอิง</h2>
+  <div class="box cols">
+    <div>
+      <ul>
+        <li>กรอบโลก S (เฉื่อย): จุดกำเนิด O, แกน \(x,y,z\) และเวกเตอร์หน่วย \(\ihat,\jhat,\khat\), เวลา \(t\)</li>
+        <li>กรอบ S′ (เฉื่อย): จุดกำเนิด O′ เคลื่อนด้วยความเร็วคงที่ \(\vect{U}\) เทียบ S, ถือว่า \(t'=t\)</li>
+        <li>เวกเตอร์ตำแหน่ง: \(\vect{r}=x\ihat+y\jhat+z\khat\) (ใน S), \(\vect{r}'=x'\ihat+y'\jhat+z'\khat\) (ใน S′)</li>
+        <li>ความเร็ว/เร่ง: \(\vect{v}=\dv{\vect{r}}{t},\ \vect{a}=\dv{\vect{v}}{t}\) และ \(\vect{v}',\vect{a}'\) ใน S′</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>สัญลักษณ์ทั่วไป: \(g\) (แรงโน้มถ่วงลง), \(U=\norm{\vect{U}}\)</li>
+        <li>สเกลาร์–เวกเตอร์: หนา \(\vect{r},\vect{v},\vect{a}\); หน่วยพื้นฐาน \(\mathrm{m},\mathrm{s}\)</li>
+        <li>สมมติ “เฉื่อย”: กรอบเคลื่อนด้วยความเร็วคงที่สัมพัทธ์กัน (ไม่มีความเร่งของกรอบ)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="galilean">
+  <h2>การแปลงกาลิเลโอ (Galilean Transform) & ความหมาย</h2>
+  <div class="box">
+    <p>ให้ O′ เคลื่อนใน S ด้วยความเร็วคงที่ \(\vect{U}\) และที่ \(t=0\) มีเวกเตอร์จาก O ไป O′ คือ \(\vect{R}_0\).</p>
+    <div class="eq-block">\[ \boxed{\ \vect{r}(t)=\vect{R}_0+\vect{U}\,t+\vect{r}'(t)\ } \]</div>
+    <div class="eq-caption">ตำแหน่งใน S = ตำแหน่ง O′ ใน S + ตำแหน่งสัมพัทธ์ใน S′</div>
+
+    <div class="eq-block">\[
+      \boxed{\ \vect{v}(t)=\dv{\vect{r}}{t}=\vect{U}+\vect{v}'(t)\ },\qquad
+      \boxed{\ \vect{a}(t)=\dv{\vect{v}}{t}=\vect{a}'(t)\ }
+    \]</div>
+    <div class="eq-caption">เมื่อ \(\vect{U}\) คงที่: ความเร็ว “บวกเวกเตอร์” ตรง ๆ และความเร่งเท่ากันในสองกรอบ</div>
+
+    <div class="tip"><b>หมายเหตุ:</b> ถ้า \(\vect{U}=\vect{U}(t)\) (กรอบเร่ง) จะได้ \(\vect{a}=\vect{a}'+\dv{\vect{U}}{t}\). ในบทนี้เราจำกัดกรอบเฉื่อยเท่านั้น</div>
+  </div>
+</section>
+
+<section id="toolkit">
+  <h2>กล่องเครื่องมือแคลคูลัสที่ใช้</h2>
+  <div class="box cols">
+    <div>
+      <ul>
+        <li>ทฤษฎีบทพื้นฐานของแคลคูลัส (FTC)</li>
+        <li>อินทิกรัลเวลา: \(\vect{v}(t)=\vect{v}_0+\int_0^t \vect{a}(\tau)\,\dd\tau\), \(\vect{r}(t)=\vect{r}_0+\int_0^t \vect{v}(\tau)\,\dd\tau\)</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>ประกอบเวกเตอร์: ทำต่อแกน \(x,y,z\) แล้วประกอบบน \(\ihat,\jhat,\khat\)</li>
+        <li>เลือกกรอบ “ให้สมการง่ายขึ้น” แล้วแปลงกลับด้วย Galilean</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="situations">
+  <h2>สถานการณ์ตัวอย่าง (โจทย์ฟิสิกส์) + เฉลยทีละขั้น</h2>
+
+  <!-- A1 -->
+  <div class="problem">
+    <h4>A1) ทางเลื่อนสนามบิน + โปรไฟล์เดินไม่คงที่</h4>
+    <p>
+      ในอาคารผู้โดยสารระหว่างประเทศ มีทางเลื่อนยาวตรงจากโถงตรวจคนเข้าเมืองไปยังด่านศุลกากร
+      ผู้โดยสารคนหนึ่งลากกระเป๋าใบใหญ่ จึงเลือกขึ้นทางเลื่อนและเดินไปในทิศเดียวกับการเคลื่อนที่ของมัน
+      ช่วงเวลานี้ผู้โดยสารเร่งจังหวะเดินทีละน้อยเพื่อแซงคิวให้ทันเที่ยวบินต่อเครื่อง
+      กำหนดให้กรอบโลกเป็น S และกรอบทางเลื่อนเป็น S′ ที่เคลื่อนตามแนว +x ด้วยความเร็วคงที่ U
+      ผู้โดยสารเดินสัมพัทธ์ใน S′ ด้วย \(u(t)=u_0+\beta t\) เริ่มที่ \(x=0\) เมื่อ \(t=0\)
+      ปลายทางของสายพานอยู่ที่ตำแหน่ง \(x=L\) ในกรอบ S
+      จงหาความเร็วจริง \(v(t)\) ใน S และเวลาที่ถึงปลายทาง \(T\) พร้อมอธิบายเส้นกราฟตำแหน่ง–เวลาอย่างย่อ
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>Galilean: \(v(t)=U+u(t)=U+u_0+\beta t\).</li>
+      <li>ตำแหน่ง: \(x(t)=\int_0^t v(\tau)\,\dd\tau=(U+u_0)t+\tfrac12\beta t^2\).</li>
+      <li>ถึงเป้า: \(x(T)=L\Rightarrow \tfrac12\beta T^2+(U+u_0)T-L=0\) ⇒ เลือกรากบวก.</li>
+      <li>สรุป: \(v(t)=U+u_0+\beta t\), \(T\) จากข้อ 3.</li>
+    </ol>
+  </div>
+
+  <!-- A2 -->
+  <div class="problem">
+    <h4>A2) ว่ายข้ามแม่น้ำ (กระแสคงที่) ขึ้น “ฝั่งตรงข้ามพอดี”</h4>
+    <p>
+      จุดตั้งแคมป์อยู่ฝั่งใต้ของแม่น้ำ ส่วนจุดสังเกตนกอยู่ฝั่งเหนือพอดีกันตามแนวตั้งฉากของฝั่ง
+      ในช่วงสาย กระแสน้ำคงที่และพัดทางตะวันออกอย่างสม่ำเสมอ นักเรียนอาสาอาสาจะว่ายน้ำข้ามไปติดตั้งกล้อง
+      เพื่อให้ถึงจุดตรงข้ามได้พอดี เขาต้องเอียงทิศว่ายชดเชยกระแสตามหลักเวกเตอร์ความเร็ว
+      ให้กรอบฝั่งเป็น S และความเร็วกระแสน้ำคงที่ U ตาม +x
+      นักว่ายน้ำมีความเร็วสัมพัทธ์ต่อน้ำค่าคงที่ \(v_s\) และเลือกหันหัวว่ายทำมุม \(\varphi\)
+      ความกว้างแม่น้ำคือ \(W\) เริ่มจาก (0,0) และต้องขึ้นที่ (0,W)
+      จงหามุม \(\varphi\) ที่ทำให้ตำแหน่งทาง x ไม่เคลื่อน และคำนวณเวลา \(T\) ที่ใช้ข้าม
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ใน S: \(v_x=-v_s\cos\varphi+U,\ v_y=v_s\sin\varphi\).</li>
+      <li>ขึ้นตรงข้าม ⇒ \(v_x\equiv 0\Rightarrow \cos\varphi=U/v_s\).</li>
+      <li>เวลา: \(T=W/(v_s\sin\varphi)=\dfrac{W}{\sqrt{v_s^2-U^2}}\).</li>
+    </ol>
+  </div>
+
+  <!-- A3 -->
+  <div class="problem">
+    <h4>A3) ฝนแนวดิ่ง + รถเร่งตรง: มุมฝนที่ “เห็น” จากกรอบรถ</h4>
+    <p>
+      เช้าฝนพรำบนถนนโล่ง รถเก๋งคันหนึ่งออกตัวจากไฟเขียวแล้วเร่งความเร็วอย่างนุ่มนวล
+      ผู้ขับสังเกตว่าหยดฝนที่มากระทบกระจกหน้าดูเหมือนเอียงมากขึ้นเรื่อย ๆ ตามความเร็วรถ
+      วิศวกรต้องออกแบบมุมตั้งกระจกให้ลดการเกาะของหยดน้ำ ณ ช่วงเวลาที่กำหนด
+      ให้ฝนตกแนวดิ่งคงที่ในกรอบโลก S ด้วยความเร็วขนาด \(v_r\) ลงตาม −y
+      รถเคลื่อนตาม +x ด้วย \(u(t)=u_0+a t\) และให้กรอบรถเป็น S′
+      จงหามุมการมองเห็นของทิศฝนเทียบแนวดิ่ง \(\psi(t)\) และหาค่าเวลา \(t^*\) ที่ทำให้ \(\psi(t^*)=\psi^*\)
+      พร้อมระบุเวกเตอร์แนวฉากที่ผิวกระจกควรหัน ณ เวลาดังกล่าว
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ใน S′(รถ): \(\vect{v}'=\vect{v}-\vect{U}=-(u(t))\,\ihat-v_r\,\jhat\).</li>
+      <li>มุมเห็น: \(\tan\psi(t)=\dfrac{|v'_x|}{|v'_y|}=\dfrac{u(t)}{v_r}=\dfrac{u_0+a t}{v_r}\).</li>
+      <li>ให้ \(\psi(t^*)=\psi^*\Rightarrow t^*=(v_r\tan\psi^*-u_0)/a\) (ต้อง \(t^*\ge 0\)).</li>
+    </ol>
+  </div>
+
+  <!-- A4 -->
+  <div class="problem">
+    <h4>A4) เครื่องบินในลมคงที่: ไปเส้นตรง A→B ให้เร็วสุด</h4>
+    <p>
+      เส้นทางบินภายในประเทศจากเมือง A ไปเมือง B เป็นแนวตะวันออกตรง
+      วันนั้นมีลมคงที่พัดเฉียงทางเหนือ–ใต้ ทำให้เครื่องบินต้อง “หักหัว” เพื่อให้เส้นทางภาคพื้นยังคงเส้นตรง
+      นักบินต้องการเวลาถึงปลายทางสั้นที่สุดโดยไม่ยอมให้เส้นทางเบี่ยง
+      กำหนดให้ลมมีเวกเตอร์ \(\vect{w}=(w_x,w_y)\) คงที่
+      เครื่องบินมีความเร็วสัมพัทธ์ต่ออากาศขนาดคงที่ \(v_a\) และปรับหัวเครื่องเป็นมุม \(\theta\)
+      ตำแหน่งเริ่ม A(0,0) และจุดหมาย B(L,0)
+      จงหามุม \(\theta\) ที่ทำให้เวกเตอร์ภาคพื้น \(\vect{v}_g\) ชี้แนว +x และคำนวณเวลาเดินทาง \(T\)
+      พร้อมตรวจเงื่อนไขที่ค่าลมขวางไม่เกินศักยภาพการหักหัวของเครื่อง
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>เส้นทางตรง: \(v_{g,y}=v_a\sin\theta+w_y=0\Rightarrow \sin\theta=-w_y/v_a\) (ต้อง \(|w_y|\le v_a\)).</li>
+      <li>ความเร็วแกน x: \(v_{g,x}=v_a\cos\theta+w_x=\sqrt{v_a^2-w_y^2}+w_x\).</li>
+      <li>เวลา: \(T=L/v_{g,x}\).</li>
+    </ol>
+  </div>
+
+  <!-- A5 -->
+  <div class="problem">
+    <h4>A5) นัดพบบนเส้นตรง: คนหนึ่งเร่ง อีกคนคงที่</h4>
+    <p>
+      ถนนยาวเส้นหนึ่งลากผ่านหมู่บ้านสองฝั่ง คน A ออกตัวจากหน้าบ้านด้านตะวันตก
+      ส่วนคน B เดินนำหน้าอยู่ไกลออกไปทางทิศตะวันออก ทั้งสองต้องการเจอกันให้เร็วที่สุดโดยไม่ย้อนกลับ
+      คน A ค่อย ๆ เร่งฝีเท้าขึ้น ส่วนคน B เดินคงที่
+      ให้แกน x ตามแนวถนนไปทางตะวันออก A เริ่มที่ \(x_{A0}\) และมี \(v_A(t)=u+\alpha t\)
+      ขณะที่ B เริ่มที่ \(x_{B0}>x_{A0}\) และเดินคงที่ด้วย \(U\)
+      จงหาค่าเวลา \(T\) ที่ทั้งคู่เจอกัน และระบุตำแหน่งนัดพบบนแกนเดียวกัน
+      พร้อมอธิบายสั้น ๆ ว่ากราฟตำแหน่ง–เวลาแสดงเส้นโค้งตัดเส้นตรงได้อย่างไร
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ตำแหน่ง: \(x_A=x_{A0}+u t+\tfrac12\alpha t^2\), \(x_B=x_{B0}+U t\).</li>
+      <li>ตั้งเท่ากัน: \(\tfrac12\alpha T^2+(u-U)T+(x_{A0}-x_{B0})=0\Rightarrow T\) คือรากบวก.</li>
+      <li>ตำแหน่งนัดพบ: \(x=x_{B0}+U T\).</li>
+    </ol>
+  </div>
+</section>
+
+<section id="exercises">
+  <h2>แบบฝึกหัดเวอร์ชันขยาย (6 ข้อ) + เฉลยทีละขั้น</h2>
+
+  <!-- Ex1 -->
+  <div class="problem">
+    <h4>ข้อ 1 — ทางเลื่อน “สองช่วงความเร็ว” (อินทิกรัลต่อช่วง)</h4>
+    <p>
+      ทางเลื่อนในเทอร์มินอลมีการเปลี่ยนความเร็วตามตารางเวลาเพื่อประหยัดพลังงาน
+      ในช่วงแรกเปิดที่ความเร็วคงที่ระดับหนึ่ง จากนั้นเพิ่มความเร็วขึ้นในช่วงเร่งด่วน
+      ผู้โดยสารคนหนึ่งเดินบนทางเลื่อนด้วยฝีเท้าคงที่เมื่อเทียบกับสายพานและต้องการทราบเวลาเดินรวม
+      ให้ช่วงแรกของสายพานใช้ความเร็ว \(U_1\) นาน \(T_1\) วินาที ก่อนเปลี่ยนเป็น \(U_2\) จนสิ้นสุด
+      ผู้โดยสารเดินสัมพัทธ์คงที่ \(u_0\) ไปทาง +x และระยะรวมของทางเลื่อนคือ \(L\)
+      จงคำนวณความเร็วจริงในแต่ละช่วงและหาเวลารวม \(T\)
+      พร้อมระบุว่ากรณีใดถึงปลายทางตั้งแต่ช่วงแรก และกรณีใดต้องเข้าสู่ช่วงที่สอง
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ช่วง 1 (0–\(T_1\)): \(v=U_1+u_0\Rightarrow x(t)=(U_1+u_0)t\). ถ้า \(x(T_1)\ge L\Rightarrow T=L/(U_1+u_0)\).</li>
+      <li>ถ้ายังไม่ถึง: ระยะคงเหลือ \(L' = L-(U_1+u_0)T_1\).</li>
+      <li>ช่วง 2: \(v=U_2+u_0\Rightarrow \Delta t=L'/(U_2+u_0)\).</li>
+      <li>สรุป: \(T=T_1+\Delta t\); กราฟ \(v(t)\) เป็นขั้นสองระดับ.</li>
+    </ol>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="problem">
+    <h4>ข้อ 2 — ข้ามแม่น้ำเมื่อกระแส “เพิ่มตามเวลา”</h4>
+    <p>
+      สะพานชั่วคราวถูกปิดบำรุงรักษา ทำให้ทีมอาสาต้องว่ายข้ามแม่น้ำเพื่อส่งเวชภัณฑ์ไปยังชุมชนฝั่งตรงข้าม
+      กระแสน้ำเชี่ยวแรงขึ้นช้า ๆ ระหว่างวัน ทำให้การตั้งหัวว่ายต้องปรับตามเวลา
+      เพื่อให้ขึ้นตรงข้ามกับจุดเริ่มอย่างแม่นยำ
+      ให้กระแสมีรูป \(U(t)=U_0+\beta t\) ทาง +x และผู้ว่ายมีความเร็วสัมพัทธ์คงที่ \(v_s\)
+      ให้เลือกมุมหัวว่ายเป็น \(\varphi(t)\) ตลอดช่วงเวลา จนข้ามความกว้าง \(W\)
+      จงตั้งสมการเงื่อนไขของ \(\varphi(t)\) ที่ทำให้ตำแหน่งตาม x คงที่ศูนย์
+      และเขียนอินทิกรัลเพื่อหาค่าเวลา \(T\) ที่ต้องใช้ในการข้าม
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ตรงข้าม ⇒ \(v_x(t)\equiv 0\Rightarrow v_s\cos\varphi(t)=U(t)=U_0+\beta t\).</li>
+      <li>ต้องมี \(v_s\ge \max_{[0,T]}U(t)\).</li>
+      <li>เวลา: \(W=\int_0^T v_s\sin\varphi(t)\,\dd t=\int_0^T v_s\sqrt{1-(U(t)/v_s)^2}\,\dd t\).</li>
+      <li>แก้ \(T\) จากอินทิกรัล (มักต้องเชิงตัวเลขเมื่อให้ค่าจริง).</li>
+    </ol>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="problem">
+    <h4>ข้อ 3 — ฝนเฉ: ออกแบบให้กระจก “ตั้งฉากกับทิศฝนที่เห็น” ณ เวลาเป้าหมาย</h4>
+    <p>
+      ห้องวิจัยยานยนต์กำลังทดสอบรูปทรงกระจกบังลมเพื่อลดคราบน้ำในวันที่ฝนตก
+      ในการทดสอบ รถจะเร่งความเร็วตามโปรไฟล์ที่กำหนดแล้วบันทึกมุมที่หยดฝนพุ่งเข้ากระจกในเวลาต่าง ๆ
+      ทีมออกแบบต้องเลือกเวลาเป้าหมายหนึ่งจุดเพื่อปรับมุมกระจกให้ตั้งฉากกับทิศฝนที่เห็น
+      ให้ฝนตกแนวดิ่งด้วยขนาดความเร็ว \(v_r\) รถวิ่งตาม \(u(t)=u_0+a t\)
+      กำหนดมุมเป้าหมาย \(\psi^*\) เทียบแนวดิ่งที่เวลา \(t^*\)
+      จงคำนวณ \(t^*\) จากเงื่อนไข \(\psi(t^*)=\psi^*\) และระบุเวกเตอร์แนวฉากของกระจกที่เหมาะสมในขณะนั้น
+      พร้อมอธิบายคร่าว ๆ ว่ามุมที่เห็นเพิ่มตามเวลาตามกลไกเวกเตอร์สัมพัทธ์อย่างไร
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ในกรอบรถ: \(\vect{v}'=-(u_0+a t)\ihat-v_r\jhat\).</li>
+      <li>มุมเห็น: \(\tan\psi = (u_0+a t)/v_r\). ให้ \(\psi(t^*)=\psi^*\Rightarrow t^*=(v_r\tan\psi^*-u_0)/a\).</li>
+      <li>แนวฉากกับ \(\vect{v}'\): \(\vect{n}\parallel (v_r\ihat-(u_0+a t^*)\jhat)\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="problem">
+    <h4>ข้อ 4 — เครื่องบิน + ลมขวาง: ลงเส้น y=0 ด้วย “ทางตรง” เร็วสุด</h4>
+    <p>
+      เส้นทางบินสั้นระหว่างสองเมืองอยู่ในแนวตะวันออก–ตะวันตกและต้องรักษาเส้นทางตรงเพื่อความแม่นยำของเวลา
+      วันทดสอบมีลมขวางคงที่ ทำให้นักบินต้องหักหัวเครื่องให้เหมาะสม
+      บริษัทต้องการประมาณเวลาเดินทางต่ำสุดภายใต้ข้อจำกัดเครื่องบินจริง
+      กำหนดลม \(\vect{w}=(0,w_y)\) และความเร็วสัมพัทธ์ต่ออากาศของเครื่อง \(v_a\) เป็นค่าคงที่
+      จุดเริ่ม A(0,0) และปลายทาง B(L,0)
+      จงหามุม \(\theta\) ที่ทำให้เวกเตอร์ความเร็วภาคพื้นชี้ไปตาม +x และคำนวณเวลา \(T\)
+      พร้อมตรวจสอบเงื่อนไข \(|w_y|\le v_a\) ว่าต้องเป็นจริงเพื่อให้เส้นทางตรงเป็นไปได้
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ทางตรง: \(v_{g,y}=v_a\sin\theta+w_y=0\Rightarrow \sin\theta=-w_y/v_a\).</li>
+      <li>ความเร็วตาม x: \(v_{g,x}=\sqrt{v_a^2-w_y^2}\).</li>
+      <li>เวลา: \(T=L/v_{g,x}\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex5 -->
+  <div class="problem">
+    <h4>ข้อ 5 — นัดพบ: โปรไฟล์เชิงเส้นสองฝ่าย</h4>
+    <p>
+      งานวิ่งการกุศลจัดบนถนนเส้นยาวที่มีจุดเริ่มและจุดรวมพลอยู่ห่างกันพอสมควร
+      นักวิ่ง A ออกตัวช้ากว่าแต่เร่งความเร็วเพิ่มขึ้นเรื่อย ๆ ขณะนักวิ่ง B วิ่งผ่านไปด้วยความเร็วคงที่
+      ผู้จัดต้องประมาณเวลาที่ทั้งสองจะเจอกันเพื่อถ่ายภาพคู่เฉลิมฉลองให้ทัน
+      ให้แกน x ตามแนวถนน A เริ่มที่ \(x_A(0)=0\) และมี \(v_A=u_A+\alpha t\)
+      ส่วน B เริ่มที่ \(x_B(0)=L_0\) และมี \(v_B=u_B-\beta t\) (ช้าลงเล็กน้อย) โดย \(\alpha,\beta\ge0\)
+      จงคำนวณเวลา \(T>0\) ที่ตำแหน่งของทั้งสองเท่ากัน และอธิบายสั้น ๆ เงื่อนไขที่ทำให้มีรากบวกเพียงหนึ่งเดียว
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ตำแหน่ง: \(x_A=u_A T+\tfrac12\alpha T^2\), \(x_B=L_0+u_B T-\tfrac12\beta T^2\).</li>
+      <li>เท่ากัน ⇒ \(\tfrac12(\alpha+\beta)T^2+(u_A-u_B)T-L_0=0\Rightarrow T\) คือรากบวก.</li>
+    </ol>
+  </div>
+
+  <!-- Ex6 -->
+  <div class="problem">
+    <h4>ข้อ 6 — 3D: แท่นเคลื่อนที่ (เฉื่อย) + หุ่นยนต์เร่งในกรอบแท่น</h4>
+    <p>
+      สายการผลิตอัตโนมัติใช้แท่นลำเลียงเคลื่อนชิ้นงานในระนาบ ขณะหุ่นยนต์บนแท่นต้องเคลื่อนหัวจับแบบสามมิติ
+      วิศวกรต้องการสมการตำแหน่งในกรอบโลกเพื่อเทียบกับกล้องตรวจคุณภาพ
+      ให้แท่นเคลื่อนด้วย \(\vect{U}=U_x\ihat+U_y\jhat\) คงที่ และในกรอบแท่น S′ หุ่นยนต์มีความเร่งสั่งการ \(\vect{a}'(t)=\vect{a}_0+\vect{b}t\)
+      เงื่อนไขเริ่มต้นคือ \(\vect{r}'(0)=\vect{0}\), \(\vect{v}'(0)=\vect{v}'_0\) และตำแหน่งเริ่มของแท่นใน S คือ \(\vect{R}_0\)
+      จงหาสมการ \(\vect{r}(t)\) ในกรอบโลก S และบอกวิธีประกอบผลลัพธ์ตามแกน \(\ihat,\jhat,\khat\)
+      เพื่อใช้กับระบบควบคุมจริง
+    </p>
+  </div>
+
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>ใน S′: \(\vect{v}'(t)=\vect{v}'_0+\vect{a}_0 t+\tfrac12\vect{b}t^2\).</li>
+      <li>ตำแหน่งสัมพัทธ์: \(\vect{r}'(t)=\vect{v}'_0 t+\tfrac12\vect{a}_0 t^2+\tfrac16\vect{b}t^3\).</li>
+      <li>Galilean: \(\vect{r}(t)=\vect{R}_0+\vect{U}t+\vect{r}'(t)\).</li>
+    </ol>
+  </div>
+</section>
+
+<section id="cheatsheet">
+  <h2>Cheat Sheet สรุปสูตร</h2>
+  <div class="box">
+    <ul>
+      <li>Galilean (กรอบเฉื่อย): \(\vect{r}=\vect{R}_0+\vect{U}t+\vect{r}'\), \(\vect{v}=\vect{U}+\vect{v}'\), \(\vect{a}=\vect{a}'\)</li>
+      <li>ข้ามแม่น้ำ (คงที่): \(\cos\varphi=U/v_s\), \(T=W/\sqrt{v_s^2-U^2}\)</li>
+      <li>ฝนเฉกับรถเร่ง: \(\tan\psi(t)=(u_0+a t)/v_r\Rightarrow t^*=(v_r\tan\psi^*-u_0)/a\)</li>
+      <li>ลมขวางคงที่: \(\sin\theta=-w_y/v_a\), \(v_{g,x}=\sqrt{v_a^2-w_y^2}+w_x\), \(T=L/v_{g,x}\)</li>
+      <li>นัดพบเชิงเส้น: แก้กำลังสองเวลา จากการอินทิกรัลความเร็วแล้วตั้งตำแหน่งเท่ากัน</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+</body>
+</html>

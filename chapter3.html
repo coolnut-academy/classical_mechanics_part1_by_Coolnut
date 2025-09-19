@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>บทที่ 3 (ใหม่) — การเคลื่อนที่ 2 มิติ: คาร์ทีเซียน & โพรเจคไทล์ (พื้นเอียง/ลม) + ขยาย 3 มิติ</title>
+
+<!-- MathJax v3 -->
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(','\\)']],
+    displayMath: [['\\[','\\]']],
+    processEscapes: true,
+    tags: 'none',
+    packages: {'[+]': ['ams']},
+    macros: {
+      dd: ['\\,\\mathrm{d}#1', 1],
+      dv: ['\\dfrac{\\mathrm{d}#1}{\\mathrm{d}#2}', 2],
+      pdv: ['\\dfrac{\\partial #1}{\\partial #2}', 2],
+      vect: ['\\boldsymbol{#1}', 1],
+      ihat: '\\hat{\\boldsymbol{i}}',
+      jhat: '\\hat{\\boldsymbol{j}}',
+      khat: '\\hat{\\boldsymbol{k}}',
+      abs: ['\\left\\lvert #1\\right\\rvert', 1],
+      norm: ['\\left\\lVert #1\\right\\rVert', 1]
+    }
+  },
+  chtml: { scale: 1.46 },
+  options: { renderActions: { addMenu: [] } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+  :root{
+    --ink:#0f172a;--muted:#475569;--bg:#ffffff;--bd:#e2e8f0;
+    --box:#f8fafc;--eqbg:#eef6ff;--eqbd:#93c5fd;
+    --prob-bg:#fff7ed;--prob-bd:#fdba74;--prob-h:#9a3412;
+    --sol-bg:#eef2ff;--sol-bd:#c7d2fe;--sol-h:#3730a3;
+    --note-bg:#f0fdf4;--note-bd:#bbf7d0;--tip-bg:#ecfeff;--tip-bd:#a5f3fc;
+    --toc-bg:#faf5ff;--toc-bd:#e9d5ff
+  }
+  html,body{background:var(--bg);color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Thai","Noto Sans","Helvetica Neue",Arial,Tahoma,sans-serif;
+    line-height:1.85}
+  main{max-width:1120px;margin:2rem auto;padding:0 1rem 4rem}
+  h1{font-size:2.35rem;font-weight:800;margin:.2rem 0 .8rem}
+  .lead{color:var(--muted);margin:.25rem 0 1.25rem}
+  h2{font-size:1.7rem;font-weight:760;color:#0b4f54;margin:1.8rem 0 1rem}
+  h3{font-size:1.28rem;font-weight:700;color:#0b4f54;margin:1.1rem 0 .6rem}
+  p,li{font-size:1.06rem}
+  section{margin:1.5rem 0 1.4rem;padding-bottom:.8rem;border-bottom:1px solid var(--bd)}
+  .box{background:var(--box);border:1px solid var(--bd);border-radius:14px;padding:1.05rem 1.15rem}
+  .eq-block{margin:1rem auto;padding:.9rem 1rem;text-align:center;border-left:4px solid var(--eqbd);background:var(--eqbg);border-radius:12px}
+  .eq-caption{color:#0b4f54;font-size:1rem;margin:.35rem 0 .8rem;text-align:center}
+  .note{background:var(--note-bg);border:1px solid var(--note-bd);color:#166534;border-radius:10px;padding:.7rem 1rem;margin:.8rem 0}
+  .tip{background:var(--tip-bg);border:1px solid var(--tip-bd);color:#075985;border-radius:10px;padding:.7rem 1rem;margin:.8rem 0}
+  .toc{background:var(--toc-bg);border:1px solid var(--toc-bd);border-radius:14px;padding:1rem 1.1rem;margin:1rem 0}
+  .toc a{color:#6b21a8;text-decoration:none} .toc a:hover{text-decoration:underline}
+  .problem{background:var(--prob-bg);border:2px solid var(--prob-bd);border-radius:16px;padding:1rem 1.1rem;margin:1.1rem 0}
+  .problem h4{color:var(--prob-h);font-size:1.1rem;margin:.1rem 0 .45rem}
+  .solution{background:var(--sol-bg);border:2px dashed var(--sol-bd);border-radius:16px;padding:1rem 1.1rem;margin:.75rem 0}
+  .solution h4{color:var(--sol-h);font-size:1.06rem;margin:.1rem 0 .45rem}
+  ol.steps{margin:.2rem 0 0 1.1rem} ol.steps li{margin:.42rem 0}
+  mjx-container[jax="CHTML"]{font-size:148% !important} mjx-container{margin:.5rem 0}
+  .cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+  @media (max-width:900px){.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>บทที่ 3 (ใหม่) — การเคลื่อนที่ 2 มิติ: คาร์ทีเซียน & โพรเจคไทล์ (พื้นเอียง/ลม) + ขยาย 3 มิติ</h1>
+  <p class="lead">เวอร์ชัน “โจทย์ฟิสิกส์” เข้มข้น: ให้/หา/สมมติฐาน/สเก็ตช์ไกด์ + เฉลยทีละขั้น (คิเนแมติกส์ล้วน ไม่พูดถึงแรง)</p>
+  <div class="note"><b>แนวทางอินทิกรัล:</b> ใช้รูปแบบ <span style="white-space:nowrap">\(v(t)=v_0+\int_0^t a(t)\,dt\)</span>, <span style="white-space:nowrap">\(x(t)=x_0+\int_0^t v(t)\,dt\)</span> ตลอดบท เพื่อความคงที่ของสัญลักษณ์</div>
+</header>
+
+<nav class="toc">
+  <h3 id="toc">สารบัญ</h3>
+  <ol>
+    <li><a href="#symbols">สัญลักษณ์และกรอบเวกเตอร์</a></li>
+    <li><a href="#projectile-basic">โพรเจคไทล์พื้นราบ (ไม่มีลม)</a></li>
+    <li><a href="#wind">โพรเจคไทล์มีลมแบบง่าย (a<sub>x</sub>=α คงที่)</a></li>
+    <li><a href="#slope">พื้นเอียง: ยิงขึ้น/ยิงลง</a></li>
+    <li><a href="#3d">ขยายสู่ 3 มิติ & inverse design</a></li>
+    <li><a href="#situations">สถานการณ์ตัวอย่าง (โจทย์ฟิสิกส์) + เฉลยละเอียด</a></li>
+    <li><a href="#exercises">แบบฝึกหัด 6 ข้อ + เฉลยทีละขั้น</a></li>
+  </ol>
+</nav>
+
+<section id="symbols">
+  <h2>สัญลักษณ์และกรอบเวกเตอร์</h2>
+  <div class="box cols">
+    <div>
+      <ul>
+        <li>แกน: \(x\) แนวนอน (ขวา +), \(y\) ขึ้น (+), \(z\) ออกจากกระดาน (+)</li>
+        <li>เวกเตอร์หน่วย: \(\ihat,\jhat,\khat\)</li>
+        <li>เวกเตอร์ตำแหน่ง: \(\vect{r}(t)=x(t)\ihat+y(t)\jhat+z(t)\khat\)</li>
+        <li>ความเร็ว/เร่ง: \(\vect{v}=\dv{\vect{r}}{t},\ \vect{a}=\dv{\vect{v}}{t}\)</li>
+      </ul>
+    </div>
+    <div>
+      <ul>
+        <li>แรงโน้มถ่วง: \(g \approx 9.81\ \mathrm{m\,s^{-2}}\) (ทิศลง)</li>
+        <li>มุมยิง: \(\theta\) (จากแนวนอน), มุมพื้นเอียง: \(\varphi\)</li>
+        <li>โมเดลลมง่าย: \(a_x=\alpha\) (คงที่), \(a_y=-g\)</li>
+        <li>กฎลูกโซ่: \(\dv{v}{t}=v\,\dv{v}{x}\) เมื่อ \(a=a(x)\) (ใช้ในบทก่อนหน้า)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="projectile-basic">
+  <h2>โพรเจคไทล์พื้นราบ (ไม่มีลม)</h2>
+  <div class="box">
+    <p>ตั้ง \(\vect{a}=(0,-g)\), จุดปล่อย \(\vect{r}(0)=(0,0)\), \(\vect{v}(0)=v_0(\cos\theta\,\ihat+\sin\theta\,\jhat)\).</p>
+    <div class="eq-block">\[ v_x(t)=v_0\cos\theta,\quad v_y(t)=v_0\sin\theta-g\,t \]</div>
+    <div class="eq-caption">แนว x ไม่เร่ง (คงที่) ส่วนแนว y ลดลงเส้นตรงด้วยอิทธิพลของ g</div>
+    <div class="eq-block">\[ x(t)=v_0\cos\theta\,t,\quad y(t)=v_0\sin\theta\,t-\tfrac12 g t^2 \]</div>
+    <div class="eq-caption">อินทิกรัลจากนิยาม \(x'=v_x,\ y'=v_y\)</div>
+    <div class="eq-block">\[ y(x)=x\tan\theta-\frac{g\,x^2}{2\,v_0^2\cos^2\theta} \]</div>
+    <div class="eq-caption">กำจัดเวลา: แทน \(t=x/(v_0\cos\theta)\) ลงใน \(y(t)\) → วิถีพาราโบลา</div>
+    <div class="tip">จุดสูงสุด \(t_\text{peak}=v_0\sin\theta/g\), \(y_\text{max}=v_0^2\sin^2\theta/(2g)\); ระยะราบรวม \(R=v_0^2\sin 2\theta/g\)</div>
+  </div>
+</section>
+
+<section id="wind">
+  <h2>โพรเจคไทล์ “มีลมแบบง่าย” — \(a_x=\alpha\) คงที่</h2>
+  <div class="box">
+    <p>ตั้ง \(\vect{a}=(\alpha,-g)\) โดย \(\alpha\) อาจบวก (ลมตาม) หรือลบ (ลมต้าน).</p>
+    <div class="eq-block">\[ v_x(t)=v_0\cos\theta+\alpha t,\quad x(t)=v_0\cos\theta\,t+\tfrac12\alpha t^2 \]</div>
+    <div class="eq-block">\[ v_y(t)=v_0\sin\theta-g t,\quad y(t)=v_0\sin\theta\,t-\tfrac12 g t^2 \]</div>
+    <div class="note">เมื่อจะกำจัดเวลาให้ได้ \(y(x)\) ต้องแก้สมการกำลังสองของ \(x(t)\) เพื่อหา \(t(x)\) แล้วแทนใน \(y(t)\). ในงานจริงนิยมแก้เชิงตัวเลขเมื่อทราบค่าจริงของ \(\alpha,v_0,\theta\).</div>
+    <div class="tip">หากลมทำงานแค่ช่วง \(0\le t\le T_w\): ทำอินทิกรัล “ต่อช่วง (piecewise)” และบังคับความต่อเนื่องของ \(x,y,v\) ที่ \(t=T_w\).</div>
+  </div>
+</section>
+
+<section id="slope">
+  <h2>พื้นเอียง: ยิงขึ้น/ยิงลง (ไม่มีลม)</h2>
+  <div class="box">
+    <p>พื้นเอียงสมการเส้น \(y=x\tan\varphi\) (บวก = ไต่ขึ้นทางขวา). วิถีเดิม \(x=v_0\cos\theta\,t,\ y=v_0\sin\theta\,t-\tfrac12 g t^2\).</p>
+    <div class="eq-block">\[ t_\text{hit}=\frac{2v_0\sin(\theta-\varphi)}{g\cos\varphi}\quad (\text{ต้อง } \sin(\theta-\varphi)>0) \]</div>
+    <div class="eq-caption">แก้สมการจุดตัด \(y=x\tan\varphi\) แล้วคูณแยกตัวประกอบด้วย \(t>0\)</div>
+    <div class="eq-block">\[ s=\frac{x_\text{hit}}{\cos\varphi}=\frac{2\,v_0^2\cos\theta\,\sin(\theta-\varphi)}{g\,\cos^2\varphi} \]</div>
+    <div class="eq-caption">ระยะตามพื้น (วัดไปตามแนวสโลป) โดย \(x=s\cos\varphi\)</div>
+    <div class="tip">มุมให้ระยะตามพื้นมากสุด: \(\theta_\text{opt}=45^\circ+\dfrac{\varphi}{2}\) (ได้จากตั้ง \(\dv{s}{\theta}=0\)).</div>
+  </div>
+</section>
+
+<section id="3d">
+  <h2>ขยายสู่ 3 มิติ & Inverse Design</h2>
+  <div class="box">
+    <p>ให้ \(\vect{a}=(\alpha_x,\alpha_y,\alpha_z)\) คงที่ (โพรเจคไทล์มาตรฐาน: \((0,0,-g)\)).</p>
+    <div class="eq-block">\[
+      \vect{v}(t)=\vect{v}_0+\vect{a}\,t,\qquad
+      \vect{r}(t)=\vect{r}_0+\vect{v}_0\,t+\tfrac12\vect{a}\,t^2
+    \]</div>
+    <div class="eq-caption">คิดต่อแกน \(x,y,z\) แล้วประกอบบน \(\ihat,\jhat,\khat\)</div>
+    <div class="eq-block">\[
+      \text{กำหนดเป้าหมายที่เวลา }T:\ \ \vect{r}(T)=\vect{R}\ \Rightarrow\
+      \vect{v}_0=\frac{\vect{R}-\tfrac12\vect{a}\,T^2}{T}
+    \]</div>
+    <div class="tip">ถ้าต้องบังคับทิศทางท้ายทาง: ใส่เงื่อนไขกับ \(\vect{v}(T)=\vect{v}_0+\vect{a}T\) เพิ่มเติม.</div>
+  </div>
+</section>
+
+<section id="situations">
+  <h2>สถานการณ์ตัวอย่าง (โจทย์ฟิสิกส์) + เฉลยละเอียด</h2>
+
+  <!-- A1 -->
+  <div class="problem">
+    <h4>A1) โพรเจคไทล์พื้นราบ (ไม่มีลม) — ให้ลงจุดรับ (X, 0)</h4>
+    <p><b>ให้:</b> จุดปล่อย (0,0); \(v_0>0\); \(\theta\in(0^\circ,90^\circ)\); จุดรับ (X,0), X>0; \(\vect{a}=(0,-g)\).<br>
+       <b>หา:</b> (ก) \(\theta\) ที่ทำให้ตกที่ (X,0) (มักมี 2 คำตอบ) (ข) เวลาอากาศ \(T\).<br>
+       <b>สมมติฐาน:</b> ไม่มีลม/แรงต้าน; พื้นระนาบระดับเดียวกัน. <b>สเก็ตช์:</b> วิถีพาราโบลาตัดพื้น.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (ทีละขั้น)</h4>
+    <ol class="steps">
+      <li>จากนิยาม: \(x=v_0\cos\theta\,t,\ y=v_0\sin\theta\,t-\tfrac12 g t^2\).</li>
+      <li>กำจัดเวลา: \(t=\dfrac{X}{v_0\cos\theta}\) เมื่อตกที่ \(x=X\).</li>
+      <li>บังคับ \(y(X)=0\): \(X\tan\theta-\dfrac{gX^2}{2v_0^2\cos^2\theta}=0\).</li>
+      <li>ใช้ \(1/\cos^2\theta=1+\tan^2\theta\) ได้สมการกำลังสองใน \(\tan\theta\) ⇒ สองคำตอบ (โค้งต่ำ/สูง).</li>
+      <li>เวลาอากาศ: \(T=\dfrac{X}{v_0\cos\theta}\) สำหรับ \(\theta\) ที่เลือก.</li>
+    </ol>
+    <div class="tip"><b>ใช้:</b> FTC, กำจัดเวลา, อัตลักษณ์ตรีโกณมิติ.</div>
+  </div>
+
+  <!-- A2 -->
+  <div class="problem">
+    <h4>A2) โพรเจคไทล์พื้นราบ “มีลมคงที่” (aₓ=α) — ยังต้องลงจุดเดิม</h4>
+    <p><b>ให้:</b> เหมือน A1 แต่ \(\vect{a}=(\alpha,-g)\), \(\alpha\in\mathbb{R}\).<br>
+       <b>หา:</b> (ก) \(\theta\) ใหม่ที่ทำให้ตกที่ (X,0) โดย \(v_0\) คงเดิม (ข) เวลา \(T\).<br>
+       <b>สมมติฐาน:</b> \(\alpha\) คงที่ทั้งทาง; อื่น ๆ เหมือนเดิม. <b>สเก็ตช์:</b> ใส่ลูกศร \(a_x=\alpha\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (ทีละขั้น)</h4>
+    <ol class="steps">
+      <li>\(x=v_0\cos\theta\,t+\tfrac12\alpha t^2,\ \ y=v_0\sin\theta\,t-\tfrac12 g t^2\).</li>
+      <li>จาก \(y(T)=0\Rightarrow T=\dfrac{2v_0\sin\theta}{g}\) (ไม่เปลี่ยนเพราะ \(a_y\) เดิม).</li>
+      <li>เงื่อนไขระยะ: \(X=x(T)=\dfrac{v_0^2\sin 2\theta}{g}+\dfrac{2\alpha v_0^2\sin^2\theta}{g^2}\).</li>
+      <li>นิยาม \(f(\theta)=0\) แล้วแก้ (เชิงปิดหรือเชิงตัวเลข Newton–Raphson: ใช้ \(f'(\theta)=\dfrac{2v_0^2\cos2\theta}{g}+\dfrac{4\alpha v_0^2\sin\theta\cos\theta}{g^2}\)).</li>
+      <li>ได้ \(\theta\) ⇒ คำนวณ \(T=\dfrac{2v_0\sin\theta}{g}\).</li>
+    </ol>
+    <div class="tip"><b>ใช้:</b> FTC, กำจัดเวลา, อนุพันธ์เพื่อแก้สมการไม่เชิงเส้น.</div>
+  </div>
+
+  <!-- A3 -->
+  <div class="problem">
+    <h4>A3) ยิง “ขึ้น” บนพื้นเอียง (φ &gt; 0) — เวลาแตะพื้นและระยะตามพื้น</h4>
+    <p><b>ให้:</b> พื้น \(y=x\tan\varphi\) (ไต่ขึ้น), จุดปล่อย (0,0), \(v_0,\theta\), ไม่มีลม.<br>
+       <b>หา:</b> \(t_\text{hit}&gt;0\) และระยะตามพื้น \(s\). <b>สเก็ตช์:</b> เส้นสโลปและวิถี.</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (ทีละขั้น)</h4>
+    <ol class="steps">
+      <li>วิถี: \(x=v_0\cos\theta\,t,\ y=v_0\sin\theta\,t-\tfrac12 g t^2\).</li>
+      <li>จุดตัด: วาง \(y=x\tan\varphi\) ⇒ \(v_0\sin\theta\,t-\tfrac12 g t^2=v_0\cos\theta\,t\tan\varphi\).</li>
+      <li>ตัด \(t\ne0\): \(t_\text{hit}=\dfrac{2v_0(\sin\theta-\cos\theta\tan\varphi)}{g}=\dfrac{2v_0\sin(\theta-\varphi)}{g\cos\varphi}\) (ต้อง \(\theta>\varphi\)).</li>
+      <li>\(x_\text{hit}=v_0\cos\theta\,t_\text{hit}\), ระยะตามพื้น \(s=\dfrac{x_\text{hit}}{\cos\varphi}=\dfrac{2v_0^2\cos\theta\,\sin(\theta-\varphi)}{g\cos^2\varphi}\).</li>
+    </ol>
+    <div class="tip"><b>ใช้:</b> กำจัดเวลา, เอกลักษณ์ \(\sin\theta-\cos\theta\tan\varphi=\sin(\theta-\varphi)/\cos\varphi\).</div>
+  </div>
+
+  <!-- A4 -->
+  <div class="problem">
+    <h4>A4) ยิง “ลง” บนพื้นเอียง (φ &lt; 0) — มุมที่ให้ระยะตามพื้นสูงสุด</h4>
+    <p><b>ให้:</b> พื้น \(y=x\tan\varphi\) โดย \(\varphi&lt;0\), \(v_0\) คงที่, ไม่มีลม.<br>
+       <b>หา:</b> \(\theta_\text{opt}\) ที่ทำให้ \(s\) สูงสุด และค่า \(s_\text{max}\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (ทีละขั้น)</h4>
+    <ol class="steps">
+      <li>ใช้ \(s(\theta)=\dfrac{2v_0^2\cos\theta\,\sin(\theta-\varphi)}{g\cos^2\varphi}\).</li>
+      <li>หา \(\dv{s}{\theta}=0\) ⇒ \(\theta_\text{opt}=45^\circ+\dfrac{\varphi}{2}\).</li>
+      <li>\(s_\text{max}=\dfrac{v_0^2}{g\cos^2\varphi}\,(1+\sin\varphi)\) (แทน \(\theta_\text{opt}\) กลับ).</li>
+    </ol>
+    <div class="tip"><b>ใช้:</b> อนุพันธ์หาค่าสูงสุด/ต่ำสุด, อัตลักษณ์ตรีโกณ.</div>
+  </div>
+
+  <!-- A5 -->
+  <div class="problem">
+    <h4>A5) 3D “ลอดห่วงตรวจ” ที่เวลา T (มีลมด้าน x คงที่)</h4>
+    <p><b>ให้:</b> ศูนย์กลางห่วง \(\vect{R}=(X,Y,Z)\), เวลา \(T>0\), \(\vect{a}=(\alpha,0,-g)\), จุดปล่อย \(\vect{r}(0)=\vect{0}\).<br>
+       <b>หา:</b> \(\vect{v}_0\) ที่ทำให้ \(\vect{r}(T)=\vect{R}\) (และถ้ากำหนดเพิ่ม: เงื่อนไขกับ \(\vect{v}(T)\)).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย (ทีละขั้น)</h4>
+    <ol class="steps">
+      <li>\(\vect{r}(T)=\vect{v}_0 T+\tfrac12\vect{a}T^2=\vect{R}\Rightarrow \vect{v}_0=\dfrac{\vect{R}-\tfrac12\vect{a}T^2}{T}\).</li>
+      <li>แยกแกน: \(v_{0x}=\dfrac{X-\tfrac12\alpha T^2}{T},\ v_{0y}=\dfrac{Y}{T},\ v_{0z}=\dfrac{Z+\tfrac12 g T^2}{T}\).</li>
+      <li>ถ้าต้องการทิศทางท้ายทาง: ใช้ \(\vect{v}(T)=\vect{v}_0+\vect{a}T\) ใส่เงื่อนไขเวกเตอร์ต่อ.</li>
+    </ol>
+    <div class="tip"><b>ใช้:</b> อินทิกรัลเชิงเวกเตอร์บน \(\ihat,\jhat,\khat\); แก้ระบบเชิงเส้นต่อแกน.</div>
+  </div>
+</section>
+
+<section id="exercises">
+  <h2>แบบฝึกหัด 6 ข้อ (มีบริบทยาว) + เฉลยทีละขั้น</h2>
+
+  <!-- Ex1 -->
+  <div class="problem">
+    <h4>ข้อ 1 — พิสูจน์วิถีโพรเจคไทล์จากนิยาม</h4>
+    <p><b>ให้:</b> \(v_0,\theta\), \(\vect{a}=(0,-g)\), จุดปล่อย (0,0). <b>พิสูจน์:</b> \(y(x)=x\tan\theta-\dfrac{g x^2}{2v_0^2\cos^2\theta}\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(v_x=v_0\cos\theta,\ v_y=v_0\sin\theta-g t\) (จาก \(v=v_0+\int_0^t a(t)\,dt\)).</li>
+      <li>\(x=\int_0^t v_x\,dt=v_0\cos\theta\,t,\ \ y=\int_0^t v_y\,dt=v_0\sin\theta\,t-\tfrac12 g t^2\).</li>
+      <li>\(t=x/(v_0\cos\theta)\) ⇒ แทนลง \(y(t)\) ได้รูปที่ต้องพิสูจน์.</li>
+    </ol>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="problem">
+    <h4>ข้อ 2 — เลือกมุมให้ตกที่ X (ไม่มีลม)</h4>
+    <p><b>ให้:</b> \(v_0, X, g\). <b>หา:</b> \(\theta\) ทั้งหมดที่ทำให้ตกที่ (X,0) และเวลา \(T\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(T=X/(v_0\cos\theta)\).</li>
+      <li>\(0=y(T)=v_0\sin\theta\,T-\tfrac12 g T^2\Rightarrow X\tan\theta-\dfrac{gX^2}{2v_0^2\cos^2\theta}=0\).</li>
+      <li>ใช้ \(1/\cos^2\theta=1+\tan^2\theta\) ⇒ สมการกำลังสองใน \(\tan\theta\) ⇒ 2 มุม.</li>
+    </ol>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="problem">
+    <h4>ข้อ 3 — มีลมคงที่ (aₓ=α): คง v₀ ให้ตกที่ X เดิม</h4>
+    <p><b>ให้:</b> \(v_0, X, g, \alpha\). <b>หา:</b> \(\theta, T\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(T=2v_0\sin\theta/g\) จาก \(y(T)=0\).</li>
+      <li>\(X=v_0\cos\theta\,T+\tfrac12\alpha T^2=\dfrac{v_0^2\sin2\theta}{g}+\dfrac{2\alpha v_0^2\sin^2\theta}{g^2}\).</li>
+      <li>นิยาม \(f(\theta)=0\), ใช้ Newton–Raphson เพื่อแก้ \(\theta\), แล้วหาค่า \(T\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="problem">
+    <h4>ข้อ 4 — ยิงขึ้นบนพื้นเอียง: หา t<sub>hit</sub> และ s</h4>
+    <p><b>ให้:</b> \(\varphi>0,\ v_0,\ \theta\). <b>หา:</b> \(t_\text{hit}, s\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(t_\text{hit}=\dfrac{2v_0\sin(\theta-\varphi)}{g\cos\varphi}\) (ต้อง \(\theta>\varphi\)).</li>
+      <li>\(s=\dfrac{2v_0^2\cos\theta\,\sin(\theta-\varphi)}{g\cos^2\varphi}\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex5 -->
+  <div class="problem">
+    <h4>ข้อ 5 — ยิงลงบนพื้นเอียง: มุมให้ไกลสุด</h4>
+    <p><b>ให้:</b> \(\varphi<0,\ v_0\). <b>หา:</b> \(\theta_\text{opt}, s_\text{max}\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(\theta_\text{opt}=45^\circ+\dfrac{\varphi}{2}\).</li>
+      <li>\(s_\text{max}=\dfrac{v_0^2}{g\cos^2\varphi}\,(1+\sin\varphi)\).</li>
+    </ol>
+  </div>
+
+  <!-- Ex6 -->
+  <div class="problem">
+    <h4>ข้อ 6 — 3D: ลอดห่วงในเวลา T (ลมด้าน x คงที่)</h4>
+    <p><b>ให้:</b> \(\vect{R}=(X,Y,Z),\ T,\ \vect{a}=(\alpha,0,-g)\). <b>หา:</b> \(\vect{v}_0\).</p>
+  </div>
+  <div class="solution">
+    <h4>เฉลย</h4>
+    <ol class="steps">
+      <li>\(\vect{v}_0=\dfrac{\vect{R}-\tfrac12\vect{a}T^2}{T}\).</li>
+      <li>\(v_{0x}=\dfrac{X-\tfrac12\alpha T^2}{T},\ v_{0y}=\dfrac{Y}{T},\ v_{0z}=\dfrac{Z+\tfrac12 g T^2}{T}\).</li>
+    </ol>
+  </div>
+
+</section>
+
+</main>
+</body>
+</html>
