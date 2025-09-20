@@ -38,6 +38,14 @@ window.MathJax = {
     --gradient:linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
   
+  /* Dark mode variables */
+  [data-theme="dark"] {
+    --ink:#f1f5f9; --muted:#94a3b8; --bg:#0f172a; --bd:#334155;
+    --box:#1e293b; --card-bg:#1e293b; --card-shadow:0 4px 6px -1px rgba(0,0,0,0.3);
+    --primary:#60a5fa; --primary-hover:#3b82f6; --primary-light:#1e3a8a;
+    --gradient:linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
+  }
+  
   html,body{
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     color:var(--ink);
@@ -45,12 +53,145 @@ window.MathJax = {
     Roboto, "Noto Sans Thai", "Noto Sans", "Helvetica Neue", Arial, Tahoma, sans-serif;
     line-height:1.7; margin:0; padding:0;
     min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  [data-theme="dark"] html,
+  [data-theme="dark"] body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   }
   
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 1rem;
+    position: relative;
+  }
+  
+  /* Top Navigation Bar */
+  .top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--bd);
+    z-index: 1000;
+    padding: 0.75rem 0;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-decoration: none;
+  }
+  
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-input {
+    background: var(--box);
+    border: 1px solid var(--bd);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    width: 200px;
+    transition: all 0.3s ease;
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    width: 250px;
+  }
+  
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--bd);
+    border-radius: 8px;
+    box-shadow: var(--card-shadow);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1001;
+    display: none;
+  }
+  
+  .search-result-item {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--bd);
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .search-result-item:hover {
+    background: var(--box);
+  }
+  
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+  
+  .search-result-title {
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+  }
+  
+  .search-result-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  
+  .theme-toggle {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+  }
+  
+  .theme-toggle:hover {
+    background: var(--primary-hover);
+    transform: scale(1.05);
+  }
+  
+  
+  /* Adjust main content for fixed nav */
+  body {
+    padding-top: 80px;
   }
   
   /* Header */
@@ -277,14 +418,163 @@ window.MathJax = {
   .status-intermediate { background: #fef3c7; color: #92400e; }
   .status-advanced { background: #fee2e2; color: #991b1b; }
   
+  
   /* Footer */
   .footer {
-    text-align: center;
+    background: var(--card-bg);
     margin-top: 4rem;
-    padding: 2rem;
-    color: var(--muted);
-    font-size: 0.9rem;
+    padding: 3rem 0 1rem;
+    border-top: 1px solid var(--bd);
   }
+  
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+  }
+  
+  .footer-section h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0 0 1rem;
+    color: var(--ink);
+  }
+  
+  .footer-section p {
+    color: var(--muted);
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-section li {
+    margin: 0.5rem 0;
+  }
+  
+  .footer-section a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .footer-section a:hover {
+    color: var(--primary);
+  }
+  
+  .footer-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+  }
+  
+  .footer-btn:hover {
+    background: var(--primary-hover);
+  }
+  
+  .footer-bottom {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bd);
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  
+  /* Enhanced animations */
+  .chapter-card {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .chapter-card:nth-child(1) { animation-delay: 0.1s; }
+  .chapter-card:nth-child(2) { animation-delay: 0.2s; }
+  .chapter-card:nth-child(3) { animation-delay: 0.3s; }
+  .chapter-card:nth-child(4) { animation-delay: 0.4s; }
+  .chapter-card:nth-child(5) { animation-delay: 0.5s; }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Scroll to top button */
+  .scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(100px);
+    z-index: 999;
+  }
+  
+  .scroll-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .scroll-top:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+  }
+  
+  /* Enhanced chapter cards with better info */
+  .chapter-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: var(--box);
+    border-radius: 8px;
+    font-size: 0.85rem;
+  }
+  
+  .chapter-duration {
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .chapter-difficulty {
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+  
+  .difficulty-basic { background: #dbeafe; color: #1e40af; }
+  .difficulty-intermediate { background: #fef3c7; color: #92400e; }
+  .difficulty-advanced { background: #fee2e2; color: #991b1b; }
   
   /* Responsive */
   @media (max-width: 768px) {
@@ -293,10 +583,31 @@ window.MathJax = {
     .header { padding: 2rem 1rem; }
     .chapters-grid { grid-template-columns: 1fr; }
     .overview-grid { grid-template-columns: 1fr; }
+    .nav-content { padding: 0 0.5rem; }
+    .nav-brand { font-size: 1rem; }
+    .search-input { width: 150px; }
+    .search-input:focus { width: 180px; }
+    body { padding-top: 70px; }
   }
 </style>
 </head>
 <body>
+
+<!-- Top Navigation -->
+<nav class="top-nav">
+  <div class="nav-content">
+    <a href="#" class="nav-brand">📚 Classical Mechanics Part 1</a>
+    <div class="nav-controls">
+      <div class="search-box">
+        <input type="text" class="search-input" id="search-input" placeholder="ค้นหาเนื้อหา...">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <button class="theme-toggle" id="theme-toggle" title="เปลี่ยนโหมดสี">
+        🌙
+      </button>
+    </div>
+  </div>
+</nav>
 
 <div class="container">
   <!-- Header -->
@@ -310,7 +621,7 @@ window.MathJax = {
   </div>
 
   <!-- Course Overview -->
-  <div class="course-overview">
+  <div class="course-overview" id="course-overview">
     <h2>🎯 ภาพรวมคอร์ส</h2>
     <p>คอร์สนี้ออกแบบให้เรียนรู้กลศาสตร์คลาสสิกอย่างเป็นระบบ เริ่มจากพื้นฐานคิเนแมติกส์ไปจนถึงการประยุกต์ใช้กฎของนิวตัน</p>
     
@@ -350,6 +661,14 @@ window.MathJax = {
           เริ่มต้นด้วยพื้นฐานการเคลื่อนที่ 1 มิติ ขยายสู่ 2D และ 3D พร้อมการอ่านและตีความกราฟ 
           ทุกโจทย์ผูกกับสถานการณ์จริง อ่านสนุก เข้าใจภาพก่อนลงมือคำนวณ
         </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 45-60 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-basic">
+            พื้นฐาน
+          </div>
+        </div>
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
@@ -379,6 +698,14 @@ window.MathJax = {
           ศึกษาการเคลื่อนที่แบบเร่งคงตัวและไม่คงตัว ครอบคลุมกรณี a(t), a(x), a(v) 
           พร้อมขยายสู่ 2D/3D ด้วยเครื่องมือแคลคูลัสที่สมบูรณ์
         </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 60-75 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-intermediate">
+            ระดับกลาง
+          </div>
+        </div>
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
@@ -408,6 +735,14 @@ window.MathJax = {
           การเคลื่อนที่ในระนาบและอวกาศ ศึกษาโพรเจคไทล์บนพื้นราบและพื้นเอียง 
           รวมถึงผลกระทบของลมและการขยายสู่ 3 มิติ
         </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 75-90 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-intermediate">
+            ระดับกลาง
+          </div>
+        </div>
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
@@ -437,6 +772,14 @@ window.MathJax = {
           การศึกษาการเคลื่อนที่ในกรอบอ้างอิงต่างๆ การแปลงกาลิเลโอ 
           และการประยุกต์ในสถานการณ์จริงเช่น การข้ามแม่น้ำ การเคลื่อนที่บนทางเลื่อน
         </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 90-120 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-advanced">
+            ระดับสูง
+          </div>
+        </div>
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
@@ -466,6 +809,14 @@ window.MathJax = {
           การประยุกต์กฎของนิวตันในการแก้ปัญหาจริง ครอบคลุมแรงเสียดทาน แรงต้านอากาศ 
           พร้อมเทคนิค FBD และการใช้แคลคูลัสขั้นสูง
         </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 120-150 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-advanced">
+            ระดับสูง
+          </div>
+        </div>
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
@@ -484,12 +835,167 @@ window.MathJax = {
 
   </div>
 
+
   <!-- Footer -->
   <div class="footer">
-    <p>📚 Classical Mechanics Part 1 by Coolnut</p>
-    <p>คอร์สกลศาสตร์คลาสสิกสำหรับการเรียนรู้อย่างเป็นระบบ</p>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>📚 Classical Mechanics Part 1</h4>
+        <p>คอร์สกลศาสตร์คลาสสิกสำหรับการเรียนรู้อย่างเป็นระบบ</p>
+        <p>โดย <strong>Coolnut</strong></p>
+      </div>
+      <div class="footer-section">
+        <h4>🔗 ลิงก์ที่เป็นประโยชน์</h4>
+        <ul>
+          <li><a href="#course-overview">ภาพรวมคอร์ส</a></li>
+          <li><a href="chapter1.html">เริ่มเรียนเลย</a></li>
+          <li><a href="#top" onclick="document.getElementById('scroll-top').click()">กลับไปด้านบน</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>⚙️ การตั้งค่า</h4>
+        <ul>
+          <li>🌙 Dark Mode: ใช้ปุ่มด้านบน</li>
+          <li>🔍 Search: พิมพ์ในช่องค้นหา</li>
+          <li>📱 Mobile Friendly</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Classical Mechanics Part 1 by Coolnut. สร้างด้วย ❤️ เพื่อการศึกษา</p>
+    </div>
   </div>
-</div>
+  </div>
+
+<!-- Scroll to top button -->
+<button class="scroll-top" id="scroll-top" title="กลับไปด้านบน">
+  ↑
+</button>
+
+<script>
+// Theme toggle functionality
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+// Check for saved theme preference or default to light
+const currentTheme = localStorage.getItem('theme') || 'light';
+body.setAttribute('data-theme', currentTheme);
+themeToggle.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+
+themeToggle.addEventListener('click', () => {
+  const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  body.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  themeToggle.textContent = newTheme === 'dark' ? '☀️' : '🌙';
+});
+
+
+// Scroll to top functionality
+const scrollTopBtn = document.getElementById('scroll-top');
+
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    scrollTopBtn.classList.add('visible');
+  } else {
+    scrollTopBtn.classList.remove('visible');
+  }
+});
+
+scrollTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+// Search functionality
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+
+const searchData = [
+  {
+    title: 'บทที่ 1+2: พื้นฐานคิเนแมติกส์',
+    description: 'การเคลื่อนที่ 1D, 2D, 3D และการอ่านกราฟ',
+    keywords: 'คิเนแมติกส์ กราฟ เวกเตอร์ ความเร็ว ความเร่ง',
+    url: 'chapter1.html'
+  },
+  {
+    title: 'บทที่ 2: การเคลื่อนที่ 1 มิติขั้นสูง',
+    description: 'การเร่งคงตัวและไม่คงตัว แคลคูลัส',
+    keywords: 'เร่งคงตัว เร่งไม่คงตัว แคลคูลัส อนุพันธ์ อินทิกรัล',
+    url: 'chapter2.html'
+  },
+  {
+    title: 'บทที่ 3: การเคลื่อนที่ 2 มิติ',
+    description: 'โพรเจคไทล์ การเคลื่อนที่บนพื้นเอียง',
+    keywords: 'โพรเจคไทล์ พื้นเอียง ลม 2D 3D คาร์ทีเซียน',
+    url: 'chapter3.html'
+  },
+  {
+    title: 'บทที่ 4: กรอบเฉื่อย & การเคลื่อนที่สัมพัทธ์',
+    description: 'การแปลงกาลิเลโอ กรอบอ้างอิง',
+    keywords: 'กรอบเฉื่อย สัมพัทธ์ กาลิเลโอ อ้างอิง',
+    url: 'Chapter4.html'
+  },
+  {
+    title: 'บทที่ 5: กลศาสตร์นิวตันพื้นฐาน',
+    description: 'กฎของนิวตัน แรงเสียดทาน FBD',
+    keywords: 'นิวตัน แรง เสียดทาน FBD ต้านอากาศ',
+    url: 'chapter5.html'
+  }
+];
+
+searchInput.addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase().trim();
+  
+  if (query.length < 2) {
+    searchResults.style.display = 'none';
+    return;
+  }
+  
+  const filteredResults = searchData.filter(item => 
+    item.title.toLowerCase().includes(query) ||
+    item.description.toLowerCase().includes(query) ||
+    item.keywords.toLowerCase().includes(query)
+  );
+  
+  if (filteredResults.length > 0) {
+    searchResults.innerHTML = filteredResults.map(item => `
+      <div class="search-result-item" onclick="window.location.href='${item.url}'">
+        <div class="search-result-title">${item.title}</div>
+        <div class="search-result-desc">${item.description}</div>
+      </div>
+    `).join('');
+    searchResults.style.display = 'block';
+  } else {
+    searchResults.innerHTML = '<div class="search-result-item"><div class="search-result-desc">ไม่พบผลการค้นหา</div></div>';
+    searchResults.style.display = 'block';
+  }
+});
+
+// Hide search results when clicking outside
+document.addEventListener('click', (e) => {
+  if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+    searchResults.style.display = 'none';
+  }
+});
+
+
+// Smooth scroll for internal links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+</script>
 
 </body>
 </html>
