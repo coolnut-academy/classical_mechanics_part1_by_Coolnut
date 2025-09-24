@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>บทที่ 2 (ใหม่) — การเคลื่อนที่ 1 มิติ: เร่งคงตัว & ไม่คงตัว (ขยายสู่ 2D/3D) — ฉบับสมบูรณ์ Beautiful Math</title>
+<title>บทที่ 2 — การเคลื่อนที่หลายมิติแบบไม่คงเร่ง (2D/3D Non-Uniform Motion)</title>
 
 <!-- MathJax v3 -->
 <script>
@@ -32,6 +32,7 @@ window.MathJax = {
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
+<!-- Styles (รักษาสไตล์เดิม) -->
 <style>
   :root{
     --ink:#0f172a; --muted:#475569; --bg:#ffffff; --bd:#e2e8f0;
@@ -47,7 +48,7 @@ window.MathJax = {
     Roboto, "Noto Sans Thai", "Noto Sans", "Helvetica Neue", Arial, Tahoma, sans-serif;
     line-height:1.9;
   }
-  main{max-width: 1120px; margin: 2rem auto; padding: 0 1rem 4rem;}
+  main{max-width:1120px; margin:2rem auto; padding:0 1rem 4rem;}
   h1{font-size:2.45rem; font-weight:800; letter-spacing:.1px; margin:0 0 .6rem;}
   .lead{color:var(--muted); margin:.25rem 0 1.25rem;}
   h2{font-size:1.68rem; font-weight:760; color:#0b4f54; margin:1.9rem 0 1.05rem;}
@@ -77,24 +78,25 @@ window.MathJax = {
   @media (max-width: 900px){ .cols{grid-template-columns:1fr} }
 </style>
 </head>
+
 <body>
 <main>
   <header>
-    <h1>บทที่ 2 (ใหม่) — การเคลื่อนที่ 1 มิติ: เร่งคงตัว & ไม่คงตัว (ขยายสู่ 2D/3D)</h1>
-    <p class="lead">ฉบับสมบูรณ์ Beautiful Math — สัญลักษณ์มาตรฐาน, สมการจัดบล็อกชัด, คำอธิบายใต้สูตร, สถานการณ์–โจทย์ยาวขึ้นเข้าใจบริบท, และเฉลยทีละขั้น</p>
-    <div class="note"><b>ขอบเขต:</b> คิเนมาติกส์ล้วน (ยังไม่แตะ “แรง/พลังงาน/วงกลม/หมุน”). เวกเตอร์หน่วย \(\ihat,\jhat,\khat\); เวกเตอร์หนา \(\vect{r},\vect{v},\vect{a}\).</div>
+    <h1>บทที่ 2 — การเคลื่อนที่หลายมิติแบบไม่คงเร่ง (2D/3D Non-Uniform Motion)</h1>
+    <p class="lead">โฟกัส Non-Uniform </p>
+    <div class="note"><b>ขอบเขต:</b> คิเนแมติกส์ล้วน (ยังไม่แตะแรง/พลังงาน/วงกลม/หมุน). เวกเตอร์หน่วย \(\ihat,\jhat,\khat\); เวกเตอร์หนา \(\vect{r},\vect{v},\vect{a}\).</div>
   </header>
 
   <nav class="toc">
     <h3 id="toc">สารบัญ</h3>
     <ol>
       <li><a href="#symbols">สัญลักษณ์และข้อกำหนด</a></li>
-      <li><a href="#const">เร่งคงตัว</a></li>
+      <li><a href="#vec">เวกเตอร์คิเนแมติกส์ (นิยาม/สูตรทั่วไป)</a></li>
       <li><a href="#nonconst">เร่งไม่คงตัว: \(a(t), a(x), a(v)\) และ 2D/3D</a></li>
-      <li><a href="#toolkit">กล่องเครื่องมือแคลคูลัสที่ใช้บ่อย</a></li>
-      <li><a href="#situations">สถานการณ์ประยุกต์ (5 กรณี) + เฉลยละเอียด</a></li>
-      <li><a href="#exercises">แบบฝึกหัด (6 ข้อ) + เฉลยทีละขั้น</a></li>
-      <li><a href="#cheatsheet">Cheat Sheet สรุปสูตร</a></li>
+      <li><a href="#toolkit">กล่องเครื่องมือแคลคูลัส (Separation / Parametric / By-Parts / Integrals)</a></li>
+      <li><a href="#examples">สถานการณ์ชีวิตจริง (Examples: 2D + 3D) + เฉลยย่อ</a></li>
+      <li><a href="#problems">โจทย์ท้ายบท (อย่างน้อย 2 ข้อเป็น 3D เต็ม) + เฉลยทีละขั้น</a></li>
+      <li><a href="#cheatsheet">Cheat Sheet — อ้างอิงเร็ว</a></li>
     </ol>
   </nav>
 
@@ -112,31 +114,31 @@ window.MathJax = {
       <div>
         <ul>
           <li>นิยาม: \(v=\dv{x}{t}\), \(a=\dv{v}{t}\)</li>
-          <li>กฎลูกโซ่: \(\dv{v}{t}= \dv{v}{x}\dv{x}{t}=v\,\dv{v}{x}\)</li>
-          <li>เวกเตอร์: \(\vect{r}=x\ihat+y\jhat+z\khat\), \(\norm{\vect{v}}^2=\vect{v}\!\cdot\!\vect{v}\)</li>
+          <li>กฎลูกโซ่ (สำหรับ \(a(x)\)): \(\dv{v}{t}=v\,\dv{v}{x}\)</li>
+          <li>ข้อกำหนดอินทิกรัล: ใช้ \(\tau\) เป็น <em>dummy variable</em> เสมอ เช่น \(\int_0^t a(\tau)\,\dd\tau\)</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="const">
-    <h2>เร่งคงตัว</h2>
+  <section id="vec">
+    <h2>เวกเตอร์คิเนแมติกส์ (Vector Kinematics)</h2>
     <div class="box">
-      <div class="eq-block">\[ v(t)=v_0+a\,t \]</div>
-      <div class="eq-caption">ความเร็วเปลี่ยนเชิงเส้นเมื่อเร่งคงที่</div>
-
-      <div class="eq-block">\[ x(t)=x_0+v_0\,t+\tfrac12\,a\,t^2 \]</div>
-      <div class="eq-caption">ตำแหน่ง = ระยะจากความเร็วต้น \(v_0 t\) + ระยะเพิ่มจากความเร่ง \(\tfrac12 a t^2\)</div>
-
-      <div class="eq-block">\[ v^2=v_0^2+2\,a\,(x-x_0) \]</div>
-      <div class="eq-caption">กำจัดเวลาเมื่อสนใจความเร็ว–ระยะ</div>
-
-      <div class="eq-block">\[
-        \vect{v}(t)=\vect{v}_0+\vect{a}\,t,\qquad
-        \vect{r}(t)=\vect{r}_0+\vect{v}_0\,t+\tfrac12\,\vect{a}\,t^2,\qquad
-        v^2=v_0^2+2\,\vect{a}\!\cdot\!(\vect{r}-\vect{r}_0)
-      \]</div>
-      <div class="eq-caption">เวอร์ชันเวกเตอร์: คิดต่อแกนแล้วประกอบบน \(\ihat,\jhat,\khat\)</div>
+      <div class="eq-block">
+        \[
+          \vect{r}(t)=x(t)\,\ihat + y(t)\,\jhat + z(t)\,\khat,\qquad
+          \vect{v}(t)=\dv{\vect{r}}{t},\qquad
+          \vect{a}(t)=\dv{\vect{v}}{t}
+        \]
+      </div>
+      <div class="eq-caption">คิดแยกแกนเหมือน 1D แล้วประกอบกลับเป็นเวกเตอร์ \(\ihat,\jhat,\khat\)</div>
+      <div class="eq-block">
+        \[
+          \vect{v}(t)=\vect{v}_0+\int_{0}^{t}\!\vect{a}(\tau)\,\dd{\tau},\qquad
+          \vect{r}(t)=\vect{r}_0+\int_{0}^{t}\!\vect{v}(\tau)\,\dd{\tau}
+        \]
+      </div>
+      <div class="eq-caption">กรณีไม่คงเร่ง: ต้องอินทิกรัลทีละแกน</div>
     </div>
   </section>
 
@@ -144,226 +146,286 @@ window.MathJax = {
     <h2>เร่งไม่คงตัว: \(a(t), a(x), a(v)\) และ 2D/3D</h2>
     <div class="box">
       <h3>1) \(a=a(t)\) — ฟังก์ชันของเวลา</h3>
-      <div class="eq-block">\[ v(t)=v_0+\int_{0}^{t}\! a(\tau)\,\dd{\tau},\qquad
-        x(t)=x_0+\int_{0}^{t}\! v(\tau)\,\dd{\tau} \]</div>
+      <div class="eq-block">
+        \[
+          v(t)=v_0+\int_{0}^{t} a(\tau)\,\dd{\tau},\qquad
+          x(t)=x_0+\int_{0}^{t} v(\tau)\,\dd{\tau}
+        \]
+      </div>
       <div class="eq-caption">พื้นที่ใต้กราฟ \(a\!-\!t\) ให้ \(\Delta v\); ใต้ \(v\!-\!t\) ให้ \(\Delta x\)</div>
 
       <h3>2) \(a=a(x)\) — ฟังก์ชันของตำแหน่ง</h3>
-      <p>ใช้โซ่อนุพันธ์ \(a=\dv{v}{t}=v\,\dv{v}{x}\):</p>
-      <div class="eq-block">\[ \tfrac12\,\dv{}{x}(v^2)=a(x)\ \Rightarrow\
-        v^2=v_0^2+2\!\int_{x_0}^{x}\! a(\xi)\,\dd\xi,\qquad
-        t=\int_{x_0}^{x}\!\dfrac{\dd \xi}{v(\xi)} \]</div>
-      <div class="eq-caption">เหมาะเมื่อราง/พื้นผิวถูกกำหนดให้เร่งตามตำแหน่ง</div>
+      <p>ใช้กฎลูกโซ่ \(a=\dv{v}{t}=v\,\dv{v}{x}\):</p>
+      <div class="eq-block">
+        \[
+          \tfrac12\,\dv{}{x}(v^2)=a(x)
+          \Rightarrow
+          v^2=v_0^2+2\!\int_{x_0}^{x}\! a(\xi)\,\dd\xi,
+          \qquad
+          t=\int_{x_0}^x \frac{\dd\xi}{v(\xi)}
+        \]
+      </div>
 
       <h3>3) \(a=a(v)\) — ฟังก์ชันของความเร็ว</h3>
-      <div class="eq-block">\[ \dv{v}{t}=a(v)\ \Rightarrow\ t=\int_{v_0}^{v}\!\dfrac{\dd u}{a(u)},
-        \qquad \dv{v}{x}=\dfrac{a(v)}{v} \]</div>
-      <div class="eq-caption">จำลองการผ่อน/หน่วงที่ขึ้นกับความเร็ว</div>
+      <div class="eq-block">
+        \[
+          \dv{v}{t}=a(v)\ \Rightarrow\
+          t=\int_{v_0}^{v}\!\frac{\dd u}{a(u)},\qquad
+          \dv{v}{x}=\frac{a(v)}{v}
+        \]
+      </div>
 
       <h3>4) หลายมิติ (2D/3D)</h3>
-      <div class="eq-block">\[
-        v_i(t)=v_{0i}+\int_{0}^{t}\! a_i(\tau)\,\dd \tau,\qquad
-        r_i(t)=r_{0i}+\int_{0}^{t}\! v_i(\tau)\,\dd \tau\quad (i=x,y,(z))
-      \]</div>
-      <div class="eq-caption">คิดต่อแกน แล้วประกอบเป็นเวกเตอร์บน \(\ihat,\jhat,\khat\)</div>
+      <div class="eq-block">
+        \[
+          v_i(t)=v_{0i}+\int_{0}^{t}\!a_i(\tau)\,\dd\tau,\qquad
+          r_i(t)=r_{0i}+\int_{0}^{t}\!v_i(\tau)\,\dd\tau\quad (i=x,y,(z))
+        \]
+      </div>
     </div>
   </section>
 
   <section id="toolkit">
-    <h2>กล่องเครื่องมือแคลคูลัสที่ใช้บ่อย</h2>
+    <h2>กล่องเครื่องมือแคลคูลัส (Separation / Parametric / By-Parts / Integrals)</h2>
     <div class="box cols">
       <div>
         <ul>
-          <li>ทฤษฎีบทพื้นฐานของแคลคูลัส (FTC)</li>
-          <li>กฎลูกโซ่: \(\dv{v}{t}=v\,\dv{v}{x}\)</li>
-          <li>แยกตัวแปร: \(\dv{v}{t}=a(v)\Rightarrow \dfrac{\dd v}{a(v)}=\dd t\)</li>
+          <li><b>Separation of Variables</b>: \(\dv{v}{t}=f(v)\Rightarrow\int \dfrac{\dd v}{f(v)}=\int \dd t\)</li>
+          <li><b>Parametric Elimination</b>: กำจัด \(t\) จาก \(x(t),y(t)\) เพื่อหา \(y(x)\) หรือใช้กับ 3D เพื่อหาส่วนโค้งอวกาศจากพาราเมตริก</li>
+          <li><b>Integration by Parts</b>: \(\displaystyle \int u\,dv=uv-\int v\,du\)</li>
         </ul>
       </div>
       <div>
         <ul>
-          <li>อินทิกรัลพหุนาม/ตรีโกณมิติ/เอกซ์โปเนนเชียล</li>
-          <li>อินทิกรัลต่อช่วง (piecewise) + เงื่อนไขความต่อเนื่อง</li>
-          <li>การกำจัดพารามิเตอร์เวลาเพื่อหา \(y(x)\)</li>
+          <li>\(\displaystyle \int e^{-\lambda t}\dd t=-\frac{1}{\lambda}e^{-\lambda t}+C\)</li>
+          <li>\(\displaystyle \int \sin(\omega t)\dd t=-\frac{1}{\omega}\cos(\omega t)+C\)</li>
+          <li>\(\displaystyle \int \frac{\dd v}{v}=\ln|v|+C,\quad \int \frac{\dd v}{v^2}=-\frac{1}{v}+C\)</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="situations">
-    <h2>สถานการณ์ประยุกต์ (5 กรณี) + เฉลยละเอียด</h2>
+  <section id="examples">
+    <h2>สถานการณ์ชีวิตจริง (Examples: 2D + 3D) + เฉลยย่อ</h2>
 
     <div class="problem">
-      <h4>กรณี 1 — รถไฟหยุดพอดีกึ่งกลางชานชาลา (1D, คงเร่ง)</h4>
-      <p><b>บริบท:</b> ขบวนรถไฟต้องหยุดให้ประตูตรง “กึ่งกลางชานชาลา” เพื่อซิงก์ทางเดินล้อเลื่อนอัตโนมัติ.<br>
-         <b>ข้อมูล:</b> ตอนหัวรถผ่าน x=0 มีความเร็วต้น \(v_0\); กึ่งกลางชานชาลาอยู่ที่ \(x=D\); ระบบตั้งหน่วงคงที่ \(a<0\) ได้.<br>
-         <b>สมมติฐาน:</b> ทางตรง, ใช้หน่วงคงที่ตลอดช่วงเข้า (ไม่คงความเร็วกลางทาง).<br>
-         <b>ต้องหา:</b> (ก) \(a\) (ข) \(t_\mathrm{stop}\) (ค) \(v\) ที่ \(x=D/2\).</p>
+      <h4>Example 1 — Projectile with Linear Drag (2D: นักธนูในสนามเปิด)</h4>
+      <p><b>สถานการณ์:</b> ยิงด้วยความเร็วต้น \(v_0\) มุม \(\theta\) กลางอากาศที่มีแรงต้านเชิงเส้น \(k\). ต้องการลักษณะวิถีและพิสัยที่เปลี่ยนไปจากสุญญากาศ.</p>
+      <p><b>โจทย์:</b> หา \(x(t),y(t)\) และอธิบายผลของ drag ต่อพิสัย.</p>
     </div>
     <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(0=v_0^2+2aD\Rightarrow a=-\dfrac{v_0^2}{2D}\).</li>
-        <li>\(v=v_0+at=0\Rightarrow t_\mathrm{stop}=\dfrac{2D}{v_0}\).</li>
-        <li>\(x=D/2:\ v^2=v_0^2+2a(D/2)=0\Rightarrow v=0\).</li>
-      </ol>
-      <div class="tip"><b>ใช้:</b> สูตรกำจัดเวลา \(v^2\)–\(x\) และ \(v\)–\(t\) เชิงเส้น</div>
-    </div>
-
-    <div class="problem">
-      <h4>กรณี 2 — สายพานซิงก์แขนกลหยิบชิ้นงาน (1D, \(a(t)=a_0+\beta t\))</h4>
-      <p><b>บริบท:</b> บนไลน์ผลิต สินค้าต้องถึง “เซลล์หยิบ” ระยะ \(L\) เวลา \(T\) โดย \(v(T)\le V_{\max}\).<br>
-         <b>ข้อมูล:</b> เริ่ม \((x_0,v_0)\), ตั้งโปรไฟล์ \(a(t)=a_0+\beta t\).<br>
-         <b>ต้องหา:</b> \(v(t),x(t)\) และเงื่อนไขพารามิเตอร์ให้ถึงเป้าและไม่เกินความเร็ว.</p>
-    </div>
-    <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(v(t)=v_0+a_0 t+\tfrac12\beta t^2\).</li>
-        <li>\(x(t)=x_0+v_0 t+\tfrac12 a_0 t^2+\tfrac16 \beta t^3\).</li>
-        <li>\(x(T)-x_0=v_0 T+\tfrac12 a_0 T^2+\tfrac16 \beta T^3=L\).</li>
-        <li>\(v(T)=v_0+a_0 T+\tfrac12\beta T^2\le V_{\max}\).</li>
-      </ol>
+      <h4>เฉลยย่อ</h4>
+      <div class="eq-block">
+        \[
+          a_x=-k v_x,\ a_y=-g-k v_y
+          \Rightarrow
+          v_x=v_{0x}e^{-kt},\quad
+          x(t)=\frac{v_{0x}}{k}(1-e^{-kt})
+        \]
+        \[
+          v_y=\Big(v_{0y}+\frac{g}{k}\Big)e^{-kt}-\frac{g}{k},\quad
+          y(t)=\frac{1}{k}\Big(v_{0y}+\frac{g}{k}\Big)(1-e^{-kt})-\frac{g}{k}\,t
+        \]
+      </div>
     </div>
 
     <div class="problem">
-      <h4>กรณี 3 — AGV เบี่ยงเลนหลบพาเลตเป็นพาราโบลา (2D, \(\vect{a}=(0,\alpha)\))</h4>
-      <p><b>บริบท:</b> AGV ต้อง “ปาดเลน” หลบพาเลตในช่วง \(x\in[0,X]\) โดยคง \(v_x=u\) ให้จังหวะผลิตไม่สะดุด.<br>
-         <b>ข้อมูล:</b> ตั้ง \(a_y=\alpha\) คงที่ช่วงเลี่ยง, เริ่มที่ (0,0).<br>
-         <b>ต้องหา:</b> \(y(x)\), มุมหัวรถที่ \(x=X\), และตรวจ \(y(X)\) ≥ \(h\) (clearance).</p>
+      <h4>Example 2 — AGV เบี่ยงเลน (2D: โรงงานอุตสาหกรรม)</h4>
+      <p><b>สถานการณ์:</b> AGV วิ่งด้วย \(v_x\) คงที่ เลี้ยวนุ่มนวลด้วยความเร่งด้านข้างเพิ่มตามเวลา \(a_y=\alpha t\) เพื่อลดแรงกระชาก.</p>
+      <p><b>โจทย์:</b> หาเส้นทาง \(y(x)\) และสรุปความปลอดภัยจากรูปโค้ง.</p>
     </div>
     <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(x=ut,\ y=\tfrac12\alpha t^2\Rightarrow t=x/u\).</li>
-        <li>\(y(x)=\dfrac{\alpha}{2u^2}x^2\).</li>
-        <li>\(x=X:\ v_y=\alpha X/u,\ \theta=\arctan(\alpha X/u^2)\); ตรวจ \(y(X)\ge h\).</li>
-      </ol>
+      <h4>เฉลยย่อ</h4>
+      <div class="eq-block">
+        \[
+          v_y=\tfrac12\alpha t^2,\ y=\tfrac16\alpha t^3,\ x=v_x t
+          \Rightarrow
+          \boxed{\,y(x)=\dfrac{\alpha}{6v_x^{3}}x^{3}\,}
+        \]
+      </div>
     </div>
 
     <div class="problem">
-      <h4>กรณี 4 — โซนกล้องต้องภาพคม (1D, \(a(v)=-\lambda v\))</h4>
-      <p><b>บริบท:</b> ต้องลดจาก \(v_0\) เหลือ \(qv_0\) ภายในโซนกว้าง \(W\) เพื่อไม่ให้ภาพเบลอ.<br>
-         <b>ต้องหา:</b> ระยะ \(\Delta x\) ที่ใช้และเงื่อนไขเพียงพอของ \(W\).</p>
+      <h4>Example 3 — Delivery Drone (3D: ลมผันผวน + ไต่ระดับ)</h4>
+      <p><b>สถานการณ์:</b> Drone ออกจาก \(\vect{r}_0\) ด้วย \(\vect{v}_0\) บินผ่านลมที่เปลี่ยนตามเวลา: โยกไซน์ในแกน \(x\), อ่อนลงเอ็กซ์โปเนนเชียลในแกน \(y\), และไต่ระดับเองในแกน \(z\).</p>
+      <p><b>โจทย์:</b> ให้
+        \(\displaystyle \vect{a}(t)=a_0\sin(\omega t)\,\ihat+\beta e^{-\lambda t}\,\jhat+\gamma t\,\khat\).
+        จงหา \(\vect{v}(t)\) และ \(\vect{r}(t)\) ในรูปเวกเตอร์ \(\ihat,\jhat,\khat\) และอธิบายลักษณะเส้นทาง.</p>
     </div>
     <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(v(t)=v_0 e^{-\lambda t}\) จาก \(\dv{v}{t}=-\lambda v\).</li>
-        <li>\(\Delta x=\dfrac{v_0}{\lambda}(1-e^{-\lambda t})\).</li>
-        <li>ที่ \(v=qv_0:\ t=\dfrac{1}{\lambda}\ln\dfrac{1}{q}\Rightarrow \Delta x=\dfrac{v_0}{\lambda}(1-q)\le W\).</li>
-      </ol>
+      <h4>เฉลยย่อ</h4>
+      <div class="eq-block">
+        \[
+          \boxed{\;
+          \begin{aligned}
+            v_x&=v_{0x}+\frac{a_0}{\omega}(1-\cos\omega t), &
+            r_x&=r_{0x}+v_{0x}t+\frac{a_0}{\omega}\Big(t-\frac{\sin\omega t}{\omega}\Big)\\
+            v_y&=v_{0y}+\frac{\beta}{\lambda}(1-e^{-\lambda t}), &
+            r_y&=r_{0y}+v_{0y}t+\frac{\beta}{\lambda}\Big(t-\frac{1-e^{-\lambda t}}{\lambda}\Big)\\
+            v_z&=v_{0z}+\tfrac12\gamma t^2, &
+            r_z&=r_{0z}+v_{0z}t+\tfrac16\gamma t^3
+          \end{aligned}
+          \;}
+        \]
+        \[
+          \vect{v}=v_x\ihat+v_y\jhat+v_z\khat,\qquad
+          \vect{r}=r_x\ihat+r_y\jhat+r_z\khat
+        \]
+      </div>
     </div>
 
     <div class="problem">
-      <h4>กรณี 5 — โดรนผ่าน “ห่วงตรวจ” ตรงเวลา–ความเร็ว (3D, \(\vect{a}(t)=\vect{a}_0+\vect{b}\,t\))</h4>
-      <p><b>บริบท:</b> โดรนต้องลอดห่วงตำแหน่ง \(\vect{R}\) เวลา \(T\) ด้วยความเร็ว \(\vect{V}\) เพื่อเก็บข้อมูลต่อเนื่อง.<br>
-         <b>ต้องหา:</b> \(\vect{a}_0,\vect{b}\) ให้ \(\vect{r}(T)=\vect{R}\), \(\vect{v}(T)=\vect{V}\).</p>
+      <h4>Example 4 — Hybrid Acceleration (3D: ส่วน z ต้อง By-Parts)</h4>
+      <p><b>สถานการณ์:</b> แพลตฟอร์มหุ่นยนต์เคลื่อนที่ในอุโมงค์ทดสอบ โดยมีการกระตุ้นต่างชนิดกันในแต่ละแกน:
+        \(\ a_x=a_0\sin(\omega t),\ a_y=\beta e^{-\lambda t},\ a_z=t e^{-\lambda t}\).
+        ต้องการหา \(\vect{v}(t),\vect{r}(t)\) แบบครบมิติ.</p>
+      <p><b>โจทย์:</b> อินทิกรัลแกน \(z\) ต้องใช้ Integration by Parts; จงแสดงผลลัพธ์เป็นเวกเตอร์ \(\ihat,\jhat,\khat\).</p>
     </div>
     <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(\vect{v}(T)=\vect{v}_0+\vect{a}_0 T+\tfrac12 \vect{b}T^2=\vect{V}\).</li>
-        <li>\(\vect{r}(T)=\vect{r}_0+\vect{v}_0 T+\tfrac12 \vect{a}_0 T^2+\tfrac16 \vect{b}T^3=\vect{R}\).</li>
-        <li>\(\displaystyle \vect{b}=\frac{6}{T^2}\!\left(\frac{\vect{R}-\vect{r}_0}{T}-\frac{\vect{v}_0+\vect{V}}{2}\right),\quad
-            \vect{a}_0=\frac{\vect{V}-\vect{v}_0}{T}-\tfrac12 \vect{b}T.\)</li>
-      </ol>
+      <h4>เฉลยย่อ</h4>
+      <div class="eq-block">
+        \[
+          v_x=v_{0x}+\frac{a_0}{\omega}(1-\cos\omega t),\quad
+          v_y=v_{0y}+\frac{\beta}{\lambda}(1-e^{-\lambda t})
+        \]
+        \[
+          \int_0^t \tau e^{-\lambda \tau}\dd\tau
+          =-\Big(\frac{t}{\lambda}+\frac{1}{\lambda^2}\Big)e^{-\lambda t}+\frac{1}{\lambda^2}
+          \Rightarrow
+          v_z=v_{0z}-\Big(\frac{t}{\lambda}+\frac{1}{\lambda^2}\Big)e^{-\lambda t}+\frac{1}{\lambda^2}
+        \]
+        \[
+          \Rightarrow\quad
+          \vect{v}(t)=v_x\,\ihat+v_y\,\jhat+v_z\,\khat
+        \]
+        (ตำแหน่ง \(\vect{r}(t)\) ได้จากอินทิกรัลของ \(v_i(t)\) แต่ละแกน; ผลมาตรฐานตามอินทิกรัลในบท)
+      </div>
+      <p class="tip"><b>Cheat Sheet:</b> \(\int\sin\), \(\int e^{-\lambda t}\), Integration by Parts (แกน \(z\))</p>
     </div>
+
+    <div class="problem">
+        <h4>ข้อ 5 — 3D Guide-Rail Pod กับตัวขับแบบตำแหน่ง (Position-Dependent) : \(a=a(r)\)</h4>
+        <p><b>สถานการณ์ (สั้นกำลังดี):</b> แคปซูลลำเลียงวิ่งในอุโมงค์นำทาง 3 มิติ โดยแต่ละแกนมีบูสเตอร์ที่ให้ความเร่งขึ้นกับตำแหน่งตามแนวรางของตัวเอง เพื่อควบคุมความเร็วให้ปลอดภัยเมื่อเข้าใกล้จุดหมาย ปรับแบบจำลองเป็น
+          \(\ a_x(x)=-\kappa_x x,\ a_y(y)=-\kappa_y y,\ a_z(z)=-\kappa_z z\) (ลักษณะฟื้นคืนเชิงเส้นคล้ายสปริง 3D). เริ่มจากตำแหน่ง \(\vect{r}_0=(x_0,y_0,z_0)\) และความเร็วต้น \(\vect{v}_0=(v_{0x},v_{0y},v_{0z})\).</p>
+        <p><b>โจทย์:</b> (ก) หา <i>ความสัมพันธ์ความเร็ว–ตำแหน่ง</i> รายแกนในรูป \(v_i(r_i)\) (สำหรับ \(i=x,y,z\)) โดยใช้กฎลูกโซ่  
+           (ข) เขียน \(\vect{v}(t)\) และ \(\vect{r}(t)\) ในเชิงอินทิกรัล  
+           (ค) แสดงอินทิกรัลเวลารูปทั่วไป \(t=\displaystyle\int \frac{\dd r_i}{v_i(r_i)}\) สำหรับอย่างน้อยหนึ่งแกน และอธิบายเชิงคุณภาพว่าแคปซูลจะชะลอเมื่อเข้าใกล้จุดหมายได้อย่างไร</p>
+      </div>
+      <div class="solution">
+        <h4>เฉลย</h4>
+        <ol class="steps">
+          <li><b>กฎลูกโซ่รายแกน:</b> \(a_i=\dv{v_i}{t}=v_i\,\dv{v_i}{r_i}\) จึงได้  
+            \(\displaystyle v_i\,\dv{v_i}{r_i}=a_i(r_i)\ \Rightarrow\ \dv{}{r_i}\!\Big(\tfrac12 v_i^2\Big)=a_i(r_i)\).</li>
+          <li><b>อินทิกรัลระหว่างตำแหน่ง:</b>  
+            \(\displaystyle \tfrac12\big(v_i^2-v_{0i}^2\big)=\int_{r_{0i}}^{r_i}\! a_i(\xi)\,\dd\xi\).  
+            สำหรับ \(a_i(\xi)=-\kappa_i \xi\) ได้  
+            \[
+              \int_{r_{0i}}^{r_i} (-\kappa_i \xi)\,\dd\xi = -\tfrac12\kappa_i\,(r_i^2-r_{0i}^2)
+              \Rightarrow
+              \boxed{\,v_i^2(r_i)=v_{0i}^2-\kappa_i\,(r_i^2-r_{0i}^2)\,}.
+            \]</li>
+          <li><b>เวกเตอร์ความเร็ว/ตำแหน่ง:</b>  
+            \(\displaystyle \vect{v}(t)=v_x\ihat+v_y\jhat+v_z\khat,\quad
+            \vect{r}(t)=x\ihat+y\jhat+z\khat\),  
+            โดย \(v_i(r_i)\) ให้มาจากข้อ (2) และความสัมพันธ์เวลาได้จากอินทิกรัลต่อไปนี้</li>
+          <li><b>เวลาในรูปอินทิกรัล:</b> รายแกน  
+            \[
+              \boxed{\,t-t_0=\int_{r_{0i}}^{r_i}\frac{\dd\xi}{\sqrt{\,v_{0i}^2-\kappa_i(\xi^2-r_{0i}^2)\,}}\,}
+            \]
+            (เป็นอินทิกรัลชนิดอาร์คไซน์/อาร์คซินไฮเพอร์โบลิกแล้วแต่สัญญาณของพจน์ภายในราก). ในการคำนวณจริง ให้เลือกแกนใดแกนหนึ่งเป็น “นาฬิกา” และใช้ \(r_i(t)\) เป็นพารามิเตอร์เพื่อพล็อตเส้นโค้งอวกาศ.</li>
+          <li><b>สรุปเชิงคุณภาพ:</b> เมื่อ \(|r_i|\) เพิ่ม เทอม \(-\kappa_i r_i^2\) ทำให้ \(v_i^2\) ลดลง → ระบบ “ดึงกลับ/ชะลอ” ใกล้ตำแหน่งสมดุล; เสถียรภาพตามแนวรางเกิดจากสนามเร่งที่ขึ้นกับตำแหน่ง.</li>
+        </ol>
+        <p class="tip"><b>Cheat Sheet:</b> แบบฟอร์ม \(a(x)\Rightarrow \tfrac12\dv{}{x}(v^2)=a(x)\ \Rightarrow\ v^2=v_0^2+2\!\int a(x)\,\dd x\); ใช้ \(\tau\) เป็นตัวแปรจำลองในอินทิกรัลเวลาเมื่อเขียน \(\vect{r}(t)=\vect{r}_0+\int_0^t \vect{v}(\tau)\,\dd\tau\).</p>
+      </div>  
   </section>
 
-  <section id="exercises">
-    <h2>แบบฝึกหัด (6 ข้อ) + เฉลยทีละขั้น</h2>
+  <section id="problems">
+    <h2>โจทย์ท้ายบท</h2>
 
     <div class="problem">
-      <h4>ข้อ 1 — \(a(t)=a_0\cos(\omega t)\) (1D)</h4>
-      <p>ห้องแล็บทดสอบการสั่นของสายพาน เริ่ม \((x_0,v_0)\). จงหา \(v(t),x(t)\) และเวลาบวกแรกที่ \(v(t)=v_0\).</p>
+      <h4>ข้อ 1 — 3D Projectile with Linear Drag (เวกเตอร์ \(\ihat,\jhat,\khat\))</h4>
+      <p><b>สถานการณ์:</b> ลูกบอลถูกยิงจากแท่นด้วยเวกเตอร์ความเร็วต้น \(\vect{v}_0=v_{0x}\ihat+v_{0y}\jhat+v_{0z}\khat\) ในอากาศที่มีแรงต้านเชิงเส้น. แรงโน้มถ่วงมีผลในแกน \(-\jhat\) เท่านั้น.</p>
+      <p><b>โมเดล:</b> \(\ a_x=-k v_x,\ a_y=-g-k v_y,\ a_z=-k v_z\).</p>
+      <p><b>โจทย์:</b> หา \(\vect{v}(t)\) และ \(\vect{r}(t)\) แบบเวกเตอร์ครบ 3 แกน.</p>
     </div>
     <div class="solution">
       <h4>เฉลย</h4>
       <ol class="steps">
-        <li>\(v(t)=v_0+\dfrac{a_0}{\omega}\sin(\omega t)\).</li>
-        <li>\(x(t)=x_0+v_0 t-\dfrac{a_0}{\omega^2}\big(1-\cos(\omega t)\big)\).</li>
-        <li>\(\sin(\omega t)=0\Rightarrow t=\pi/\omega\) (บวกแรก).</li>
+        <li>\(v_x=v_{0x}e^{-kt}\Rightarrow x(t)=\dfrac{v_{0x}}{k}(1-e^{-kt})\).</li>
+        <li>\(v_y=\big(v_{0y}+\tfrac{g}{k}\big)e^{-kt}-\tfrac{g}{k}
+            \Rightarrow y(t)=\dfrac{1}{k}\big(v_{0y}+\tfrac{g}{k}\big)(1-e^{-kt})-\tfrac{g}{k}\,t\).</li>
+        <li>\(v_z=v_{0z}e^{-kt}\Rightarrow z(t)=\dfrac{v_{0z}}{k}(1-e^{-kt})\).</li>
+        <li>\(\displaystyle \boxed{\ \vect{v}(t)=v_x\ihat+v_y\jhat+v_z\khat,\ \ \vect{r}(t)=x\ihat+y\jhat+z\khat\ }\).</li>
       </ol>
-      <div class="note"><b>ใช้:</b> อินทิกรัลตรีโกณมิติ</div>
     </div>
 
     <div class="problem">
-      <h4>ข้อ 2 — \(a(x)=a_0-\beta x\) (1D)</h4>
-      <p>รางออกแบบให้ชะลอใกล้ปลายทาง: เริ่ม \(x_0=0,v_0=0\). หา \(v(x)\) และเวลาไปถึง \(x=L\).</p>
+      <h4>ข้อ 2 — 3D Drone Path under Mixed Accelerations</h4>
+      <p><b>สถานการณ์:</b> Drone เริ่มที่ \(\vect{r}_0\) ด้วย \(\vect{v}_0\) แล้วพบสนามเร่ง:
+        \(\ a_x=a_0\sin(\omega t),\ a_y=\beta e^{-\lambda t},\ a_z=\gamma t\).
+        ต้องการเส้นทางบิน 3 มิติสำหรับระบบนำทาง.</p>
+      <p><b>โจทย์:</b> หา \(\vect{v}(t)\) และ \(\vect{r}(t)\) เป็นเวกเตอร์.</p>
     </div>
     <div class="solution">
       <h4>เฉลย</h4>
       <ol class="steps">
-        <li>\(v\,\dv{v}{x}=a_0-\beta x\Rightarrow \tfrac12\dv{}{x}(v^2)=a_0-\beta x\).</li>
-        <li>\(v^2=2a_0 x-\beta x^2\Rightarrow v(x)=\sqrt{2a_0 x-\beta x^2}\).</li>
-        <li>\(t=\int_0^L \dfrac{\dd x}{\sqrt{2a_0 x-\beta x^2}}\) — ใช้การแทน \(x=\dfrac{2a_0}{\beta}\sin^2\theta\).</li>
+        <li>\(v_x=v_{0x}+\tfrac{a_0}{\omega}(1-\cos\omega t),\ \ r_x=r_{0x}+v_{0x}t+\tfrac{a_0}{\omega}\!\big(t-\tfrac{\sin\omega t}{\omega}\big)\).</li>
+        <li>\(v_y=v_{0y}+\tfrac{\beta}{\lambda}(1-e^{-\lambda t}),\ \ r_y=r_{0y}+v_{0y}t+\tfrac{\beta}{\lambda}\!\big(t-\tfrac{1-e^{-\lambda t}}{\lambda}\big)\).</li>
+        <li>\(v_z=v_{0z}+\tfrac12\gamma t^2,\ \ r_z=r_{0z}+v_{0z}t+\tfrac16\gamma t^3\).</li>
+        <li>สรุป \(\vect{v},\vect{r}\) โดยประกอบ \(\ihat,\jhat,\khat\).</li>
       </ol>
-      <div class="note"><b>ใช้:</b> โซ่อนุพันธ์, อินทิกรัลรากกำลังสอง</div>
     </div>
 
     <div class="problem">
-      <h4>ข้อ 3 — \(a(v)=-\lambda v+c\) (1D)</h4>
-      <p>ผ่อนด้วยสัดส่วนความเร็วและมีแรงขับคงที่ \(c\): แก้ \(\dv{v}{t}=-\lambda v+c,\ v(0)=v_0\) แล้วหา \(x(t)\).</p>
+      <h4>ข้อ 3 — AGV บนสกายบริดจ์ (3D: วิ่งตรง + เลี้ยว + ไต่ระดับแบบไม่คงเร่ง)</h4>
+      <p><b>สถานการณ์:</b> รถ AGV เคลื่อนในโถงยกระดับ: วิ่งตรงตามแกน \(x\) ด้วย \(v_x\) คงที่, เบี่ยงเลนในแกน \(y\) ด้วย \(a_y=\alpha t\), และถูกยกขึ้นช้า ๆ ด้วยลิฟต์รางให้ความเร่ง \(a_z=\gamma t\).</p>
+      <p><b>โจทย์:</b> หาเส้นโค้งอวกาศ \(\vect{r}(t)\) และความสัมพันธ์ \(y(x), z(x)\).</p>
     </div>
     <div class="solution">
       <h4>เฉลย</h4>
       <ol class="steps">
-        <li>\(v(t)=(v_0-\tfrac{c}{\lambda})e^{-\lambda t}+\tfrac{c}{\lambda}\).</li>
-        <li>\(x(t)=x_0+\tfrac{v_0-\tfrac{c}{\lambda}}{\lambda}(1-e^{-\lambda t})+\tfrac{c}{\lambda}t\).</li>
+        <li>\(x=v_x t \Rightarrow t=\dfrac{x}{v_x}\).</li>
+        <li>\(v_y=\tfrac12\alpha t^2,\ y=\tfrac16\alpha t^3\Rightarrow
+               \boxed{\,y(x)=\dfrac{\alpha}{6v_x^3}x^3\,}\).</li>
+        <li>\(v_z=\tfrac12\gamma t^2,\ z=\tfrac16\gamma t^3\Rightarrow
+               \boxed{\,z(x)=\dfrac{\gamma}{6v_x^3}x^3\,}\).</li>
+        <li>\(\vect{r}(t)=x\ihat+y\jhat+z\khat\) ด้วยนิยามข้างต้น.</li>
       </ol>
     </div>
 
     <div class="problem">
-      <h4>ข้อ 4 — 2D: \(a_x(t)=a_0\sin(\omega t),\ a_y(t)=\alpha\)</h4>
-      <p>รางคัดแยก “โค้ง–ยก”: เริ่ม \((0,0)\), \(\vect{v}_0=(u,0)\). หา \(\vect{v}(t),\vect{r}(t)\) และ \(y(x)\).</p>
-    </div>
-    <div class="solution">
-      <h4>เฉลยละเอียด</h4>
-      <ol class="steps">
-        <li>\(v_x=u-\dfrac{a_0}{\omega}(1-\cos\omega t),\quad x=ut-\dfrac{a_0}{\omega}\!\left(t-\dfrac{\sin\omega t}{\omega}\right)\).</li>
-        <li>\(v_y=\alpha t,\quad y=\tfrac12\alpha t^2\).</li>
-        <li>\(y(x)\): ใช้พาราเมตริก \((x(t),y(t))\) หรือแก้ \(t\) จาก \(x(t)\) แบบเชิงตัวเลข.</li>
-      </ol>
-    </div>
-
-    <div class="problem">
-      <h4>ข้อ 5 — 3D: \(\vect{a}(t)=\vect{a}_0\cos(\omega t)\)</h4>
-      <p>หัวจับหุ่นยนต์ทดสอบแรงสั่นสามแกน: หา \(\vect{v}(t),\vect{r}(t)\) จาก \(\vect{r}_0,\vect{v}_0\).</p>
+      <h4>ข้อ 4 — Hybrid 3D with By-Parts on \(z\)-axis</h4>
+      <p><b>สถานการณ์:</b> แท่นทดสอบหุ่นยนต์ในห้องปฏิบัติการสร้างสนามเร่ง:
+        \(\ a_x=a_0\sin(\omega t),\ a_y=\beta e^{-\lambda t},\ a_z=t e^{-\lambda t}\).
+        วิศวกรต้องการแบบจำลองความเร็ว/ตำแหน่งเพื่อปรับคอนโทรลเลอร์.</p>
+      <p><b>โจทย์:</b> หา \(\vect{v}(t)\) และ \(\vect{r}(t)\) โดยแสดงขั้นตอน Integration by Parts สำหรับแกน \(z\).</p>
     </div>
     <div class="solution">
       <h4>เฉลย</h4>
       <ol class="steps">
-        <li>\(\vect{v}(t)=\vect{v}_0+\dfrac{\vect{a}_0}{\omega}\sin(\omega t)\).</li>
-        <li>\(\vect{r}(t)=\vect{r}_0+\vect{v}_0 t-\dfrac{\vect{a}_0}{\omega^2}\big(1-\cos(\omega t)\big)\).</li>
-      </ol>
-    </div>
-
-    <div class="problem">
-      <h4>ข้อ 6 — 3D: ตั้ง \(\vect{a}(t)=\vect{a}_0+\vect{b}t\) ให้ถึงเป้า</h4>
-      <p>โดรนนัดพบ: ถึง \(\vect{R}\) ที่เวลา \(T\) ด้วย \(\vect{V}\). หา \(\vect{a}_0,\vect{b}\).</p>
-    </div>
-    <div class="solution">
-      <h4>เฉลย</h4>
-      <ol class="steps">
-        <li>\(\vect{b}=\dfrac{6}{T^2}\!\left(\dfrac{\vect{R}-\vect{r}_0}{T}-\dfrac{\vect{v}_0+\vect{V}}{2}\right)\).</li>
-        <li>\(\vect{a}_0=\dfrac{\vect{V}-\vect{v}_0}{T}-\tfrac12 \vect{b}T\).</li>
+        <li>\(v_x=v_{0x}+\tfrac{a_0}{\omega}(1-\cos\omega t),\quad
+               v_y=v_{0y}+\tfrac{\beta}{\lambda}(1-e^{-\lambda t})\).</li>
+        <li>\(\int_0^t \tau e^{-\lambda \tau}\dd\tau
+              =-\big(\tfrac{t}{\lambda}+\tfrac{1}{\lambda^2}\big)e^{-\lambda t}+\tfrac{1}{\lambda^2}
+              \Rightarrow v_z=v_{0z}-\big(\tfrac{t}{\lambda}+\tfrac{1}{\lambda^2}\big)e^{-\lambda t}+\tfrac{1}{\lambda^2}\).</li>
+        <li>อินทิกรัลของ \(v_i\) ให้ \(r_i\) ตามมาตรฐาน (เหมือนใน Examples 3–4) แล้วประกอบ
+            \(\vect{v}=v_x\ihat+v_y\jhat+v_z\khat,\ \vect{r}=r_x\ihat+r_y\jhat+r_z\khat\).</li>
       </ol>
     </div>
   </section>
 
   <section id="cheatsheet">
-    <h2>Cheat Sheet สรุปสูตร</h2>
+    <h2>Cheat Sheet</h2>
     <div class="box">
       <ul>
-        <li>คงเร่ง: \(v=v_0+at\), \(x=x_0+v_0 t+\tfrac12 a t^2\), \(v^2=v_0^2+2a(x-x_0)\)</li>
-        <li>\(a(t)\): \(v=v_0+\int a\,\dd t\), \(x=x_0+\int v\,\dd t\)</li>
-        <li>\(a(x)\): \(v^2=v_0^2+2\!\int a(x)\,\dd x\), \(t=\int \dd x/v(x)\)</li>
-        <li>\(a(v)\): \(t=\int \dd v/a(v)\), \(\dv{v}{x}=a(v)/v\)</li>
-        <li>2D/3D: ทำต่อแกนแล้วประกอบบน \(\ihat,\jhat,\khat\)</li>
+        <li>\(a(t)\): \(v=v_0+\int a(\tau)\,\dd\tau,\ \ x=x_0+\int v(\tau)\,\dd\tau\)</li>
+        <li>\(a(x)\): \(v^2=v_0^2+2\int a(x)\,\dd x,\ \ t=\int \dd x/v(x)\)</li>
+        <li>\(a(v)\): \(t=\int \dd v/a(v),\ \ \dv{v}{x}=\dfrac{a(v)}{v}\)</li>
+        <li>2D/3D: \(v_i=v_{0i}+\int a_i(\tau)\,\dd\tau,\ \ r_i=r_{0i}+\int v_i(\tau)\,\dd\tau\) สำหรับ \(i=x,y,z\)</li>
+        <li>เทคนิค: Separation / Parametric / Integration-by-Parts / \(\int e^{-\lambda t}\), \(\int \sin(\omega t)\)</li>
       </ul>
     </div>
   </section>
-
 </main>
 </body>
 </html>
