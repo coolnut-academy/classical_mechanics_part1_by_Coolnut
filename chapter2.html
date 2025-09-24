@@ -213,21 +213,24 @@ window.MathJax = {
       <p><b>สถานการณ์:</b> ยิงด้วยความเร็วต้น \(v_0\) มุม \(\theta\) กลางอากาศที่มีแรงต้านเชิงเส้น \(k\). ต้องการลักษณะวิถีและพิสัยที่เปลี่ยนไปจากสุญญากาศ.</p>
       <p><b>โจทย์:</b> หา \(x(t),y(t)\) และอธิบายผลของ drag ต่อพิสัย.</p>
     </div>
-    <div class="solution">
-      <h4>เฉลยย่อ</h4>
-      <div class="eq-block">
-        \[
-          a_x=-k v_x,\ a_y=-g-k v_y
-          \Rightarrow
-          v_x=v_{0x}e^{-kt},\quad
-          x(t)=\frac{v_{0x}}{k}(1-e^{-kt})
-        \]
-        \[
-          v_y=\Big(v_{0y}+\frac{g}{k}\Big)e^{-kt}-\frac{g}{k},\quad
-          y(t)=\frac{1}{k}\Big(v_{0y}+\frac{g}{k}\Big)(1-e^{-kt})-\frac{g}{k}\,t
-        \]
-      </div>
-    </div>
+<div class="solution">
+  <h4>เฉลยย่อ</h4>
+  <p class="note" style="font-size:.95em;opacity:.85">
+    หมายเหตุ: ใช้สัญลักษณ์ <b>\(\lambda \equiv k/m\)</b> เป็นค่าสัมประสิทธิ์หน่วงเชิงเส้นต่อมวล (หน่วย \(s^{-1}\)).
+  </p>
+  <div class="eq-block">
+    \[
+      a_x=-\lambda v_x,\qquad a_y=-g-\lambda v_y
+      \;\Rightarrow\;
+      v_x(t)=v_{0x}e^{-\lambda t},\quad
+      x(t)=\frac{v_{0x}}{\lambda}\!\left(1-e^{-\lambda t}\right)
+    \]
+    \[
+      v_y(t)=\left(v_{0y}+\frac{g}{\lambda}\right)e^{-\lambda t}-\frac{g}{\lambda},\quad
+      y(t)=\frac{1}{\lambda}\left(v_{0y}+\frac{g}{\lambda}\right)\!\left(1-e^{-\lambda t}\right)-\frac{g}{\lambda}\,t
+    \]
+  </div>
+</div>
 
     <div class="problem">
       <h4>Example 2 — AGV เบี่ยงเลน (2D: โรงงานอุตสาหกรรม)</h4>
