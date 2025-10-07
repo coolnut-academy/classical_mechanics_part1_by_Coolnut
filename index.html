@@ -5,16 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Classical Mechanics Part 1 by Coolnut — Course Index</title>
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DPWXE0VL75"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DPWXE0VL75');
-</script>
-  
 <!-- MathJax v3 -->
 <script>
 window.MathJax = {
@@ -404,6 +394,16 @@ window.MathJax = {
     transform: translateX(2px);
   }
   
+  .chapter-link.locked {
+    background: #94a3b8; /* slate-400 */
+    cursor: not-allowed;
+  }
+  
+  .chapter-link.locked:hover {
+    background: #94a3b8;
+    transform: none;
+  }
+  
   .chapter-link::after {
     content: '→';
     transition: transform 0.2s ease;
@@ -700,12 +700,12 @@ window.MathJax = {
       <div class="chapter-header">
         <div class="status-badge status-intermediate">ระดับกลาง</div>
         <div class="chapter-number">บทที่ 2</div>
-        <h3 class="chapter-title">บทที่ 2 — การเคลื่อนที่หลายมิติแบบไม่คงเร่ง </h3>
-        <p class="chapter-subtitle">(2D/3D Non-Uniform Motion)</p>
+        <h3 class="chapter-title">การเคลื่อนที่ 1 มิติขั้นสูง</h3>
+        <p class="chapter-subtitle">เร่งคงตัว & ไม่คงตัว — Beautiful Math</p>
       </div>
       <div class="chapter-content">
         <p class="chapter-description">
-          โฟกัส Non-Uniform 
+          ศึกษาการเคลื่อนที่แบบเร่งคงตัวและไม่คงตัว ครอบคลุมกรณี a(t), a(x), a(v) 
           พร้อมขยายสู่ 2D/3D ด้วยเครื่องมือแคลคูลัสที่สมบูรณ์
         </p>
         <div class="chapter-meta">
@@ -719,10 +719,11 @@ window.MathJax = {
         <div class="chapter-topics">
           <h4>หัวข้อสำคัญ</h4>
           <ul class="topics-list">
-            <li>โฟกัส Non-Uniform</li>
+            <li>การเร่งคงตัวและสมการพื้นฐาน</li>
+            <li>การเร่งไม่คงตัว: a(t), a(x), a(v)</li>
             <li>กล่องเครื่องมือแคลคูลัส</li>
-            <li>สถานการณ์ประยุกต์</li>
-            <li>แบบฝึกหัด พร้อมเฉลย</li>
+            <li>สถานการณ์ประยุกต์ 5 กรณี</li>
+            <li>แบบฝึกหัด 6 ข้อพร้อมเฉลย</li>
           </ul>
         </div>
         <a href="chapter2.html" class="chapter-link">
@@ -836,8 +837,8 @@ window.MathJax = {
             <li>เทคนิค FBD และหมายเหตุ</li>
           </ul>
         </div>
-        <a href="chapter5.html" class="chapter-link">
-          เริ่มเรียน
+        <a href="#" class="chapter-link locked">
+          🔒 รอ Admin ปลดล็อค
         </a>
       </div>
     </div>
@@ -950,7 +951,8 @@ const searchData = [
     title: 'บทที่ 5: กลศาสตร์นิวตันพื้นฐาน',
     description: 'กฎของนิวตัน แรงเสียดทาน FBD',
     keywords: 'นิวตัน แรง เสียดทาน FBD ต้านอากาศ',
-    url: 'chapter5.html'
+    url: 'chapter5.html',
+    locked: true
   }
 ];
 
@@ -970,9 +972,9 @@ searchInput.addEventListener('input', (e) => {
   
   if (filteredResults.length > 0) {
     searchResults.innerHTML = filteredResults.map(item => `
-      <div class="search-result-item" onclick="window.location.href='${item.url}'">
-        <div class="search-result-title">${item.title}</div>
-        <div class="search-result-desc">${item.description}</div>
+      <div class="search-result-item" onclick="${item.locked ? "alert('บทนี้ยังไม่เปิดให้เข้าถึง รอ Admin ปลดล็อค')" : `window.location.href='${item.url}'`}">
+        <div class="search-result-title">${item.title} ${item.locked ? '🔒' : ''}</div>
+        <div class="search-result-desc">${item.description}${item.locked ? ' — รอ Admin ปลดล็อค' : ''}</div>
       </div>
     `).join('');
     searchResults.style.display = 'block';
@@ -1002,6 +1004,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       });
     }
   });
+});
+
+// Block navigation for locked chapter links
+document.addEventListener('click', (e) => {
+  const lockedLink = e.target.closest('.chapter-link.locked');
+  if (lockedLink) {
+    e.preventDefault();
+    alert('บทนี้ยังไม่เปิดให้เข้าถึง รอ Admin ปลดล็อค');
+  }
 });
 
 </script>
