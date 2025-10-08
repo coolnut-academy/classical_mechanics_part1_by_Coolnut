@@ -515,6 +515,7 @@ window.MathJax = {
   .chapter-card:nth-child(3) { animation-delay: 0.3s; }
   .chapter-card:nth-child(4) { animation-delay: 0.4s; }
   .chapter-card:nth-child(5) { animation-delay: 0.5s; }
+  .chapter-card:nth-child(6) { animation-delay: 0.6s; }
   
   @keyframes fadeInUp {
     to {
@@ -843,6 +844,43 @@ window.MathJax = {
       </div>
     </div>
 
+    <!-- Chapter 6 -->
+    <div class="chapter-card">
+      <div class="chapter-header">
+        <div class="status-badge status-advanced">ระดับสูง</div>
+        <div class="chapter-number">บทที่ 6</div>
+        <h3 class="chapter-title">บทพิสูจน์สมการคาบการสั่นของสปริง</h3>
+        <p class="chapter-subtitle">พิสูจน์โดยใช้หลักการอนุรักษ์พลังงาน</p>
+      </div>
+      <div class="chapter-content">
+        <p class="chapter-description">
+          การพิสูจน์สมการคาบการสั่นของสปริงที่มีมวลโดยใช้หลักการอนุรักษ์พลังงานกล 
+          ครอบคลุมการคำนวณพลังงานจลน์ของสปริงและมวล พลังงานศักย์ยืดหยุ่น และการหาสมการการเคลื่อนที่
+        </p>
+        <div class="chapter-meta">
+          <div class="chapter-duration">
+            ⏱️ ประมาณ 30-45 นาที
+          </div>
+          <div class="chapter-difficulty difficulty-advanced">
+            ระดับสูง
+          </div>
+        </div>
+        <div class="chapter-topics">
+          <h4>หัวข้อสำคัญ</h4>
+          <ul class="topics-list">
+            <li>การคำนวณพลังงานจลน์รวมของระบบ</li>
+            <li>พลังงานจลน์ของสปริงที่มีมวล</li>
+            <li>พลังงานศักย์ยืดหยุ่น</li>
+            <li>หลักการอนุรักษ์พลังงาน</li>
+            <li>การหาสมการคาบการสั่นสุดท้าย</li>
+          </ul>
+        </div>
+        <a href="ProofSpringDengDeng.html" class="chapter-link">
+          เริ่มเรียน
+        </a>
+      </div>
+    </div>
+
   </div>
 
 
@@ -859,6 +897,7 @@ window.MathJax = {
         <ul>
           <li><a href="#course-overview">ภาพรวมคอร์ส</a></li>
           <li><a href="chapter1.html">เริ่มเรียนเลย</a></li>
+          <li><a href="ProofSpringDengDeng.html">บทพิสูจน์สมการคาบสปริง</a></li>
           <li><a href="#top" onclick="document.getElementById('scroll-top').click()">กลับไปด้านบน</a></li>
         </ul>
       </div>
@@ -952,6 +991,12 @@ const searchData = [
     description: 'กฎของนิวตัน แรงเสียดทาน FBD',
     keywords: 'นิวตัน แรง เสียดทาน FBD ต้านอากาศ',
     url: 'chapter5.html'
+  },
+  {
+    title: 'บทที่ 6: บทพิสูจน์สมการคาบการสั่นของสปริง',
+    description: 'พิสูจน์สมการคาบสปริงที่มีมวลโดยใช้หลักการอนุรักษ์พลังงาน',
+    keywords: 'สปริง คาบ การสั่น พิสูจน์ พลังงาน อนุรักษ์ SHM',
+    url: 'ProofSpringDengDeng.html'
   }
 ];
 
