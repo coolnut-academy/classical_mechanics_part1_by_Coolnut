@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รวมเฉลยติวโจทย์กลศาสตร์ ปลายค่าย 1 สอวน. (ข้อ 1 - 10) | By Coolnut</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- MathJax Configuration -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #ffffff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --accent-primary: #2563eb;
+            --accent-secondary: #7c3aed;
+            --border-color: #cbd5e1;
+        }
+
+        .dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #ffffff;
+            --text-secondary: #cbd5e1;
+            --accent-primary: #60a5fa;
+            --accent-secondary: #a78bfa;
+            --border-color: #475569;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #581c87 100%);
+            line-height: 1.8;
+            transition: background 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .dark-mode body {
+            background: linear-gradient(135deg, #0c1222 0%, #1a0b2e 100%);
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        .dark-mode .glass-effect {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid rgba(100, 116, 139, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .answer {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            color: #065f46;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border-left: 5px solid #10b981;
+            margin-top: 1.5rem;
+            box-shadow: 0 4px 12px -1px rgba(0, 0, 0, 0.15);
+            font-weight: 500;
+        }
+
+        .dark-mode .answer {
+            background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+            color: #d1fae5;
+            border-left-color: #34d399;
+            box-shadow: 0 4px 12px -1px rgba(0, 0, 0, 0.4);
+        }
+
+        .step-heading {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-heading::before {
+            content: "▸";
+            color: var(--accent-primary);
+            font-weight: bold;
+        }
+
+        p {
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.9;
+        }
+
+        .accordion-content p {
+            font-size: 1rem;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .accordion-trigger {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .accordion-trigger::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(37, 99, 235, 0.15), rgba(124, 58, 237, 0.15));
+            transition: width 0.3s ease;
+        }
+
+        .dark-mode .accordion-trigger::before {
+            background: linear-gradient(90deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+        }
+
+        .accordion-trigger:hover::before {
+            width: 100%;
+        }
+
+        .accordion-trigger.viewed {
+            border-left: 5px solid #2563eb;
+        }
+
+        .dark-mode .accordion-trigger.viewed {
+            border-left: 5px solid #60a5fa;
+        }
+
+        .icon-arrow {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .open .icon-arrow {
+            transform: rotate(90deg);
+        }
+
+        .problem-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .header-gradient {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .dark-mode .header-gradient {
+            background: linear-gradient(135deg, #fde047 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.5);
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1e293b;
+            border: 2px solid #cbd5e1;
+            font-weight: 600;
+        }
+
+        .dark-mode .btn-secondary {
+            background: #1e293b;
+            color: white;
+            border: 2px solid #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(203, 213, 225, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .dark-mode .progress-bar {
+            background: rgba(71, 85, 105, 0.4);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2563eb, #7c3aed);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-panel {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 640px) {
+            .control-panel {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .dark-mode-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #cbd5e1;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode-toggle.active {
+            background: #2563eb;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+        }
+
+        .dark-mode-toggle::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode-toggle.active::after {
+            transform: translateX(30px);
+        }
+
+        ul {
+            color: var(--text-primary);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            line-height: 1.8;
+        }
+
+        .problem-item {
+            border-color: #cbd5e1 !important;
+        }
+
+        .dark-mode .problem-item {
+            border-color: #475569 !important;
+        }
+
+        strong {
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+
+        .dark-mode strong {
+            color: #60a5fa;
+        }
+
+        .problem-item {
+            transition: all 0.3s ease;
+        }
+
+        .problem-item:hover {
+            transform: translateX(4px);
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            z-index: 1000;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.6);
+            background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+        }
+    </style>
+</head>
+<body class="text-slate-800" id="body">
+
+    <div class="container mx-auto p-4 sm:p-8 my-8 fade-in">
+        <div class="text-center mb-8">
+            <h1 class="text-5xl font-bold header-gradient mb-3">รวมเฉลยโจทย์กลศาสตร์</h1>
+            <p class="text-lg mb-4" style="color: #fef3c7; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">โดยวิทยากร: นายสาธิต ศิริวัชน์ (Coolnut) | คลิกที่โจทย์แต่ละข้อเพื่อดูเฉลยแบบละเอียด</p>
+            
+            <!-- Progress Bar -->
+            <div class="glass-effect rounded-lg p-4 mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-sm font-semibold" style="color: var(--text-primary);">ความคืบหน้า</span>
+                    <span class="text-sm font-semibold" style="color: var(--accent-primary);" id="progress-text">0/10</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <button class="btn btn-primary" id="expand-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    เปิดทั้งหมด
+                </button>
+                <button class="btn btn-secondary" id="collapse-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                    </svg>
+                    ปิดทั้งหมด
+                </button>
+                <button class="btn btn-secondary" id="reset-progress">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
+                    </svg>
+                    รีเซ็ต
+                </button>
+                <div class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" style="color: #fef3c7; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                    <div class="dark-mode-toggle" id="dark-mode-toggle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-effect shadow-2xl rounded-2xl overflow-hidden">
+            <!-- Problem 1 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="1">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">1</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">รถยนต์เคลื่อนที่ในแนวเส้นตรง</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> รถยนต์คันหนึ่งเคลื่อนที่เป็นเส้นตรงจากหยุดนิ่ง โดยเพิ่มความเร็วในอัตราคงที่ $a_x = 5.0 \, \text{m/s}^2$ จากนั้นเคลื่อนที่ด้วยความเร็วคงที่ และสุดท้ายลดความเร็วลงในอัตราเดียวกับตอนแรกจนหยุดนิ่ง เวลาในการเคลื่อนที่ทั้งหมดเท่ากับ $25.0 \, \text{s}$ ความเร็วเฉลี่ยตลอดช่วงเวลานั้นเท่ากับ $72 \, \text{km/h}$ ถามว่ารถยนต์เคลื่อนที่ด้วยความเร็วคงที่เป็นเวลานานเท่าใด</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีแคลคูลัส):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: แปลงหน่วยและหาข้อมูลพื้นฐาน</p>
+                        <p>ความเร็วเฉลี่ย: $v_{avg} = 72 \, \frac{\text{km}}{\text{h}} \times \frac{1000 \, \text{m}}{1 \, \text{km}} \times \frac{1 \, \text{h}}{3600 \, \text{s}} = 20 \, \text{m/s}$</p>
+                        <p>จากสมการความเร็วเฉลี่ย $\Delta x = v_{avg} \times t_{total}$ เราสามารถคำนวณระยะทางทั้งหมดได้:</p>
+                        <p>ระยะทางทั้งหมด: $\Delta x_{total} = 20 \, \text{m/s} \times 25.0 \, \text{s} = 500 \, \text{m}$</p>
+                        <p>จากความสมมาตรของการเคลื่อนที่ (อัตราเร่งเท่ากับอัตราหน่วง) ทำให้เวลาที่ใช้ในช่วงเร่งความเร็ว ($t_1$) และลดความเร็ว ($t_3$) จะเท่ากัน ดังนั้น $t_{total} = t_1 + t_2 + t_3 = 2t_1 + t_2 = 25.0 \, \text{s}$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: สร้างฟังก์ชันความเร็วและหาระยะทางโดยการอินทิเกรต</p>
+                        <p>ความเร็ว $v(t)$ หาได้จากความสัมพันธ์ $v(t) = \int a(t) \,dt$ และระยะทาง $\Delta x = \int v(t) \,dt$</p>
+                        <p>ช่วงที่ 1 ($0 \le t \le t_1$): $v_1(t) = \int 5.0 \,dt = 5.0t$ และ $\Delta x_1 = \int_{0}^{t_1} 5.0t \,dt = 2.5t_1^2$</p>
+                        <p>ช่วงที่ 2 ($t_1 \le t \le t_1+t_2$): ความเร็วคงที่ที่ $v_{max} = v_1(t_1) = 5.0t_1$ ดังนั้น $\Delta x_2 = v_{max} \cdot t_2 = (5.0t_1)t_2$</p>
+                        <p>ช่วงที่ 3: เนื่องจากความสมมาตร $\Delta x_3 = \Delta x_1 = 2.5t_1^2$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 3: แก้ระบบสมการ</p>
+                        <p>ผลรวมของระยะทางคือ: $\Delta x_{total} = \Delta x_1 + \Delta x_2 + \Delta x_3$</p>
+                        <p>$500 = 2.5t_1^2 + 5.0t_1t_2 + 2.5t_1^2 \Rightarrow 500 = 5.0t_1^2 + 5.0t_1t_2$</p>
+                        <p>หารด้วย 5.0 ทั้งสมการ: $100 = t_1^2 + t_1t_2 \Rightarrow 100 = t_1(t_1 + t_2)$ (สมการ A)</p>
+                        <p>จากความสัมพันธ์ของเวลา เรามี $t_2 = 25.0 - 2t_1$ (สมการ B)</p>
+                        <p>แทน (B) ใน (A): $100 = t_1(t_1 + (25.0 - 2t_1)) \Rightarrow 100 = t_1(25.0 - t_1)$</p>
+                        <p>จัดรูปเป็นสมการกำลังสอง: $t_1^2 - 25.0t_1 + 100 = 0$ ซึ่งแก้ได้ $t_1 = 5.0 \, \text{s}$ (อีกคำตอบหนึ่งคือ 20s ซึ่งทำให้ $t_2$ ติดลบ)</p>
+                        <p>นำค่า $t_1$ ไปหา $t_2$: $t_2 = 25.0 - 2(5.0) = 15.0 \, \text{s}$</p>
+                        
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> รถยนต์เคลื่อนที่ด้วยความเร็วคงที่เป็นเวลานาน **15.0 วินาที**</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Problem 2 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="2">
+                 <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">2</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">จุดสามจุดบนมุมสามเหลี่ยมด้านเท่า</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> มีจุดสามจุดอยู่บนมุมของสามเหลี่ยมด้านเท่าซึ่งมีด้านยาวเท่ากับ $a$ ทั้งหมดเริ่มเคลื่อนที่พร้อมกันด้วยความเร็วขนาดคงที่ $v$ โดยที่จุดที่หนึ่งมุ่งไปยังจุดที่สองเสมอ, จุดที่สองมุ่งไปยังจุดที่สาม, และจุดที่สามมุ่งไปยังจุดที่หนึ่ง ถามว่าอีกนานเท่าใดจุดทั้งสามจึงจะมาบรรจบกัน</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีแคลคูลัสเชิงความเร็วสัมพัทธ์):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: หาอัตราการเข้าใกล้กัน</p>
+                        <p>พิจารณาจุด 1 และ 2 ซึ่งมีระยะห่างกัน $r$ อัตราการเปลี่ยนแปลงของระยะห่าง ($\frac{dr}{dt}$) คือผลต่างขององค์ประกอบความเร็วตามแนวเส้นตรงที่เชื่อมระหว่างจุดทั้งสอง</p>
+                        <p>องค์ประกอบความเร็วของจุดที่ 1 ที่พุ่งเข้าหาจุดที่ 2 คือ $v$</p>
+                        <p>มุมภายในของสามเหลี่ยมด้านเท่าคือ $60^\circ$ ดังนั้น องค์ประกอบความเร็วของจุดที่ 2 ที่พุ่งหนีจากจุดที่ 1 ตามแนวเชื่อมคือ $v \cos(60^\circ) = v/2$</p>
+                        <p>อัตราการเปลี่ยนแปลงสุทธิของระยะห่างคือ: $\frac{dr}{dt} = v_{\text{component,2}} - v_{\text{component,1}} = \frac{v}{2} - v = -\frac{v}{2}$</p>
+                        <p>เครื่องหมายลบแสดงว่าระยะห่างลดลงด้วยอัตราเร็วคงที่ $v_{approach} = v/2$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: คำนวณเวลา</p>
+                        <p>เนื่องจากอัตราเร็วในการเข้าใกล้กันมีค่าคงที่ เราจึงสามารถใช้สมการพื้นฐาน $t = \frac{\text{distance}}{\text{speed}}$</p>
+                        $$t = \frac{\text{ระยะห่างเริ่มต้น}}{\text{อัตราเร็วในการเข้าใกล้}} = \frac{a}{v/2}$$
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> จุดทั้งสามจะมาบรรจบกันในเวลา $\frac{2a}{v}$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem 3 Accordion Item (CORRECTED) -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="3">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">3</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">เรือข้ามฟาก</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> เรือข้ามฟากแม่น้ำกว้าง $d$ ด้วยความเร็วเทียบกับน้ำ ($v_b$) ซึ่งน้อยกว่าความเร็วกระแสน้ำ ($v_w$) อยู่ $\eta=2$ เท่า ($v_w = 2v_b$) จะต้องเคลื่อนที่ทำมุมเท่าใดเทียบกับทิศทางของกระแสน้ำ เพื่อให้มีระยะเบี่ยง (drifting) มากที่สุด</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีแคลคูลัสและการแปลงแบบกาลิเลโอ):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: นิยามกรอบอ้างอิงและเวกเตอร์ในสมการ $\vec{v}(t) = \vec{U} + \vec{v}'(t)$</p>
+                        <p>เราจะใช้สมการการแปลงความเร็วแบบกาลิเลโอ โดยนิยามแต่ละส่วนดังนี้:</p>
+                        <ul class="list-disc list-inside ml-4">
+                            <li>$\vec{v}(t)$ คือความเร็วของเรือเทียบกับฝั่ง (ความเร็วลัพธ์ที่เราสังเกตเห็น)</li>
+                            <li>$\vec{U}$ คือความเร็วของกรอบอ้างอิงที่เคลื่อนที่ (กระแสน้ำ) เทียบกับฝั่ง: $\vec{U} = v_w \hat{i}$</li>
+                            <li>$\vec{v}'(t)$ คือความเร็วของเรือเทียบกับกรอบอ้างอิงที่เคลื่อนที่ (น้ำ): $\vec{v}'(t) = (v_b \cos\theta) \hat{i} + (v_b \sin\theta) \hat{j}$</li>
+                        </ul>
+                        <p>แทนค่าลงในสมการ: $\vec{v}(t) = (v_w \hat{i}) + \big( (v_b \cos\theta) \hat{i} + (v_b \sin\theta) \hat{j} \big)$</p>
+                        <p>รวมองค์ประกอบจะได้: $\vec{v}(t) = (v_w + v_b \cos\theta) \hat{i} + (v_b \sin\theta) \hat{j}$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: สร้างฟังก์ชันระยะเบี่ยง $x(\theta)$</p>
+                        <p>เวลาที่ใช้ข้ามฟาก ($t$) ขึ้นอยู่กับระยะทางแนวตั้ง ($d$) และความเร็วแนวตั้ง ($v_y$) เท่านั้น:</p>
+                        <p>$t = \frac{d}{v_y} = \frac{d}{v_b \sin\theta}$</p>
+                        <p>ระยะเบี่ยง ($x$) คือระยะทางแนวนอนที่เคลื่อนที่ได้ในเวลา $t$:</p>
+                        <p>$x = v_x \cdot t = (v_w + v_b \cos\theta) \left( \frac{d}{v_b \sin\theta} \right)$</p>
+                        <p>จากโจทย์ $v_w = 2v_b$ ดังนั้น: $x(\theta) = (2v_b + v_b \cos\theta) \left( \frac{d}{v_b \sin\theta} \right) = d \left( \frac{2 + \cos\theta}{\sin\theta} \right)$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 3: หาอนุพันธ์เพื่อหาค่าสูงสุด</p>
+                        <p>ใช้กฎการหาอนุพันธ์ของผลหาร $\frac{d}{d\theta}\left(\frac{u}{v}\right) = \frac{u'v - uv'}{v^2}$:</p>
+                        <p>$\frac{dx}{d\theta} = d \left[ \frac{(-\sin\theta)(\sin\theta) - (2+\cos\theta)(\cos\theta)}{\sin^2\theta} \right] = d \left[ \frac{-\sin^2\theta - 2\cos\theta - \cos^2\theta}{\sin^2\theta} \right]$</p>
+                        <p>จากเอกลักษณ์ $\sin^2\theta + \cos^2\theta = 1$: $\frac{dx}{d\theta} = d \left[ \frac{-(\sin^2\theta + \cos^2\theta) - 2\cos\theta}{\sin^2\theta} \right] = d \left[ \frac{-1 - 2\cos\theta}{\sin^2\theta} \right]$</p>
+                        <p>ให้ $\frac{dx}{d\theta} = 0$ แสดงว่าตัวเศษต้องเป็นศูนย์: $-1 - 2\cos\theta = 0 \Rightarrow \cos\theta = -\frac{1}{2}$</p>
+                        
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> มุมที่ทำให้ $\cos\theta = -1/2$ ในช่วง $0^\circ < \theta < 180^\circ$ คือ **$120^\circ$**</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Problem 4 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="4">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">4</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">การวัดค่าความเร่งโน้มถ่วง (g)</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> พิสูจน์ว่าค่า $g$ สามารถคำนวณได้จากสมการ $g = \frac{8h}{T_A^2 - T_B^2}$ เมื่อ $T_A, T_B$ คือช่วงเวลาที่วัตถุอยู่เหนือระดับ A และ B ตามลำดับ และ $h$ คือระยะห่างระหว่างระดับทั้งสอง</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีสมมาตรของการเคลื่อนที่):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: วิเคราะห์เวลาจากจุดสูงสุด</p>
+                        <p>เวลาที่วัตถุอยู่เหนือระดับ B คือ $T_B$ จากความสมมาตร เวลาที่ใช้ตกจากจุดสูงสุดมายังระดับ B คือ $t_B = T_B/2$</p>
+                        <p>ในทำนองเดียวกัน เวลาที่ใช้ตกจากจุดสูงสุดมายังระดับ A คือ $t_A = T_A/2$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: คำนวณระยะทางจากจุดสูงสุด</p>
+                        <p>ใช้สมการการเคลื่อนที่แนวดิ่ง $s_y = u_y t + \frac{1}{2}gt^2$ โดยความเร็วต้น ณ จุดสูงสุด $u_y=0$</p>
+                        <p>ระยะจากจุดสูงสุดถึง B: $h_B = \frac{1}{2}g(t_B)^2 = \frac{1}{2}g\left(\frac{T_B}{2}\right)^2 = \frac{gT_B^2}{8}$</p>
+                        <p>ระยะจากจุดสูงสุดถึง A: $h_A = \frac{1}{2}g(t_A)^2 = \frac{1}{2}g\left(\frac{T_A}{2}\right)^2 = \frac{gT_A^2}{8}$</p>
+
+                        <p class="step-heading">ขั้นตอนที่ 3: หาความสัมพันธ์และจัดรูปสมการ</p>
+                        <p>ระยะห่างระหว่างสองระดับคือ $h = h_A - h_B$</p>
+                        <p>$h = \frac{gT_A^2}{8} - \frac{gT_B^2}{8} = \frac{g}{8}(T_A^2 - T_B^2)$</p>
+                        <div class="answer">
+                            <p>จัดรูปสมการใหม่จะได้ $g = \frac{8h}{T_A^2 - T_B^2}$ ซึ่งเป็นสิ่งที่ต้องการพิสูจน์</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Problem 5 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="5">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">5</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">ลูกบอลกระดอนบนพื้นเอียง</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> ลูกบอลถูกปล่อยจากหยุดนิ่งจากความสูงแนวดิ่ง $h$ ลงบนพื้นเอียงเรียบที่ทำมุม $\alpha$ การกระดอนเป็นแบบยืดหยุ่นสมบูรณ์ จงหาระยะทาง $d$ ตามแนวพื้นเอียงที่ลูกบอลจะกระดอนไปกระทบพื้นเอียงเป็นครั้งที่สอง</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีโปรเจกไทล์ในแกนเอียง):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: หาความเร็วก่อนกระทบ</p>
+                        <p>จากกฎอนุรักษ์พลังงาน $mgh = \frac{1}{2}mv_1^2$ ความเร็วในแนวดิ่งก่อนกระทบคือ $v_1 = \sqrt{2gh}$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: วิเคราะห์การชนในแกนเอียง</p>
+                        <p>ตั้งแกน $x'$ ขนานพื้นเอียง, $y'$ ตั้งฉากพื้นเอียง การชนแบบยืดหยุ่นจะกลับทิศความเร็วในแนว $y'$ และคงความเร็วในแนว $x'$</p>
+                        <p>ความเร็วหลังชน: $v_{2,x'} = v_1 \sin\alpha$ และ $v_{2,y'} = v_1 \cos\alpha$</p>
+                        <p>ความเร่ง: $a_{x'} = g \sin\alpha$ และ $a_{y'} = -g \cos\alpha$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 3: หาเวลาที่ลอยในอากาศ</p>
+                        <p>ใช้สมการ $s_{y'} = u_{y'}t + \frac{1}{2}a_{y'}t^2$ โดยให้ $s_{y'}=0$: $0 = (v_1 \cos\alpha)t - \frac{1}{2}(g \cos\alpha)t^2$</p>
+                        <p>แก้สมการได้ $t_{flight} = \frac{2v_1}{g}$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 4: คำนวณระยะทาง $d$</p>
+                        <p>ใช้สมการ $s_{x'} = u_{x'}t + \frac{1}{2}a_{x'}t^2$: $d = (v_1 \sin\alpha)t_{flight} + \frac{1}{2}(g \sin\alpha)t_{flight}^2$</p>
+                        <p>$d = (v_1 \sin\alpha)\left(\frac{2v_1}{g}\right) + \frac{1}{2}(g \sin\alpha)\left(\frac{2v_1}{g}\right)^2 = \frac{4v_1^2 \sin\alpha}{g}$</p>
+                        
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> แทนค่า $v_1^2 = 2gh$ กลับเข้าไปจะได้ $d = \frac{4(2gh) \sin\alpha}{g} = 8h \sin\alpha$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem 6 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="6">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">6</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">บอลลูนลอยขึ้น</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> บอลลูนลอยขึ้นจากผิวโลกด้วยอัตราเร็วแนวดิ่งคงที่ $v_0$ เนื่องจากลมทำให้มีความเร็วองค์ประกอบในแนวราบเป็น $v_x = ay$ โดย $a$ เป็นค่าคงที่ และ $y$ คือความสูง จงหา (ก) การเคลื่อนที่ $x(y)$ และ (ข) ความเร่งทั้งหมด, ความเร่งสัมผัส และความเร่งแนวตั้งฉาก</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีแคลคูลัส):</strong></p>
+                        <p class="step-heading">(ก) การเคลื่อนที่ $x(y)$:</p>
+                        <p>จาก $dy/dt = v_0 \Rightarrow \int dy = \int v_0 dt \Rightarrow y(t) = v_0t$</p>
+                        <p>จาก $dx/dt = ay = a(v_0t) \Rightarrow \int dx = \int av_0t \,dt \Rightarrow x(t) = \frac{1}{2}av_0t^2$</p>
+                        <p>กำจัด $t$ โดยใช้ $t=y/v_0$: $x(y) = \frac{1}{2}av_0\left(\frac{y}{v_0}\right)^2 = \frac{a}{2v_0}y^2$</p>
+                        <p class="step-heading">(ข) ความเร่ง:</p>
+                        <p>$\vec{v}(t) = (av_0t)\hat{i} + v_0\hat{j} \Rightarrow \vec{a}(t) = \frac{d\vec{v}}{dt} = av_0\hat{i}$</p>
+                        <p>$v = |\vec{v}| = \sqrt{(av_0t)^2 + v_0^2} = v_0\sqrt{a^2t^2+1}$</p>
+                        <p>$a_t = \frac{dv}{dt} = \frac{v_0a^2t}{\sqrt{a^2t^2+1}}$ (ความเร่งแนวสัมผัส)</p>
+                        <p>จาก $|\vec{a}|^2 = a_t^2 + a_n^2 \Rightarrow a_n = \sqrt{(av_0)^2 - a_t^2} = \frac{av_0}{\sqrt{a^2t^2+1}}$ (ความเร่งแนวตั้งฉาก)</p>
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> (ก) $x(y) = \frac{a}{2v_0}y^2$ และ (ข) $\vec{a} = av_0\hat{i}$, $a_t = \frac{v_0a^2t}{\sqrt{a^2t^2+1}}$, $a_n = \frac{av_0}{\sqrt{a^2t^2+1}}$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Problem 7 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="7">
+                 <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">7</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">ยิงปืนใหญ่สองนัด</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> ปืนใหญ่ยิงกระสุนสองนัดด้วยความเร็วต้น $v_0 = 250 \, \text{m/s}$ นัดแรกทำมุม $\theta_1 = 60^\circ$ และนัดที่สองทำมุม $\theta_2 = 45^\circ$ จงหาช่วงเวลาระหว่างการยิง ($\Delta t$) ที่ทำให้กระสุนทั้งสองชนกัน</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีเคลื่อนที่สัมพัทธ์):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: ตั้งเงื่อนไขการชน</p>
+                        <p>การชนจะเกิดขึ้นได้ถ้าเวกเตอร์ตำแหน่งสัมพัทธ์ ($\vec{r}_{12}$) และเวกเตอร์ความเร็วสัมพัทธ์ ($\vec{v}_{12}$) อยู่บนแนวเส้นตรงเดียวกันและมีทิศตรงข้ามกัน</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: ตั้งสมการและแก้หา $\Delta t$</p>
+                        <p>จากการวิเคราะห์การเคลื่อนที่สัมพัทธ์ ซึ่งมีความเร่งสัมพัทธ์เป็นศูนย์ ($\vec{a}_{12}=0$) จะสามารถพิสูจน์ได้ว่าช่วงเวลาที่ทำให้เกิดการชนคือ:</p>
+                        $$ \Delta t = \frac{2v_0 \sin(\theta_1 - \theta_2)}{g(\cos\theta_1 + \cos\theta_2)} $$
+                        <p class="step-heading">ขั้นตอนที่ 3: แทนค่า</p>
+                        <p>$\sin(60^\circ-45^\circ) = \sin(15^\circ) \approx 0.2588$</p>
+                        <p>$\cos(60^\circ) = 0.5$ และ $\cos(45^\circ) \approx 0.7071$</p>
+                        $$ \Delta t = \frac{2(250)(0.2588)}{9.8(0.5 + 0.7071)} = \frac{129.4}{11.829} \approx 10.94 \, \text{s} $$
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> ช่วงเวลาระหว่างการยิงควรเป็นประมาณ **10.9 วินาที**</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NEW Problem 8 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="8">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">8</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">ลูกบอลกระดอนบนพื้นเอียง (ต่อเนื่อง)</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> ลูกบอลกระทบกับพื้นเอียงที่ทำมุม $\theta$ ที่จุด 1 ด้วยความเร็ว $v_0$ ในแนวตั้งฉากกับพื้นเอียง แล้วกระดอนออกไปแบบโปรเจกไทล์จนกระทบพื้นเอียงที่จุด 2 (ระยะ $R_{12}$) จากนั้นกระดอนออกไปอีกครั้งจนกระทบที่จุด 3 (ระยะ $R_{23}$) กำหนดให้การชนเป็นแบบยืดหยุ่น จงหา (ก) ระยะ $R_{12}$ และ (ข) ระยะ $R_{23}$ และอัตราส่วน $R_{23}/R_{12}$</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีโปรเจกไทล์ในแกนเอียง):</strong></p>
+                        <p class="step-heading">(ก) หาระยะ $R_{12}$</p>
+                        <p>ตั้งแกน $x'$ ขนานพื้นเอียง, $y'$ ตั้งฉาก ความเร็วเริ่มต้น $\vec{u}_1 = 0\hat{i'} + v_0 \hat{j'}$ ความเร่ง $\vec{a} = (g \sin\theta)\hat{i'} - (g \cos\theta)\hat{j'}$</p>
+                        <p>หาเวลาที่ลอยในอากาศ ($t_1$) จาก $s_{y'} = u_{y'}t + \frac{1}{2}a_{y'}t^2$ โดยให้ $s_{y'}=0$:</p>
+                        <p>$0 = v_0 t_1 - \frac{1}{2}(g\cos\theta)t_1^2 \Rightarrow t_1 = \frac{2v_0}{g\cos\theta}$</p>
+                        <p>หาระยะ $R_{12}$ จาก $s_{x'} = u_{x'}t + \frac{1}{2}a_{x'}t^2$: </p>
+                        <p>$R_{12} = (0)t_1 + \frac{1}{2}(g\sin\theta)t_1^2 = \frac{1}{2}g\sin\theta\left(\frac{2v_0}{g\cos\theta}\right)^2 = \frac{2v_0^2 \tan\theta}{g\cos\theta}$</p>
+                        
+                        <p class="step-heading">(ข) หาระยะ $R_{23}$ และอัตราส่วน</p>
+                        <p>หาความเร็วก่อนกระทบจุด 2 จาก $v = u+at$: $v_{x',1} = a_{x'}t_1 = 2v_0 \tan\theta$, $v_{y',1} = u_{y'} + a_{y'}t_1 = -v_0$</p>
+                        <p>การชนยืดหยุ่นทำให้ความเร็วหลังชน (ความเร็วต้นของช่วงที่สอง) คือ $\vec{u}_2 = (2v_0 \tan\theta)\hat{i'} + v_0 \hat{j'}$</p>
+                        <p>เวลาที่ลอย ($t_2$) จะเท่าเดิมเพราะ $u_{y'}$ และ $a_{y'}$ ไม่เปลี่ยน: $t_2 = t_1$</p>
+                        <p>หาระยะ $R_{23}$ จาก $s_{x'} = u_{x'}t + \frac{1}{2}a_{x'}t^2$:</p>
+                        <p>$R_{23} = u_{x',2}t_2 + \frac{1}{2}a_{x'}t_2^2 = (2v_0 \tan\theta)t_1 + R_{12} = 2(g\sin\theta t_1)\frac{t_1}{g\sin\theta} + R_{12} = 2R_{12} + R_{12} = 3R_{12}$</p>
+                        
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> (ก) $R_{12} = \frac{2v_0^2 \tan\theta}{g\cos\theta}$</p>
+                            <p>(ข) $R_{23} = 3R_{12} = \frac{6v_0^2 \tan\theta}{g\cos\theta}$ และอัตราส่วน $R_{23}/R_{12} = 3$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW Problem 9 Accordion Item -->
+            <div class="problem-item border-b" style="border-color: var(--border-color);" data-problem="9">
+                <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">9</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">แท่งไม้และลูกบอลบนพื้นเอียง</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> แท่งไม้เริ่มเคลื่อนที่ขึ้นพื้นเอียงทำมุม $\beta$ ด้วยความเร็ว $v$ ในขณะเดียวกันลูกบอลถูกโยนขึ้นจากจุดเริ่มต้นเดียวกันด้วยความเร็ว $u$ ทำมุม $\theta$ กับแนวราบ จงหาสมการของมุม $\theta$ ที่ขึ้นอยู่กับ $\beta$ ที่ทำให้ลูกบอลตกบนแท่งไม้พอดี เมื่อแท่งไม้เคลื่อนที่ไปได้สูงสุดบนพื้นเอียง และหาค่า $\theta$ เมื่อ $\beta = 45^\circ$</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีซิงโครไนซ์การเคลื่อนที่):</strong></p>
+                        <p class="step-heading">ขั้นตอนที่ 1: วิเคราะห์การเคลื่อนที่ของแท่งไม้</p>
+                        <p>ความเร่งของแท่งไม้คือ $a_p = -g\sin\beta$ จาก $v_f = v_i+at$, เวลาถึงจุดสูงสุด (ที่ $v_f=0$) คือ $t_{p} = \frac{v}{g\sin\beta}$</p>
+                        <p>จาก $v_f^2 = v_i^2+2as$, ระยะทางสูงสุดคือ $s_{p} = \frac{v^2}{2g\sin\beta}$</p>
+                        <p>พิกัดของจุดสูงสุดในแนวราบคือ $(x_p, y_p) = (s_{p}\cos\beta, s_{p}\sin\beta)$</p>
+                        
+                        <p class="step-heading">ขั้นตอนที่ 2: ตั้งเงื่อนไขการชน</p>
+                        <p>ลูกบอลต้องถึงพิกัด $(x_p, y_p)$ ในเวลา $t_p$ พอดี</p>
+                        <p>$x_p = (u\cos\theta)t_{p}$ และ $y_p = (u\sin\theta)t_{p} - \frac{1}{2}gt_{p}^2$</p>
+
+                        <p class="step-heading">ขั้นตอนที่ 3: แก้สมการหาความสัมพันธ์</p>
+                        <p>จากสมการแกน x: $u\cos\theta = \frac{x_p}{t_{p}} = \frac{s_{p}\cos\beta}{t_{p}} = \frac{(v^2/2g\sin\beta)\cos\beta}{v/g\sin\beta} = \frac{v}{2}\cos\beta$</p>
+                        <p>จากสมการแกน y: $u\sin\theta = \frac{y_p + \frac{1}{2}gt_{p}^2}{t_{p}} = \frac{s_p\sin\beta + \frac{1}{2}g t_{p}^2}{t_{p}} = \frac{(v^2/2g\sin\beta)\sin\beta + \frac{1}{2}g(v/g\sin\beta)^2}{v/g\sin\beta} = \frac{v}{2\sin\beta}(\sin^2\beta+1)$</p>
+                        <p>หา $\tan\theta = \frac{u\sin\theta}{u\cos\theta} = \frac{(\sin^2\beta+1)/\sin\beta}{\cos\beta} = \frac{\sin^2\beta+1}{\sin\beta\cos\beta}$</p>
+
+                        <p class="step-heading">ขั้นตอนที่ 4: หาค่า $\theta$ เมื่อ $\beta=45^\circ$</p>
+                        <p>$\tan\theta = \frac{\sin^2(45^\circ)+1}{\sin(45^\circ)\cos(45^\circ)} = \frac{(1/\sqrt{2})^2+1}{(1/\sqrt{2})(1/\sqrt{2})} = \frac{1/2+1}{1/2} = 3$</p>
+
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> สมการความสัมพันธ์คือ $\tan\theta = \frac{\sin^2\beta+1}{\sin\beta\cos\beta}$ และเมื่อ $\beta=45^\circ$ จะได้ $\theta = \arctan(3) \approx 71.57^\circ$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NEW Problem 10 Accordion Item -->
+            <div class="problem-item" data-problem="10">
+                 <button class="accordion-trigger w-full text-left p-6 flex justify-between items-center">
+                    <div class="flex items-center">
+                        <span class="problem-badge">10</span>
+                        <span class="text-lg font-semibold" style="color: var(--text-primary);">การดึงโซ่ด้วยความเร่งคงที่</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 icon-arrow" style="color: var(--text-secondary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                <div class="accordion-content">
+                    <div class="px-6 pb-6">
+                        <p><strong class="font-semibold">โจทย์:</strong> ถังเปล่าถูกดึงให้ลากปลายโซ่ที่วางบนพื้น โดยระบบเคลื่อนที่ด้วยความเร่งคงที่ $a$ โซ่มีความหนาแน่นเชิงเส้น $\lambda$ (kg/m) จงหา (ก) แรงดึง $F(t)$ (ข) งานที่ทำโดยแรง $F(t)$ ในเวลา $t$ และ (ค) กำลังที่สูญเสียไป ณ เวลา $t$</p>
+                        <p><strong class="font-semibold">เฉลย (วิธีระบบมวลแปรค่า):</strong></p>
+                        <p class="step-heading">(ก) หาแรง $F(t)$</p>
+                        <p>ใช้กฎข้อที่สองของนิวตันรูปทั่วไป $F_{ext} = \frac{dp}{dt}$ โดยที่ $p = mv$</p>
+                        <p>ณ เวลา $t$: $v(t) = at$, $x(t) = \frac{1}{2}at^2$, $m(t) = \lambda x(t) = \frac{1}{2}\lambda at^2$</p>
+                        <p>โมเมนตัมของระบบ: $p(t) = m(t)v(t) = (\frac{1}{2}\lambda at^2)(at) = \frac{1}{2}\lambda a^2 t^3$</p>
+                        <p>แรง: $F(t) = \frac{dp}{dt} = \frac{d}{dt}(\frac{1}{2}\lambda a^2 t^3) = \frac{3}{2}\lambda a^2 t^2$</p>
+                        
+                        <p class="step-heading">(ข) หางานที่ทำโดยแรง $F(t)$</p>
+                        <p>งานหาจาก $W = \int P dt$ โดยกำลังคือ $P(t) = F(t)v(t)$</p>
+                        <p>$P(t) = (\frac{3}{2}\lambda a^2 t^2)(at) = \frac{3}{2}\lambda a^3 t^3$</p>
+                        <p>$W(t) = \int_0^t \frac{3}{2}\lambda a^3 (t')^3 dt' = [\frac{3}{8}\lambda a^3 (t')^4]_0^t = \frac{3}{8}\lambda a^3 t^4$</p>
+
+                        <p class="step-heading">(ค) หากำลังที่สูญเสียไป</p>
+                        <p>กำลังที่ใส่เข้าระบบ ($P_{in}=P(t)$) จะเปลี่ยนไปเป็นอัตราการเพิ่มของพลังงานจลน์ ($\frac{dK}{dt}$) และกำลังที่สูญเสียไป ($P_{lost}$)</p>
+                        <p>พลังงานจลน์: $K(t) = \frac{1}{2}m(t)v(t)^2 = \frac{1}{2}(\frac{1}{2}\lambda at^2)(at)^2 = \frac{1}{4}\lambda a^3 t^4$</p>
+                        <p>อัตราการเพิ่มของพลังงานจลน์: $\frac{dK}{dt} = \frac{d}{dt}(\frac{1}{4}\lambda a^3 t^4) = \lambda a^3 t^3$</p>
+                        <p>$P_{lost} = P_{in} - \frac{dK}{dt} = \frac{3}{2}\lambda a^3 t^3 - \lambda a^3 t^3 = \frac{1}{2}\lambda a^3 t^3$</p>
+
+                        <div class="answer">
+                            <p><strong class="font-semibold">คำตอบ:</strong> (ก) $F(t) = \frac{3}{2}\lambda a^2 t^2$</p>
+                            <p>(ข) $W(t) = \frac{3}{8}\lambda a^3 t^4$</p>
+                            <p>(ค) $P_{lost}(t) = \frac{1}{2}\lambda a^3 t^3$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Scroll to Top Button -->
+        <div class="scroll-to-top" id="scroll-to-top">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 15l7-7 7 7" />
+            </svg>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const accordionTriggers = document.querySelectorAll('.accordion-trigger');
+            const expandAllBtn = document.getElementById('expand-all');
+            const collapseAllBtn = document.getElementById('collapse-all');
+            const resetProgressBtn = document.getElementById('reset-progress');
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const scrollToTopBtn = document.getElementById('scroll-to-top');
+            const progressFill = document.getElementById('progress-fill');
+            const progressText = document.getElementById('progress-text');
+            const body = document.getElementById('body');
+
+            // Load viewed problems from localStorage
+            let viewedProblems = JSON.parse(localStorage.getItem('viewedProblems')) || [];
+            
+            // Load dark mode preference
+            let darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                body.classList.add('dark-mode');
+                darkModeToggle.classList.add('active');
+            }
+
+            // Update progress display
+            function updateProgress() {
+                const percentage = (viewedProblems.length / 10) * 100;
+                progressFill.style.width = percentage + '%';
+                progressText.textContent = viewedProblems.length + '/10';
+                
+                // Mark viewed problems
+                accordionTriggers.forEach((trigger, index) => {
+                    const problemNum = index + 1;
+                    if (viewedProblems.includes(problemNum)) {
+                        trigger.classList.add('viewed');
+                    } else {
+                        trigger.classList.remove('viewed');
+                    }
+                });
+            }
+
+            // Initialize progress
+            updateProgress();
+
+            // Accordion functionality
+            accordionTriggers.forEach((trigger, index) => {
+                trigger.addEventListener('click', function () {
+                    const content = this.nextElementSibling;
+                    const isOpen = this.classList.contains('open');
+                    
+                    this.classList.toggle('open');
+                    
+                    if (content.style.maxHeight) {
+                        // Collapse
+                        content.style.maxHeight = null;
+                    } else {
+                        // Expand
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        
+                        // Mark as viewed
+                        const problemNum = index + 1;
+                        if (!viewedProblems.includes(problemNum)) {
+                            viewedProblems.push(problemNum);
+                            localStorage.setItem('viewedProblems', JSON.stringify(viewedProblems));
+                            updateProgress();
+                        }
+                    }
+                });
+            });
+
+            // Expand all
+            expandAllBtn.addEventListener('click', function () {
+                accordionTriggers.forEach((trigger, index) => {
+                    const content = trigger.nextElementSibling;
+                    trigger.classList.add('open');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    
+                    // Mark all as viewed
+                    const problemNum = index + 1;
+                    if (!viewedProblems.includes(problemNum)) {
+                        viewedProblems.push(problemNum);
+                    }
+                });
+                localStorage.setItem('viewedProblems', JSON.stringify(viewedProblems));
+                updateProgress();
+            });
+
+            // Collapse all
+            collapseAllBtn.addEventListener('click', function () {
+                accordionTriggers.forEach(trigger => {
+                    const content = trigger.nextElementSibling;
+                    trigger.classList.remove('open');
+                    content.style.maxHeight = null;
+                });
+            });
+
+            // Reset progress
+            resetProgressBtn.addEventListener('click', function () {
+                if (confirm('คุณต้องการรีเซ็ตความคืบหน้าทั้งหมดหรือไม่?')) {
+                    viewedProblems = [];
+                    localStorage.setItem('viewedProblems', JSON.stringify(viewedProblems));
+                    updateProgress();
+                    
+                    // Collapse all
+                    accordionTriggers.forEach(trigger => {
+                        const content = trigger.nextElementSibling;
+                        trigger.classList.remove('open');
+                        content.style.maxHeight = null;
+                    });
+                }
+            });
+
+            // Dark mode toggle
+            darkModeToggle.addEventListener('click', function () {
+                darkMode = !darkMode;
+                body.classList.toggle('dark-mode');
+                darkModeToggle.classList.toggle('active');
+                localStorage.setItem('darkMode', darkMode);
+            });
+
+            // Scroll to top functionality
+            window.addEventListener('scroll', function () {
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+
+            scrollToTopBtn.addEventListener('click', function () {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', function (e) {
+                // Ctrl/Cmd + D for dark mode toggle
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    darkModeToggle.click();
+                }
+                
+                // Ctrl/Cmd + E for expand all
+                if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                    e.preventDefault();
+                    expandAllBtn.click();
+                }
+                
+                // Ctrl/Cmd + W for collapse all
+                if ((e.ctrlKey || e.metaKey) && e.key === 'w') {
+                    e.preventDefault();
+                    collapseAllBtn.click();
+                }
+            });
+
+            // Add animation to problem items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateX(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.problem-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateX(-20px)';
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(item);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
